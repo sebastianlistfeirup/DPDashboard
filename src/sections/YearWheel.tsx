@@ -11,8 +11,8 @@
  * Langs kanten står månedens ændring i alle medlemmer som små søjler:
  * udad når vi blev flere, indad når vi blev færre.
  */
-import { useMemo, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import { ChartCard, SectionHeading } from '@/components/primitives'
 import {
   MONTHS, MONTHS_SHORT, cap, computeMonthProfiles, fmtNum, fmtSigned, monthIndex, yearColor, yearOf,
@@ -38,6 +38,11 @@ function wedgePath(a0: number, a1: number, r0: number, r1: number) {
 
 export function YearWheel({ data, a }: { data: Dashboard; a: AsOf }) {
   const reduced = useReducedMotion()
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(wrapRef, { once: true, amount: 0.2 })
+  const [forced, setForced] = useState(false)
+  useEffect(() => { const id = window.setTimeout(() => setForced(true), 3500); return () => window.clearTimeout(id) }, [])
+  const seen = inView || forced
   const year = yearOf(a.date)
   const years = Object.keys(data.konge).map(Number).filter((y) => y <= year).sort()
   const [activeYear, setActiveYear] = useState(year)
@@ -113,7 +118,7 @@ export function YearWheel({ data, a }: { data: Dashboard; a: AsOf }) {
         }
       >
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
-          <div className="relative mx-auto w-full max-w-[40rem]">
+          <div ref={wrapRef} className="relative mx-auto w-full max-w-[40rem]">
             <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="w-full" role="img" aria-label={`Årshjul for ${activeYear}`}>
               <defs>
                 <radialGradient id="mw-hub" cx="50%" cy="42%" r="62%">
@@ -164,7 +169,7 @@ export function YearWheel({ data, a }: { data: Dashboard; a: AsOf }) {
                     key={`rim-${i}`}
                     d={wedgePath(a0, a1, R_OUT + 3, R_OUT + 3 + h)}
                     fill={v >= 0 ? (focus === i ? '#179fa0' : '#c4dcdb') : (focus === i ? '#d24e46' : '#f1c7bb')}
-                    initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                    initial={{ opacity: 0 }} animate={seen ? { opacity: 1 } : undefined}
                     transition={{ duration: 0.5, delay: 0.3 + i * 0.02 }}
                   >
                     <title>{`${cap(MONTHS[i])} ${activeYear}: ${fmtSigned(v)} medlemmer`}</title>
@@ -175,7 +180,7 @@ export function YearWheel({ data, a }: { data: Dashboard; a: AsOf }) {
               {ghost.map((y) => (
                 <motion.path key={`g-${y}`} d={spiral(y)} fill="none" stroke={yearColor(y)} strokeWidth="1.75" opacity="0.55"
                              strokeLinejoin="round" strokeLinecap="round"
-                             initial={reduced ? false : { pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+                             initial={reduced ? false : { pathLength: 0 }} animate={seen || reduced ? { pathLength: 1 } : undefined}
                              transition={{ duration: 1.2, ease: mo.ease }} />
               ))}
               {ghost.map((y) => {
@@ -188,7 +193,7 @@ export function YearWheel({ data, a }: { data: Dashboard; a: AsOf }) {
 
               <motion.path d={spiral(activeYear)} fill="none" stroke={yearColor(activeYear) === '#8299bb' ? '#3a557d' : yearColor(activeYear)} strokeWidth="3.25"
                            strokeLinejoin="round" strokeLinecap="round"
-                           initial={reduced ? false : { pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+                           initial={reduced ? false : { pathLength: 0 }} animate={seen || reduced ? { pathLength: 1 } : undefined}
                            transition={{ duration: 1.6, ease: mo.ease, delay: 0.2 }} />
               {activePts.map((p) => {
                 const q = polar(angleAt(p.m), rFor(p.v))
@@ -227,7 +232,7 @@ export function YearWheel({ data, a }: { data: Dashboard; a: AsOf }) {
                   : 'kongeindikator'}
               </text>
               <text x={C} y={C + 46} textAnchor="middle" fontSize="10.5" fill="#8299bb" className="tnum">
-                {focus !== null && focusTotal ? `${fmtNum(focusTotal.total)} medlemmer` : lastPt ? `pr. ${cap(MONTHS[lastPt.m])}` : ''}
+                {focus !== null && focusTotal ? `${fmtNum(focusTotal.total)} medlemmer` : lastPt ? `pr. ${MONTHS[lastPt.m]}` : ''}
               </text>
             </svg>
           </div>
