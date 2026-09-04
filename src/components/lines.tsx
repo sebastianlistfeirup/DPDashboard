@@ -24,6 +24,8 @@ export interface Series {
   width?: number
   /** Skriv navnet ved sidste punkt */
   endLabel?: boolean
+  /** Kortere navn til smalle skærme */
+  shortLabel?: string
   /** Markér hvert punkt med en prik */
   dots?: boolean
   area?: boolean
@@ -164,7 +166,8 @@ export function Lines({
   const maxLabels = narrow ? 6 : 12
   const every = xTickEvery ?? Math.max(1, Math.ceil(labelled.length / maxLabels))
   const stepK = narrow ? Math.max(every, Math.ceil(labelled.length / maxLabels)) : every
-  const showLabel = new Set(labelled.filter((_, k) => k % stepK === 0 || k === labelled.length - 1))
+  // Tælles bagfra, så den sidste etiket altid er med og afstanden er jævn — ingen to oven i hinanden.
+  const showLabel = new Set(labelled.filter((_, k) => (labelled.length - 1 - k) % stepK === 0))
 
   const onMove = useCallback((e: React.MouseEvent<SVGRectElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -261,9 +264,11 @@ export function Lines({
               strokeDasharray={s.dashed ? '6 5' : undefined}
               strokeLinecap="round"
               strokeLinejoin="round"
-              initial={reduced ? false : { pathLength: 0 }}
-              animate={seen || reduced ? { pathLength: 1 } : undefined}
-              transition={{ duration: 1.1, ease: mo.ease, delay: si * 0.1 }}
+              // En stiplet linje kan ikke "tegnes op": pathLength-animationen sætter
+              // selv stroke-dasharray og ville gøre den fuldt optrukket. Den toner ind.
+              initial={reduced ? false : s.dashed ? { opacity: 0 } : { pathLength: 0 }}
+              animate={seen || reduced ? (s.dashed ? { opacity: 1 } : { pathLength: 1 }) : undefined}
+              transition={{ duration: s.dashed ? 0.8 : 1.1, ease: mo.ease, delay: s.dashed ? 0.9 : si * 0.1 }}
             />
           ))}
 
@@ -273,7 +278,7 @@ export function Lines({
 
           {endLabels.map(({ s, x, y }) => (
             <text key={`end-${s.key}`} x={x + 8} y={y} dy="0.32em" fontSize={11} fontWeight={700} fill={s.color}>
-              {s.label}
+              {narrow ? (s.shortLabel ?? s.label) : s.label}
             </text>
           ))}
 

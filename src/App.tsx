@@ -9,7 +9,6 @@ import { motion } from 'framer-motion'
 import { MonthPicker, Section, SectionNav, Wordmark, type SectionDef } from '@/components/shell'
 import { Hero } from '@/sections/Hero'
 import { Konge } from '@/sections/Konge'
-import { Report } from '@/sections/Report'
 import { Goal } from '@/sections/Goal'
 import { MainCats } from '@/sections/MainCats'
 import { YearWheel } from '@/sections/YearWheel'
@@ -21,7 +20,6 @@ import { motion as mo } from '@/design/tokens'
 const SECTIONS: SectionDef[] = [
   { id: 'status', label: 'Status', group: 'Overblik' },
   { id: 'kongeindikator', label: 'Kongeindikator', group: 'Overblik' },
-  { id: 'tekst', label: 'Månedens tekst', group: 'Overblik' },
   { id: 'maal', label: 'Mål 2029', group: 'Udvikling' },
   { id: 'hovedkategorier', label: 'Hovedkategorier', group: 'Udvikling' },
   { id: 'aarshjul', label: 'Årshjul', group: 'Udvikling' },
@@ -83,7 +81,6 @@ export default function App() {
           <Hero data={data} a={a} goal={goal} />
         </div>
         <Section id="kongeindikator"><Konge data={data} a={a} /></Section>
-        <Section id="tekst" tone="sunken"><Report data={data} a={a} goal={goal} /></Section>
         <Section id="maal" tone="dark"><Goal data={data} a={a} goal={goal} /></Section>
         <Section id="hovedkategorier"><MainCats data={data} a={a} /></Section>
         <Section id="aarshjul" tone="sunken"><YearWheel data={data} a={a} /></Section>
