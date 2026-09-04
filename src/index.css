@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --dp-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Toplinjen er lavere på mobil, hvor filterlinjen ikke klæber med. */
+    scroll-padding-top: 8.5rem;
+  }
+
+  @media (min-width: 640px) {
+    html { scroll-padding-top: 11.5rem; }
+  }
+
+  /* The dashboard commits to DP's light identity in both OS themes; every
+     surface is painted explicitly so a dark-mode browser cannot reinterpret it. */
+  body {
+    @apply bg-white font-sans text-dp-navy-900 antialiased;
+    margin: 0;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'tnum' 0;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif;
+    text-wrap: balance;
+  }
+
+  /* Figures line up in columns wherever numbers are compared. */
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  ::selection { background: #f6d3b1; color: #16233a; }
+
+  :focus-visible {
+    outline: 2px solid #df790d;
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Kicker: the manual's small caps label above a heading, with its rule. */
+  .kicker {
+    @apply flex items-center gap-2.5 text-kicker font-semibold uppercase tracking-[0.16em];
+  }
+  .kicker::before {
+    content: '';
+    @apply block h-[3px] w-7 rounded-full bg-current;
+  }
+
+  .card {
+    @apply rounded-2xl border border-dp-navy-100 bg-white shadow-card;
+  }
+
+  .card-hover {
+    @apply transition-[transform,box-shadow] duration-300 ease-dp hover:-translate-y-0.5 hover:shadow-card-hover;
+  }
+
+  /* Scrollbars inside data panels stay quiet. */
+  .thin-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #d4dbe1 transparent;
+  }
+  .thin-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+  .thin-scroll::-webkit-scrollbar-thumb { background: #d4dbe1; border-radius: 99px; }
+  .thin-scroll::-webkit-scrollbar-track { background: transparent; }
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Tryk — ledelsessiden skal kunne blive til en PDF, der ser ud af noget.
+ * A4 med rigtige marginer, ingen interface, og ingen moduler der brækkes
+ * midt over en sideskift.
+ * ──────────────────────────────────────────────────────────────────────────── */
+@page {
+  size: A4;
+  margin: 16mm 15mm 14mm;
+}
+
+@media print {
+  html { scroll-padding-top: 0; }
+
+  body {
+    background: #fff;
+    font-size: 10.5pt;
+    /* Farverne bærer betydning i graferne, så de skal med på papiret. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Interaktion hører ikke hjemme på tryk. */
+  .print\:hidden,
+  button:not(.print-keep),
+  select,
+  input,
+  textarea { display: none !important; }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* Et modul må gerne flytte til næste side, men ikke deles i to. */
+  section, article, figure, table, li { break-inside: avoid; page-break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+
+  /* Skygger og runde hjørner bliver til grå kanter på papir. */
+  .shadow-card, .shadow-card-hover { box-shadow: none !important; }
+
+  svg { max-width: 100%; }
+
+  /* Kurver tegnes med en animation der løber stregen op fra ingenting. Når
+     ingen scroller — og det gør man ikke på papir — kan animationen stå og
+     vente, og grafen komme ud af printeren tom. Framer-motion sætter
+     stroke-dashoffset som inline style, så her tvinges enhver sådan streg
+     færdigtegnet. De stiplede hjælpelinjer sætter deres mønster som attribut
+     og rammes derfor ikke. */
+  [style*="stroke-dashoffset"] {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

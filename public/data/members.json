@@ -1,0 +1,4171 @@
+{
+ "meta": {
+  "generatedAt": "2026-09-04T11:57:11+00:00",
+  "latest": "2026-05-31",
+  "first": "2025-03-31",
+  "months": 14,
+  "seriesFile": "Ledelsesoverblik_Visualiseringer_maj_2026.xlsx",
+  "warnings": [
+   "Ledelsesoverblik_Ultimo_Juli_25_Værdier.xlsx: overskriften siger 2025-05-31, filnavnet siger 2025-07-31 — filnavnet bruges.",
+   "Ledelsesoverblik_Ultimo_april_25_værdier.xlsx: Studentersektionen stod som 0 og de studerende under \"Uden sektion\" — rettet ved indlæsning."
+  ],
+  "goal": {
+   "target": 15000,
+   "date": "2029-12-31"
+  },
+  "fulltimeCategories": [
+   "Normaltansat over 19 timer",
+   "Selvstændig",
+   "Ph.d. studerende"
+  ],
+  "fullPriceCategories": [
+   "Normaltansat over 19 timer",
+   "Selvstændig"
+  ],
+  "groups": [
+   {
+    "key": "fuldtid",
+    "label": "Fuldtidsbetalende",
+    "categories": [
+     "Normaltansat over 19 timer",
+     "Selvstændig",
+     "Ph.d. studerende"
+    ]
+   },
+   {
+    "key": "kandidater",
+    "label": "1. og 2. års kandidater",
+    "categories": [
+     "1 og 2 års Kandidater"
+    ]
+   },
+   {
+    "key": "studerende",
+    "label": "Studerende",
+    "categories": [
+     "Studerende DP",
+     "Psykologistuderende"
+    ]
+   },
+   {
+    "key": "pensionister",
+    "label": "Pensionister",
+    "categories": [
+     "Pensionist DP",
+     "Pensionist DP - Udland",
+     "Efterløn DP"
+    ]
+   },
+   {
+    "key": "ledige",
+    "label": "Ledige og orlov",
+    "categories": [
+     "Ledig DP",
+     "Ledig ikke ret til dagpenge",
+     "Orlov uden løn DP",
+     "Med løntilskud"
+    ]
+   },
+   {
+    "key": "ovrige",
+    "label": "Øvrige",
+    "categories": [
+     "Normaltansat under 20 timer",
+     "Udland DP",
+     "Anden forhandlingsret",
+     "DLF og DLF ret",
+     "DLF og DP ret",
+     "DM1 Mag. art.",
+     "Æresmedlem",
+     "DP medlem"
+    ]
+   }
+  ]
+ },
+ "snapshots": [
+  {
+   "date": "2025-03-31",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 12678,
+    "ly": 12038,
+    "base": 12636,
+    "konge": 86
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 637,
+     "ly": 557,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5679,
+     "ly": 5436,
+     "base": 5595,
+     "konge": 84
+    },
+    "Pensionist DP - Udland": {
+     "now": 12,
+     "ly": 2,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 54,
+     "ly": 42,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1881,
+     "ly": 1566,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 433,
+     "ly": 430,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1091,
+     "ly": 1091,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2405,
+     "ly": 2379,
+     "base": 2401,
+     "konge": 4
+    },
+    "Udland DP": {
+     "now": 62,
+     "ly": 56,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 37,
+     "ly": 74,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 114,
+     "ly": 112,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 22,
+     "ly": 24,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 118,
+     "ly": 127,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 17,
+     "ly": 19,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 46,
+     "ly": 46,
+     "base": 48,
+     "konge": -2
+    },
+    "DLF og DP ret": {
+     "now": 36,
+     "ly": 41,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 22,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 0,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 8,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 965,
+     "ly": 913
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2603,
+     "ly": 2454
+    },
+    "Ingen sektion": {
+     "now": 2569,
+     "ly": 2479
+    },
+    "Studentersektionen": {
+     "now": 1881,
+     "ly": 1565
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2248,
+     "ly": 2184
+    },
+    "Hospitalssektionen": {
+     "now": 1873,
+     "ly": 1835
+    },
+    "Ledersektionen": {
+     "now": 204,
+     "ly": 215
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 105,
+     "ly": 111
+    },
+    "Universitetssektionen": {
+     "now": 203,
+     "ly": 222
+    },
+    "Uden sektion": {
+     "now": 26,
+     "ly": 59
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_marts_25_værdier.xlsx"
+  },
+  {
+   "date": "2025-04-30",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 12699,
+    "ly": 12062,
+    "base": 12636,
+    "konge": 83
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 665,
+     "ly": 577,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5671,
+     "ly": 5435,
+     "base": 5595,
+     "konge": 76
+    },
+    "Pensionist DP - Udland": {
+     "now": 13,
+     "ly": 2,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 53,
+     "ly": 41,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1883,
+     "ly": 1583,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 420,
+     "ly": 412,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1097,
+     "ly": 1090,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2409,
+     "ly": 2391,
+     "base": 2401,
+     "konge": 8
+    },
+    "Udland DP": {
+     "now": 62,
+     "ly": 56,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 40,
+     "ly": 75,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 115,
+     "ly": 111,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 22,
+     "ly": 23,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 118,
+     "ly": 127,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 16,
+     "ly": 18,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 47,
+     "ly": 46,
+     "base": 48,
+     "konge": -1
+    },
+    "DLF og DP ret": {
+     "now": 34,
+     "ly": 40,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 21,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 0,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 8,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 968,
+     "ly": 925
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2622,
+     "ly": 2466
+    },
+    "Ingen sektion": {
+     "now": 2556,
+     "ly": 2460
+    },
+    "Studentersektionen": {
+     "now": 1914,
+     "ly": 1638
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2255,
+     "ly": 2194
+    },
+    "Hospitalssektionen": {
+     "now": 1872,
+     "ly": 1839
+    },
+    "Ledersektionen": {
+     "now": 202,
+     "ly": 210
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 104,
+     "ly": 111
+    },
+    "Universitetssektionen": {
+     "now": 205,
+     "ly": 218
+    },
+    "Uden sektion": {
+     "now": null,
+     "ly": null
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_april_25_værdier.xlsx"
+  },
+  {
+   "date": "2025-05-31",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 12677,
+    "ly": 12047,
+    "base": 12636,
+    "konge": 84
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 695,
+     "ly": 586,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5660,
+     "ly": 5431,
+     "base": 5595,
+     "konge": 65
+    },
+    "Pensionist DP - Udland": {
+     "now": 13,
+     "ly": 3,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 56,
+     "ly": 44,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1865,
+     "ly": 1589,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 396,
+     "ly": 395,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1092,
+     "ly": 1087,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2420,
+     "ly": 2386,
+     "base": 2401,
+     "konge": 19
+    },
+    "Udland DP": {
+     "now": 60,
+     "ly": 58,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 42,
+     "ly": 71,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 115,
+     "ly": 109,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 23,
+     "ly": 23,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 108,
+     "ly": 127,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 16,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 48,
+     "ly": 46,
+     "base": 48,
+     "konge": 0
+    },
+    "DLF og DP ret": {
+     "now": 34,
+     "ly": 40,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 21,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 0,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 8,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 970,
+     "ly": 925
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2641,
+     "ly": 2470
+    },
+    "Ingen sektion": {
+     "now": 2526,
+     "ly": 2438
+    },
+    "Studentersektionen": {
+     "now": 1871,
+     "ly": 1584
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2274,
+     "ly": 2197
+    },
+    "Hospitalssektionen": {
+     "now": 1865,
+     "ly": 1835
+    },
+    "Ledersektionen": {
+     "now": 200,
+     "ly": 211
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 96,
+     "ly": 112
+    },
+    "Universitetssektionen": {
+     "now": 205,
+     "ly": 217
+    },
+    "Uden sektion": {
+     "now": 28,
+     "ly": 57
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_maj_25_værdier.xlsx"
+  },
+  {
+   "date": "2025-07-31",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 12699,
+    "ly": 12058,
+    "base": 12636,
+    "konge": 268
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 537,
+     "ly": 454,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5839,
+     "ly": 5553,
+     "base": 5595,
+     "konge": 244
+    },
+    "Pensionist DP - Udland": {
+     "now": 13,
+     "ly": 3,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 57,
+     "ly": 46,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1849,
+     "ly": 1500,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 406,
+     "ly": 520,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1104,
+     "ly": 1086,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2423,
+     "ly": 2377,
+     "base": 2401,
+     "konge": 22
+    },
+    "Udland DP": {
+     "now": 57,
+     "ly": 58,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 37,
+     "ly": 67,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 111,
+     "ly": 107,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 25,
+     "ly": 24,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 106,
+     "ly": 124,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 50,
+     "ly": 45,
+     "base": 48,
+     "konge": 2
+    },
+    "DLF og DP ret": {
+     "now": 34,
+     "ly": 43,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 0,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 962,
+     "ly": 930
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2668,
+     "ly": 2458
+    },
+    "Ingen sektion": {
+     "now": 2571,
+     "ly": 2550
+    },
+    "Studentersektionen": {
+     "now": 1833,
+     "ly": 1501
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2277,
+     "ly": 2186
+    },
+    "Hospitalssektionen": {
+     "now": 1854,
+     "ly": 1845
+    },
+    "Ledersektionen": {
+     "now": 198,
+     "ly": 207
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 96,
+     "ly": 107
+    },
+    "Universitetssektionen": {
+     "now": 201,
+     "ly": 211
+    },
+    "Uden sektion": {
+     "now": 38,
+     "ly": 62
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_Juli_25_Værdier.xlsx"
+  },
+  {
+   "date": "2025-08-31",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 12795,
+    "ly": 12191,
+    "base": 12636,
+    "konge": 287
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 569,
+     "ly": 507,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5826,
+     "ly": 5559,
+     "base": 5595,
+     "konge": 231
+    },
+    "Pensionist DP - Udland": {
+     "now": 13,
+     "ly": 5,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 57,
+     "ly": 45,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1886,
+     "ly": 1611,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 414,
+     "ly": 486,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1110,
+     "ly": 1087,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2455,
+     "ly": 2382,
+     "base": 2401,
+     "konge": 54
+    },
+    "Udland DP": {
+     "now": 55,
+     "ly": 57,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 35,
+     "ly": 58,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 110,
+     "ly": 109,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 25,
+     "ly": 24,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 105,
+     "ly": 123,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 50,
+     "ly": 45,
+     "base": 48,
+     "konge": 2
+    },
+    "DLF og DP ret": {
+     "now": 34,
+     "ly": 43,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 19,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 0,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 958,
+     "ly": 932
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2686,
+     "ly": 2482
+    },
+    "Ingen sektion": {
+     "now": 2590,
+     "ly": 2536
+    },
+    "Studentersektionen": {
+     "now": 1855,
+     "ly": 1610
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2312,
+     "ly": 2190
+    },
+    "Hospitalssektionen": {
+     "now": 1852,
+     "ly": 1852
+    },
+    "Ledersektionen": {
+     "now": 197,
+     "ly": 209
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 95,
+     "ly": 108
+    },
+    "Universitetssektionen": {
+     "now": 199,
+     "ly": 209
+    },
+    "Uden sektion": {
+     "now": 50,
+     "ly": 62
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_August_25_Værdier.xlsx"
+  },
+  {
+   "date": "2025-09-30",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 13095,
+    "ly": 12505,
+    "base": 12636,
+    "konge": 316
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 599,
+     "ly": 553,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5839,
+     "ly": 5564,
+     "base": 5595,
+     "konge": 244
+    },
+    "Pensionist DP - Udland": {
+     "now": 14,
+     "ly": 8,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 58,
+     "ly": 45,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 2166,
+     "ly": 1903,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 391,
+     "ly": 462,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1106,
+     "ly": 1084,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2470,
+     "ly": 2381,
+     "base": 2401,
+     "konge": 69
+    },
+    "Udland DP": {
+     "now": 54,
+     "ly": 58,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 29,
+     "ly": 52,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 109,
+     "ly": 111,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 23,
+     "ly": 24,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 101,
+     "ly": 122,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 51,
+     "ly": 45,
+     "base": 48,
+     "konge": 3
+    },
+    "DLF og DP ret": {
+     "now": 34,
+     "ly": 43,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 19,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 0,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 969,
+     "ly": 939
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2709,
+     "ly": 2494
+    },
+    "Ingen sektion": {
+     "now": 2585,
+     "ly": 2536
+    },
+    "Studentersektionen": {
+     "now": 2111,
+     "ly": 1898
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2329,
+     "ly": 2194
+    },
+    "Hospitalssektionen": {
+     "now": 1852,
+     "ly": 1852
+    },
+    "Ledersektionen": {
+     "now": 196,
+     "ly": 211
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 90,
+     "ly": 107
+    },
+    "Universitetssektionen": {
+     "now": 195,
+     "ly": 212
+    },
+    "Uden sektion": {
+     "now": 58,
+     "ly": 61
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_september_25_Værdier.xlsx"
+  },
+  {
+   "date": "2025-10-31",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 13171,
+    "ly": 12558,
+    "base": 12636,
+    "konge": 324
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 910,
+     "ly": 576,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5843,
+     "ly": 5565,
+     "base": 5595,
+     "konge": 248
+    },
+    "Pensionist DP - Udland": {
+     "now": 14,
+     "ly": 8,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 58,
+     "ly": 49,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1928,
+     "ly": 1921,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 383,
+     "ly": 459,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1104,
+     "ly": 1078,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2474,
+     "ly": 2391,
+     "base": 2401,
+     "konge": 73
+    },
+    "Udland DP": {
+     "now": 54,
+     "ly": 59,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 39,
+     "ly": 52,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 106,
+     "ly": 113,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 23,
+     "ly": 24,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 101,
+     "ly": 122,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 51,
+     "ly": 46,
+     "base": 48,
+     "konge": 3
+    },
+    "DLF og DP ret": {
+     "now": 32,
+     "ly": 43,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 978,
+     "ly": 946
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2746,
+     "ly": 2499
+    },
+    "Ingen sektion": {
+     "now": 2796,
+     "ly": 2537
+    },
+    "Studentersektionen": {
+     "now": 1914,
+     "ly": 1921
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2347,
+     "ly": 2212
+    },
+    "Hospitalssektionen": {
+     "now": 1866,
+     "ly": 1854
+    },
+    "Ledersektionen": {
+     "now": 195,
+     "ly": 211
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 89,
+     "ly": 107
+    },
+    "Universitetssektionen": {
+     "now": 193,
+     "ly": 209
+    },
+    "Uden sektion": {
+     "now": 46,
+     "ly": 61
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_oktober_25_Værdier.xlsx"
+  },
+  {
+   "date": "2025-11-30",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 13223,
+    "ly": 12611,
+    "base": 12636,
+    "konge": 330
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 900,
+     "ly": 606,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5835,
+     "ly": 5573,
+     "base": 5595,
+     "konge": 240
+    },
+    "Pensionist DP - Udland": {
+     "now": 13,
+     "ly": 9,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 61,
+     "ly": 50,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1969,
+     "ly": 1939,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 379,
+     "ly": 450,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1110,
+     "ly": 1085,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2489,
+     "ly": 2394,
+     "base": 2401,
+     "konge": 88
+    },
+    "Udland DP": {
+     "now": 54,
+     "ly": 64,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 44,
+     "ly": 43,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 107,
+     "ly": 110,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 28,
+     "ly": 24,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 101,
+     "ly": 122,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 50,
+     "ly": 48,
+     "base": 48,
+     "konge": 2
+    },
+    "DLF og DP ret": {
+     "now": 32,
+     "ly": 42,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 984,
+     "ly": 956
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2758,
+     "ly": 2522
+    },
+    "Ingen sektion": {
+     "now": 2759,
+     "ly": 2539
+    },
+    "Studentersektionen": {
+     "now": 1956,
+     "ly": 1936
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2362,
+     "ly": 2217
+    },
+    "Hospitalssektionen": {
+     "now": 1877,
+     "ly": 1862
+    },
+    "Ledersektionen": {
+     "now": 194,
+     "ly": 208
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 89,
+     "ly": 107
+    },
+    "Universitetssektionen": {
+     "now": 193,
+     "ly": 209
+    },
+    "Uden sektion": {
+     "now": 50,
+     "ly": 54
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_november_25_Værdier.xlsx"
+  },
+  {
+   "date": "2025-12-31",
+   "baseDate": "2024-12-31",
+   "total": {
+    "now": 13247,
+    "ly": 12631,
+    "base": 12636,
+    "konge": 340
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 905,
+     "ly": 626,
+     "base": 628,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5845,
+     "ly": 5584,
+     "base": 5595,
+     "konge": 250
+    },
+    "Pensionist DP - Udland": {
+     "now": 14,
+     "ly": 10,
+     "base": 7,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 60,
+     "ly": 50,
+     "base": 50,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1983,
+     "ly": 1938,
+     "base": 1938,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 373,
+     "ly": 440,
+     "base": 434,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1107,
+     "ly": 1083,
+     "base": 1084,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2489,
+     "ly": 2398,
+     "base": 2401,
+     "konge": 88
+    },
+    "Udland DP": {
+     "now": 53,
+     "ly": 64,
+     "base": 65,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 48,
+     "ly": 40,
+     "base": 37,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 108,
+     "ly": 111,
+     "base": 110,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 28,
+     "ly": 23,
+     "base": 23,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 101,
+     "ly": 122,
+     "base": 122,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 17,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 50,
+     "ly": 48,
+     "base": 48,
+     "konge": 2
+    },
+    "DLF og DP ret": {
+     "now": 32,
+     "ly": 42,
+     "base": 42,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 6,
+     "base": 6,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 8,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 989,
+     "ly": 965
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2759,
+     "ly": 2538
+    },
+    "Ingen sektion": {
+     "now": 2741,
+     "ly": 2529
+    },
+    "Studentersektionen": {
+     "now": 1968,
+     "ly": 1934
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2369,
+     "ly": 2220
+    },
+    "Hospitalssektionen": {
+     "now": 1889,
+     "ly": 1865
+    },
+    "Ledersektionen": {
+     "now": 195,
+     "ly": 208
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 89,
+     "ly": 107
+    },
+    "Universitetssektionen": {
+     "now": 193,
+     "ly": 210
+    },
+    "Uden sektion": {
+     "now": 54,
+     "ly": 54
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_december_25_Værdier.xlsx"
+  },
+  {
+   "date": "2026-01-31",
+   "baseDate": "2025-12-31",
+   "total": {
+    "now": 13215,
+    "ly": 12613,
+    "base": 13251,
+    "konge": 37
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 900,
+     "ly": 664,
+     "base": 902,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5881,
+     "ly": 5575,
+     "base": 5841,
+     "konge": 40
+    },
+    "Pensionist DP - Udland": {
+     "now": 14,
+     "ly": 12,
+     "base": 15,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 62,
+     "ly": 52,
+     "base": 60,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1943,
+     "ly": 1899,
+     "base": 1986,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 359,
+     "ly": 430,
+     "base": 379,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1104,
+     "ly": 1094,
+     "base": 1107,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2485,
+     "ly": 2389,
+     "base": 2488,
+     "konge": -3
+    },
+    "Udland DP": {
+     "now": 50,
+     "ly": 62,
+     "base": 53,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 48,
+     "ly": 44,
+     "base": 50,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 108,
+     "ly": 113,
+     "base": 108,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 27,
+     "ly": 23,
+     "base": 28,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 101,
+     "ly": 120,
+     "base": 101,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 15,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 50,
+     "ly": 45,
+     "base": 50,
+     "konge": 0
+    },
+    "DLF og DP ret": {
+     "now": 32,
+     "ly": 40,
+     "base": 32,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 20,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 5,
+     "base": 5,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 10,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 992,
+     "ly": 965
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2785,
+     "ly": 2562
+    },
+    "Ingen sektion": {
+     "now": 2710,
+     "ly": 2534
+    },
+    "Studentersektionen": {
+     "now": 1928,
+     "ly": 1896
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2373,
+     "ly": 2221
+    },
+    "Hospitalssektionen": {
+     "now": 1904,
+     "ly": 1865
+    },
+    "Ledersektionen": {
+     "now": 195,
+     "ly": 206
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 88,
+     "ly": 105
+    },
+    "Universitetssektionen": {
+     "now": 193,
+     "ly": 205
+    },
+    "Uden sektion": {
+     "now": 46,
+     "ly": 53
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_januar_26_værdier.xlsx"
+  },
+  {
+   "date": "2026-02-28",
+   "baseDate": "2025-12-31",
+   "total": {
+    "now": 13197,
+    "ly": 12635,
+    "base": 13251,
+    "konge": 121
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 806,
+     "ly": 614,
+     "base": 902,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5951,
+     "ly": 5637,
+     "base": 5841,
+     "konge": 110
+    },
+    "Pensionist DP - Udland": {
+     "now": 16,
+     "ly": 16,
+     "base": 15,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 61,
+     "ly": 56,
+     "base": 60,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1925,
+     "ly": 1877,
+     "base": 1986,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 368,
+     "ly": 440,
+     "base": 379,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1095,
+     "ly": 1099,
+     "base": 1107,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2500,
+     "ly": 2398,
+     "base": 2488,
+     "konge": 12
+    },
+    "Udland DP": {
+     "now": 50,
+     "ly": 62,
+     "base": 53,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 55,
+     "ly": 48,
+     "base": 50,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 108,
+     "ly": 112,
+     "base": 108,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 28,
+     "ly": 23,
+     "base": 28,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 101,
+     "ly": 119,
+     "base": 101,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 15,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 49,
+     "ly": 46,
+     "base": 50,
+     "konge": -1
+    },
+    "DLF og DP ret": {
+     "now": 32,
+     "ly": 37,
+     "base": 32,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 21,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 1,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 5,
+     "ly": 5,
+     "base": 5,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 10,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 986,
+     "ly": 956
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2799,
+     "ly": 2575
+    },
+    "Ingen sektion": {
+     "now": 2510,
+     "ly": 2569
+    },
+    "Studentersektionen": {
+     "now": 1906,
+     "ly": 1876
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2569,
+     "ly": 2238
+    },
+    "Hospitalssektionen": {
+     "now": 1903,
+     "ly": 1865
+    },
+    "Ledersektionen": {
+     "now": 193,
+     "ly": 202
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 87,
+     "ly": 106
+    },
+    "Universitetssektionen": {
+     "now": 192,
+     "ly": 204
+    },
+    "Uden sektion": {
+     "now": 51,
+     "ly": 43
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_februar_26_værdier.xlsx"
+  },
+  {
+   "date": "2026-03-31",
+   "baseDate": "2025-12-31",
+   "total": {
+    "now": 13209,
+    "ly": 12672,
+    "base": 13251,
+    "konge": 108
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 796,
+     "ly": 641,
+     "base": 902,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5907,
+     "ly": 5643,
+     "base": 5841,
+     "konge": 66
+    },
+    "Pensionist DP - Udland": {
+     "now": 16,
+     "ly": 18,
+     "base": 15,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 59,
+     "ly": 54,
+     "base": 60,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1936,
+     "ly": 1877,
+     "base": 1986,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 372,
+     "ly": 446,
+     "base": 379,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1099,
+     "ly": 1094,
+     "base": 1107,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2533,
+     "ly": 2401,
+     "base": 2488,
+     "konge": 45
+    },
+    "Udland DP": {
+     "now": 51,
+     "ly": 62,
+     "base": 53,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 73,
+     "ly": 48,
+     "base": 50,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 110,
+     "ly": 115,
+     "base": 108,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 28,
+     "ly": 22,
+     "base": 28,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 100,
+     "ly": 118,
+     "base": 101,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 17,
+     "base": 15,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 47,
+     "ly": 46,
+     "base": 50,
+     "konge": -3
+    },
+    "DLF og DP ret": {
+     "now": 32,
+     "ly": 36,
+     "base": 32,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 21,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 0,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 4,
+     "ly": 5,
+     "base": 5,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 10,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 988,
+     "ly": 965
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2801,
+     "ly": 2597
+    },
+    "Ingen sektion": {
+     "now": 2483,
+     "ly": 2573
+    },
+    "Studentersektionen": {
+     "now": 1918,
+     "ly": 1877
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2593,
+     "ly": 2246
+    },
+    "Hospitalssektionen": {
+     "now": 1913,
+     "ly": 1868
+    },
+    "Ledersektionen": {
+     "now": 190,
+     "ly": 202
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 85,
+     "ly": 105
+    },
+    "Universitetssektionen": {
+     "now": 190,
+     "ly": 203
+    },
+    "Uden sektion": {
+     "now": 47,
+     "ly": 35
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_Marts_26_Værdier.xlsx"
+  },
+  {
+   "date": "2026-04-30",
+   "baseDate": "2025-12-31",
+   "total": {
+    "now": 13239,
+    "ly": 12701,
+    "base": 13251,
+    "konge": 113
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 897,
+     "ly": 677,
+     "base": 902,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5906,
+     "ly": 5644,
+     "base": 5841,
+     "konge": 65
+    },
+    "Pensionist DP - Udland": {
+     "now": 17,
+     "ly": 20,
+     "base": 15,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 56,
+     "ly": 54,
+     "base": 60,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1883,
+     "ly": 1874,
+     "base": 1986,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 370,
+     "ly": 426,
+     "base": 379,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1088,
+     "ly": 1099,
+     "base": 1107,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2540,
+     "ly": 2405,
+     "base": 2488,
+     "konge": 52
+    },
+    "Udland DP": {
+     "now": 50,
+     "ly": 62,
+     "base": 53,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 72,
+     "ly": 54,
+     "base": 50,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 109,
+     "ly": 115,
+     "base": 108,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 26,
+     "ly": 22,
+     "base": 28,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 98,
+     "ly": 118,
+     "base": 101,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 16,
+     "base": 15,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 46,
+     "ly": 47,
+     "base": 50,
+     "konge": -4
+    },
+    "DLF og DP ret": {
+     "now": 31,
+     "ly": 34,
+     "base": 32,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 21,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 0,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 4,
+     "ly": 5,
+     "base": 5,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 10,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 985,
+     "ly": 968
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2810,
+     "ly": 2626
+    },
+    "Ingen sektion": {
+     "now": 2535,
+     "ly": 2558
+    },
+    "Studentersektionen": {
+     "now": 1862,
+     "ly": 1878
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2605,
+     "ly": 2254
+    },
+    "Hospitalssektionen": {
+     "now": 1931,
+     "ly": 1870
+    },
+    "Ledersektionen": {
+     "now": 190,
+     "ly": 201
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 84,
+     "ly": 104
+    },
+    "Universitetssektionen": {
+     "now": 188,
+     "ly": 205
+    },
+    "Uden sektion": {
+     "now": 48,
+     "ly": 36
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_April_26_Værdier.xlsx"
+  },
+  {
+   "date": "2026-05-31",
+   "baseDate": "2025-12-31",
+   "total": {
+    "now": 13228,
+    "ly": 12680,
+    "base": 13251,
+    "konge": 121
+   },
+   "categories": {
+    "1 og 2 års Kandidater": {
+     "now": 895,
+     "ly": 695,
+     "base": 902,
+     "konge": null
+    },
+    "Normaltansat over 19 timer": {
+     "now": 5899,
+     "ly": 5660,
+     "base": 5841,
+     "konge": 58
+    },
+    "Pensionist DP - Udland": {
+     "now": 17,
+     "ly": 20,
+     "base": 15,
+     "konge": null
+    },
+    "Ledig ikke ret til dagpenge": {
+     "now": 54,
+     "ly": 56,
+     "base": 60,
+     "konge": null
+    },
+    "Studerende DP": {
+     "now": 1887,
+     "ly": 1865,
+     "base": 1986,
+     "konge": null
+    },
+    "Ledig DP": {
+     "now": 362,
+     "ly": 403,
+     "base": 379,
+     "konge": null
+    },
+    "Pensionist DP": {
+     "now": 1086,
+     "ly": 1091,
+     "base": 1107,
+     "konge": null
+    },
+    "Selvstændig": {
+     "now": 2554,
+     "ly": 2420,
+     "base": 2488,
+     "konge": 66
+    },
+    "Udland DP": {
+     "now": 49,
+     "ly": 60,
+     "base": 53,
+     "konge": null
+    },
+    "Orlov uden løn DP": {
+     "now": 64,
+     "ly": 46,
+     "base": 50,
+     "konge": null
+    },
+    "Normaltansat under 20 timer": {
+     "now": 110,
+     "ly": 115,
+     "base": 108,
+     "konge": null
+    },
+    "Anden forhandlingsret": {
+     "now": 27,
+     "ly": 23,
+     "base": 28,
+     "konge": null
+    },
+    "DLF og DLF ret": {
+     "now": 96,
+     "ly": 108,
+     "base": 101,
+     "konge": null
+    },
+    "Efterløn DP": {
+     "now": 15,
+     "ly": 16,
+     "base": 15,
+     "konge": null
+    },
+    "Ph.d. studerende": {
+     "now": 47,
+     "ly": 48,
+     "base": 50,
+     "konge": -3
+    },
+    "DLF og DP ret": {
+     "now": 31,
+     "ly": 34,
+     "base": 32,
+     "konge": null
+    },
+    "Med løntilskud": {
+     "now": 21,
+     "ly": 20,
+     "base": 20,
+     "konge": null
+    },
+    "Psykologistuderende": {
+     "now": 0,
+     "ly": 1,
+     "base": 1,
+     "konge": null
+    },
+    "DM1 Mag. art.": {
+     "now": 4,
+     "ly": 5,
+     "base": 5,
+     "konge": null
+    },
+    "Æresmedlem": {
+     "now": 10,
+     "ly": 8,
+     "base": 10,
+     "konge": null
+    }
+   },
+   "sections": {
+    "Privat ansatte psykologers sektion": {
+     "now": 984,
+     "ly": 968
+    },
+    "Kommunalt Ansatte Psykologers Sektion": {
+     "now": 2812,
+     "ly": 2644
+    },
+    "Ingen sektion": {
+     "now": 2515,
+     "ly": 2532
+    },
+    "Studentersektionen": {
+     "now": 1865,
+     "ly": 1869
+    },
+    "Selvstændige Psykologers Sektion": {
+     "now": 2619,
+     "ly": 2271
+    },
+    "Hospitalssektionen": {
+     "now": 1924,
+     "ly": 1861
+    },
+    "Ledersektionen": {
+     "now": 191,
+     "ly": 198
+    },
+    "Pædagogiske Psykologers Sektion": {
+     "now": 82,
+     "ly": 96
+    },
+    "Universitetssektionen": {
+     "now": 191,
+     "ly": 204
+    },
+    "Uden sektion": {
+     "now": 44,
+     "ly": 36
+    }
+   },
+   "file": "Ledelsesoverblik_Ultimo_maj_26_Værdier.xlsx"
+  }
+ ],
+ "baseByYear": {
+  "2022": {
+   "total": 11715,
+   "categories": {
+    "Normaltansat over 19 timer": 5238,
+    "Psykologistuderende": 13,
+    "Pensionist DP - Udland": 9,
+    "Ledig DP": 423,
+    "1 og 2 års Kandidater": 545,
+    "Selvstændig": 2312,
+    "Studerende DP": 1438,
+    "Ph.d. studerende": 53,
+    "Orlov uden løn DP": 96,
+    "Udland DP": 60,
+    "Anden forhandlingsret": 29,
+    "Efterløn DP": 25,
+    "DLF og DLF ret": 138,
+    "Ledig ikke ret til dagpenge": 32,
+    "Normaltansat under 20 timer": 132,
+    "DLF og DP ret": 50,
+    "Med løntilskud": 18,
+    "Pensionist DP": 1086,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 9,
+    "DP medlem": 0
+   },
+   "source": "kvartalsdata"
+  },
+  "2023": {
+   "total": 12051,
+   "categories": {
+    "Normaltansat over 19 timer": 5418,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 11,
+    "Ledig DP": 412,
+    "1 og 2 års Kandidater": 532,
+    "Selvstændig": 2364,
+    "Studerende DP": 1624,
+    "Ph.d. studerende": 48,
+    "Orlov uden løn DP": 83,
+    "Udland DP": 55,
+    "Anden forhandlingsret": 26,
+    "Efterløn DP": 19,
+    "DLF og DLF ret": 131,
+    "Ledig ikke ret til dagpenge": 40,
+    "Normaltansat under 20 timer": 116,
+    "DLF og DP ret": 44,
+    "Med løntilskud": 22,
+    "Pensionist DP": 1089,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   },
+   "source": "kvartalsdata"
+  },
+  "2024": {
+   "total": 12636,
+   "categories": {
+    "1 og 2 års Kandidater": 628,
+    "Normaltansat over 19 timer": 5595,
+    "Pensionist DP - Udland": 7,
+    "Ledig ikke ret til dagpenge": 50,
+    "Studerende DP": 1938,
+    "Ledig DP": 434,
+    "Pensionist DP": 1084,
+    "Selvstændig": 2401,
+    "Udland DP": 65,
+    "Orlov uden løn DP": 37,
+    "Normaltansat under 20 timer": 110,
+    "Anden forhandlingsret": 23,
+    "DLF og DLF ret": 122,
+    "Efterløn DP": 17,
+    "Ph.d. studerende": 48,
+    "DLF og DP ret": 42,
+    "Med løntilskud": 20,
+    "Psykologistuderende": 1,
+    "DM1 Mag. art.": 6,
+    "Æresmedlem": 8
+   },
+   "source": "månedsfil"
+  },
+  "2025": {
+   "total": 13251,
+   "categories": {
+    "1 og 2 års Kandidater": 902,
+    "Normaltansat over 19 timer": 5841,
+    "Pensionist DP - Udland": 15,
+    "Ledig ikke ret til dagpenge": 60,
+    "Studerende DP": 1986,
+    "Ledig DP": 379,
+    "Pensionist DP": 1107,
+    "Selvstændig": 2488,
+    "Udland DP": 53,
+    "Orlov uden løn DP": 50,
+    "Normaltansat under 20 timer": 108,
+    "Anden forhandlingsret": 28,
+    "DLF og DLF ret": 101,
+    "Efterløn DP": 15,
+    "Ph.d. studerende": 50,
+    "DLF og DP ret": 32,
+    "Med løntilskud": 20,
+    "Psykologistuderende": 1,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 10
+   },
+   "source": "månedsfil"
+  }
+ },
+ "monthlyMain": [
+  {
+   "date": "2024-01-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5411,
+    "Selvstændig": 2376,
+    "Studerende DP": 1624,
+    "1 og 2 års Kandidater": 546,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2024-02-29",
+   "categories": {
+    "Normaltansat over 19 timer": 5449,
+    "Selvstændig": 2372,
+    "Studerende DP": 1570,
+    "1 og 2 års Kandidater": 522,
+    "Ph.d. studerende": 47
+   }
+  },
+  {
+   "date": "2024-03-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5437,
+    "Selvstændig": 2379,
+    "Studerende DP": 1567,
+    "1 og 2 års Kandidater": 557,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2024-04-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5436,
+    "Selvstændig": 2391,
+    "Studerende DP": 1584,
+    "1 og 2 års Kandidater": 577,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2024-05-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5432,
+    "Selvstændig": 2386,
+    "Studerende DP": 1590,
+    "1 og 2 års Kandidater": 586,
+    "Ph.d. studerende": 47
+   }
+  },
+  {
+   "date": "2024-06-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5423,
+    "Selvstændig": 2386,
+    "Studerende DP": 1587,
+    "1 og 2 års Kandidater": 596,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2024-07-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5553,
+    "Selvstændig": 2377,
+    "Studerende DP": 1500,
+    "1 og 2 års Kandidater": 454,
+    "Ph.d. studerende": 45
+   }
+  },
+  {
+   "date": "2024-08-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5559,
+    "Selvstændig": 2382,
+    "Studerende DP": 1611,
+    "1 og 2 års Kandidater": 507,
+    "Ph.d. studerende": 45
+   }
+  },
+  {
+   "date": "2024-09-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5564,
+    "Selvstændig": 2381,
+    "Studerende DP": 1903,
+    "1 og 2 års Kandidater": 553,
+    "Ph.d. studerende": 45
+   }
+  },
+  {
+   "date": "2024-10-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5565,
+    "Selvstændig": 2391,
+    "Studerende DP": 1921,
+    "1 og 2 års Kandidater": 576,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2024-11-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5573,
+    "Selvstændig": 2394,
+    "Studerende DP": 1939,
+    "1 og 2 års Kandidater": 600,
+    "Ph.d. studerende": 48
+   }
+  },
+  {
+   "date": "2024-12-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5584,
+    "Selvstændig": 2398,
+    "Studerende DP": 1938,
+    "1 og 2 års Kandidater": 626,
+    "Ph.d. studerende": 48
+   }
+  },
+  {
+   "date": "2025-01-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5579,
+    "Selvstændig": 2388,
+    "Studerende DP": 1899,
+    "1 og 2 års Kandidater": 663,
+    "Ph.d. studerende": 45
+   }
+  },
+  {
+   "date": "2025-02-28",
+   "categories": {
+    "Normaltansat over 19 timer": 5642,
+    "Selvstændig": 2398,
+    "Studerende DP": 1877,
+    "1 og 2 års Kandidater": 613,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2025-03-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5649,
+    "Selvstændig": 2402,
+    "Studerende DP": 1877,
+    "1 og 2 års Kandidater": 640,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2025-04-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5650,
+    "Selvstændig": 2406,
+    "Studerende DP": 1874,
+    "1 og 2 års Kandidater": 676,
+    "Ph.d. studerende": 47
+   }
+  },
+  {
+   "date": "2025-05-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5660,
+    "Selvstændig": 2420,
+    "Studerende DP": 1865,
+    "1 og 2 års Kandidater": 695,
+    "Ph.d. studerende": 48
+   }
+  },
+  {
+   "date": "2025-06-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5662,
+    "Selvstændig": 2424,
+    "Studerende DP": 1872,
+    "1 og 2 års Kandidater": 707,
+    "Ph.d. studerende": 47
+   }
+  },
+  {
+   "date": "2025-07-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5839,
+    "Selvstændig": 2423,
+    "Studerende DP": 1849,
+    "1 og 2 års Kandidater": 537,
+    "Ph.d. studerende": 50
+   }
+  },
+  {
+   "date": "2025-08-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5826,
+    "Selvstændig": 2455,
+    "Studerende DP": 1886,
+    "1 og 2 års Kandidater": 569,
+    "Ph.d. studerende": 50
+   }
+  },
+  {
+   "date": "2025-09-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5839,
+    "Selvstændig": 2470,
+    "Studerende DP": 2166,
+    "1 og 2 års Kandidater": 599,
+    "Ph.d. studerende": 51
+   }
+  },
+  {
+   "date": "2025-10-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5843,
+    "Selvstændig": 2474,
+    "Studerende DP": 1928,
+    "1 og 2 års Kandidater": 910,
+    "Ph.d. studerende": 51
+   }
+  },
+  {
+   "date": "2025-11-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5835,
+    "Selvstændig": 2489,
+    "Studerende DP": 1969,
+    "1 og 2 års Kandidater": 900,
+    "Ph.d. studerende": 50
+   }
+  },
+  {
+   "date": "2025-12-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5845,
+    "Selvstændig": 2489,
+    "Studerende DP": 1983,
+    "1 og 2 års Kandidater": 905,
+    "Ph.d. studerende": 50
+   }
+  },
+  {
+   "date": "2026-01-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5881,
+    "Selvstændig": 2485,
+    "Studerende DP": 1943,
+    "1 og 2 års Kandidater": 900,
+    "Ph.d. studerende": 50
+   }
+  },
+  {
+   "date": "2026-02-28",
+   "categories": {
+    "Normaltansat over 19 timer": 5951,
+    "Selvstændig": 2500,
+    "Studerende DP": 1925,
+    "1 og 2 års Kandidater": 806,
+    "Ph.d. studerende": 49
+   }
+  },
+  {
+   "date": "2026-03-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5907,
+    "Selvstændig": 2533,
+    "Studerende DP": 1936,
+    "1 og 2 års Kandidater": 796,
+    "Ph.d. studerende": 47
+   }
+  },
+  {
+   "date": "2026-04-30",
+   "categories": {
+    "Normaltansat over 19 timer": 5906,
+    "Selvstændig": 2540,
+    "Studerende DP": 1883,
+    "1 og 2 års Kandidater": 897,
+    "Ph.d. studerende": 46
+   }
+  },
+  {
+   "date": "2026-05-31",
+   "categories": {
+    "Normaltansat over 19 timer": 5899,
+    "Selvstændig": 2554,
+    "Studerende DP": 1887,
+    "1 og 2 års Kandidater": 895,
+    "Ph.d. studerende": 47
+   }
+  }
+ ],
+ "konge": {
+  "2024": [
+   {
+    "date": "2024-01-31",
+    "value": 3,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-02-29",
+    "value": 38,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-03-31",
+    "value": 32,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-04-30",
+    "value": 43,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-05-31",
+    "value": 35,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-06-30",
+    "value": 25,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-07-31",
+    "value": 145,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-08-31",
+    "value": 156,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-09-30",
+    "value": 160,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-10-31",
+    "value": 172,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-11-30",
+    "value": 185,
+    "source": "beregnet"
+   },
+   {
+    "date": "2024-12-31",
+    "value": 200,
+    "source": "beregnet"
+   }
+  ],
+  "2025": [
+   {
+    "date": "2025-01-31",
+    "value": -32,
+    "source": "beregnet"
+   },
+   {
+    "date": "2025-02-28",
+    "value": 42,
+    "source": "beregnet"
+   },
+   {
+    "date": "2025-03-31",
+    "value": 86,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-04-30",
+    "value": 83,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-05-31",
+    "value": 84,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-06-30",
+    "value": 89,
+    "source": "beregnet"
+   },
+   {
+    "date": "2025-07-31",
+    "value": 268,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-08-31",
+    "value": 287,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-09-30",
+    "value": 316,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-10-31",
+    "value": 324,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-11-30",
+    "value": 330,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2025-12-31",
+    "value": 340,
+    "source": "månedsfil"
+   }
+  ],
+  "2026": [
+   {
+    "date": "2026-01-31",
+    "value": 37,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2026-02-28",
+    "value": 121,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2026-03-31",
+    "value": 108,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2026-04-30",
+    "value": 113,
+    "source": "månedsfil"
+   },
+   {
+    "date": "2026-05-31",
+    "value": 121,
+    "source": "månedsfil"
+   }
+  ]
+ },
+ "totals": [
+  {
+   "date": "2022-01-31",
+   "total": 11705,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2022-03-31",
+   "total": 11717,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2022-06-30",
+   "total": 11699,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2022-09-30",
+   "total": 11755,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2022-12-31",
+   "total": 11715,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2023-01-31",
+   "total": 11698,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2023-03-31",
+   "total": 11696,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2023-06-30",
+   "total": 11707,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2023-09-30",
+   "total": 12045,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2023-12-31",
+   "total": 12051,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2024-01-31",
+   "total": 12043,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2024-03-31",
+   "total": 12039,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2024-06-30",
+   "total": 12065,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2024-09-30",
+   "total": 12505,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2024-12-31",
+   "total": 12634,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2025-01-31",
+   "total": 12618,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2025-03-31",
+   "total": 12678,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-04-30",
+   "total": 12699,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-05-31",
+   "total": 12677,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-06-30",
+   "total": 12706,
+   "source": "kvartalsdata"
+  },
+  {
+   "date": "2025-07-31",
+   "total": 12699,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-08-31",
+   "total": 12795,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-09-30",
+   "total": 13095,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-10-31",
+   "total": 13171,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-11-30",
+   "total": 13223,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2025-12-31",
+   "total": 13247,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2026-01-31",
+   "total": 13215,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2026-02-28",
+   "total": 13197,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2026-03-31",
+   "total": 13209,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2026-04-30",
+   "total": 13239,
+   "source": "månedsfil"
+  },
+  {
+   "date": "2026-05-31",
+   "total": 13228,
+   "source": "månedsfil"
+  }
+ ],
+ "quarterly": [
+  {
+   "date": "2022-01-31",
+   "total": 11705,
+   "categories": {
+    "Normaltansat over 19 timer": 5306,
+    "Psykologistuderende": 373,
+    "Pensionist DP - Udland": 1083,
+    "Ledig DP": 411,
+    "1 og 2 års Kandidater": 461,
+    "Selvstændig": 2210,
+    "Studerende DP": 1213,
+    "Ph.d. studerende": 60,
+    "Orlov uden løn DP": 83,
+    "Udland DP": 67,
+    "Anden forhandlingsret": 30,
+    "Efterløn DP": 24,
+    "DLF og DLF ret": 154,
+    "Ledig ikke ret til dagpenge": 31,
+    "Normaltansat under 20 timer": 98,
+    "DLF og DP ret": 52,
+    "Med løntilskud": 17,
+    "Pensionist DP": 12,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 10,
+    "DP medlem": 1
+   }
+  },
+  {
+   "date": "2022-03-31",
+   "total": 11717,
+   "categories": {
+    "Normaltansat over 19 timer": 5279,
+    "Psykologistuderende": 305,
+    "Pensionist DP - Udland": 1088,
+    "Ledig DP": 409,
+    "1 og 2 års Kandidater": 512,
+    "Selvstændig": 2238,
+    "Studerende DP": 1230,
+    "Ph.d. studerende": 56,
+    "Orlov uden løn DP": 93,
+    "Udland DP": 68,
+    "Anden forhandlingsret": 30,
+    "Efterløn DP": 24,
+    "DLF og DLF ret": 152,
+    "Ledig ikke ret til dagpenge": 34,
+    "Normaltansat under 20 timer": 98,
+    "DLF og DP ret": 51,
+    "Med løntilskud": 18,
+    "Pensionist DP": 12,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 10,
+    "DP medlem": 1
+   }
+  },
+  {
+   "date": "2022-06-30",
+   "total": 11699,
+   "categories": {
+    "Normaltansat over 19 timer": 5224,
+    "Psykologistuderende": 286,
+    "Pensionist DP - Udland": 1083,
+    "Ledig DP": 381,
+    "1 og 2 års Kandidater": 527,
+    "Selvstændig": 2257,
+    "Studerende DP": 1256,
+    "Ph.d. studerende": 55,
+    "Orlov uden løn DP": 104,
+    "Udland DP": 67,
+    "Anden forhandlingsret": 29,
+    "Efterløn DP": 25,
+    "DLF og DLF ret": 150,
+    "Ledig ikke ret til dagpenge": 37,
+    "Normaltansat under 20 timer": 117,
+    "DLF og DP ret": 51,
+    "Med løntilskud": 18,
+    "Pensionist DP": 12,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 10,
+    "DP medlem": 1
+   }
+  },
+  {
+   "date": "2022-09-30",
+   "total": 11755,
+   "categories": {
+    "Normaltansat over 19 timer": 5305,
+    "Psykologistuderende": 60,
+    "Pensionist DP - Udland": 1084,
+    "Ledig DP": 507,
+    "1 og 2 års Kandidater": 519,
+    "Selvstændig": 2292,
+    "Studerende DP": 1319,
+    "Ph.d. studerende": 54,
+    "Orlov uden løn DP": 97,
+    "Udland DP": 66,
+    "Anden forhandlingsret": 27,
+    "Efterløn DP": 26,
+    "DLF og DLF ret": 144,
+    "Ledig ikke ret til dagpenge": 35,
+    "Normaltansat under 20 timer": 121,
+    "DLF og DP ret": 50,
+    "Med løntilskud": 18,
+    "Pensionist DP": 12,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2022-12-31",
+   "total": 11715,
+   "categories": {
+    "Normaltansat over 19 timer": 5238,
+    "Psykologistuderende": 13,
+    "Pensionist DP - Udland": 9,
+    "Ledig DP": 423,
+    "1 og 2 års Kandidater": 545,
+    "Selvstændig": 2312,
+    "Studerende DP": 1438,
+    "Ph.d. studerende": 53,
+    "Orlov uden løn DP": 96,
+    "Udland DP": 60,
+    "Anden forhandlingsret": 29,
+    "Efterløn DP": 25,
+    "DLF og DLF ret": 138,
+    "Ledig ikke ret til dagpenge": 32,
+    "Normaltansat under 20 timer": 132,
+    "DLF og DP ret": 50,
+    "Med løntilskud": 18,
+    "Pensionist DP": 1086,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 9,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2023-01-31",
+   "total": 11698,
+   "categories": {
+    "Normaltansat over 19 timer": 5204,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 9,
+    "Ledig DP": 403,
+    "1 og 2 års Kandidater": 582,
+    "Selvstændig": 2310,
+    "Studerende DP": 1431,
+    "Ph.d. studerende": 51,
+    "Orlov uden løn DP": 121,
+    "Udland DP": 60,
+    "Anden forhandlingsret": 28,
+    "Efterløn DP": 26,
+    "DLF og DLF ret": 132,
+    "Ledig ikke ret til dagpenge": 36,
+    "Normaltansat under 20 timer": 128,
+    "DLF og DP ret": 46,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1094,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2023-03-31",
+   "total": 11696,
+   "categories": {
+    "Normaltansat over 19 timer": 5239,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 9,
+    "Ledig DP": 423,
+    "1 og 2 års Kandidater": 570,
+    "Selvstændig": 2309,
+    "Studerende DP": 1402,
+    "Ph.d. studerende": 51,
+    "Orlov uden løn DP": 114,
+    "Udland DP": 57,
+    "Anden forhandlingsret": 28,
+    "Efterløn DP": 23,
+    "DLF og DLF ret": 133,
+    "Ledig ikke ret til dagpenge": 37,
+    "Normaltansat under 20 timer": 126,
+    "DLF og DP ret": 46,
+    "Med løntilskud": 19,
+    "Pensionist DP": 1093,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2023-06-30",
+   "total": 11707,
+   "categories": {
+    "Normaltansat over 19 timer": 5280,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 9,
+    "Ledig DP": 390,
+    "1 og 2 års Kandidater": 591,
+    "Selvstændig": 2322,
+    "Studerende DP": 1416,
+    "Ph.d. studerende": 51,
+    "Orlov uden løn DP": 88,
+    "Udland DP": 55,
+    "Anden forhandlingsret": 27,
+    "Efterløn DP": 21,
+    "DLF og DLF ret": 132,
+    "Ledig ikke ret til dagpenge": 38,
+    "Normaltansat under 20 timer": 122,
+    "DLF og DP ret": 45,
+    "Med løntilskud": 21,
+    "Pensionist DP": 1082,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2023-09-30",
+   "total": 12045,
+   "categories": {
+    "Normaltansat over 19 timer": 5452,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 10,
+    "Ledig DP": 477,
+    "1 og 2 års Kandidater": 484,
+    "Selvstændig": 2368,
+    "Studerende DP": 1567,
+    "Ph.d. studerende": 50,
+    "Orlov uden løn DP": 73,
+    "Udland DP": 58,
+    "Anden forhandlingsret": 27,
+    "Efterløn DP": 20,
+    "DLF og DLF ret": 131,
+    "Ledig ikke ret til dagpenge": 39,
+    "Normaltansat under 20 timer": 114,
+    "DLF og DP ret": 45,
+    "Med løntilskud": 21,
+    "Pensionist DP": 1092,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2023-12-31",
+   "total": 12051,
+   "categories": {
+    "Normaltansat over 19 timer": 5418,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 11,
+    "Ledig DP": 412,
+    "1 og 2 års Kandidater": 532,
+    "Selvstændig": 2364,
+    "Studerende DP": 1624,
+    "Ph.d. studerende": 48,
+    "Orlov uden løn DP": 83,
+    "Udland DP": 55,
+    "Anden forhandlingsret": 26,
+    "Efterløn DP": 19,
+    "DLF og DLF ret": 131,
+    "Ledig ikke ret til dagpenge": 40,
+    "Normaltansat under 20 timer": 116,
+    "DLF og DP ret": 44,
+    "Med løntilskud": 22,
+    "Pensionist DP": 1089,
+    "DM1 Mag. art.": 9,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2024-01-31",
+   "total": 12043,
+   "categories": {
+    "Normaltansat over 19 timer": 5411,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 11,
+    "Ledig DP": 403,
+    "1 og 2 års Kandidater": 546,
+    "Selvstændig": 2376,
+    "Studerende DP": 1624,
+    "Ph.d. studerende": 46,
+    "Orlov uden løn DP": 78,
+    "Udland DP": 54,
+    "Anden forhandlingsret": 24,
+    "Efterløn DP": 18,
+    "DLF og DLF ret": 127,
+    "Ledig ikke ret til dagpenge": 39,
+    "Normaltansat under 20 timer": 116,
+    "DLF og DP ret": 44,
+    "Med løntilskud": 22,
+    "Pensionist DP": 1088,
+    "DM1 Mag. art.": 8,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2024-03-31",
+   "total": 12039,
+   "categories": {
+    "Normaltansat over 19 timer": 5437,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 11,
+    "Ledig DP": 429,
+    "1 og 2 års Kandidater": 557,
+    "Selvstændig": 2379,
+    "Studerende DP": 1567,
+    "Ph.d. studerende": 46,
+    "Orlov uden løn DP": 74,
+    "Udland DP": 56,
+    "Anden forhandlingsret": 24,
+    "Efterløn DP": 19,
+    "DLF og DLF ret": 127,
+    "Ledig ikke ret til dagpenge": 41,
+    "Normaltansat under 20 timer": 112,
+    "DLF og DP ret": 41,
+    "Med løntilskud": 22,
+    "Pensionist DP": 1083,
+    "DM1 Mag. art.": 6,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2024-06-30",
+   "total": 12065,
+   "categories": {
+    "Normaltansat over 19 timer": 5423,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 13,
+    "Ledig DP": 414,
+    "1 og 2 års Kandidater": 596,
+    "Selvstændig": 2387,
+    "Studerende DP": 1588,
+    "Ph.d. studerende": 46,
+    "Orlov uden løn DP": 69,
+    "Udland DP": 59,
+    "Anden forhandlingsret": 23,
+    "Efterløn DP": 17,
+    "DLF og DLF ret": 128,
+    "Ledig ikke ret til dagpenge": 43,
+    "Normaltansat under 20 timer": 111,
+    "DLF og DP ret": 40,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1074,
+    "DM1 Mag. art.": 6,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2024-09-30",
+   "total": 12505,
+   "categories": {
+    "Normaltansat over 19 timer": 5564,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 15,
+    "Ledig DP": 462,
+    "1 og 2 års Kandidater": 554,
+    "Selvstændig": 2381,
+    "Studerende DP": 1903,
+    "Ph.d. studerende": 45,
+    "Orlov uden løn DP": 52,
+    "Udland DP": 58,
+    "Anden forhandlingsret": 24,
+    "Efterløn DP": 17,
+    "DLF og DLF ret": 122,
+    "Ledig ikke ret til dagpenge": 44,
+    "Normaltansat under 20 timer": 111,
+    "DLF og DP ret": 43,
+    "Med løntilskud": 19,
+    "Pensionist DP": 1077,
+    "DM1 Mag. art.": 6,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2024-12-31",
+   "total": 12634,
+   "categories": {
+    "Normaltansat over 19 timer": 5584,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 15,
+    "Ledig DP": 441,
+    "1 og 2 års Kandidater": 628,
+    "Selvstændig": 2398,
+    "Studerende DP": 1938,
+    "Ph.d. studerende": 48,
+    "Orlov uden løn DP": 40,
+    "Udland DP": 64,
+    "Anden forhandlingsret": 23,
+    "Efterløn DP": 17,
+    "DLF og DLF ret": 122,
+    "Ledig ikke ret til dagpenge": 50,
+    "Normaltansat under 20 timer": 111,
+    "DLF og DP ret": 42,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1078,
+    "DM1 Mag. art.": 6,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2025-01-31",
+   "total": 12618,
+   "categories": {
+    "Normaltansat over 19 timer": 5577,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 16,
+    "Ledig DP": 431,
+    "1 og 2 års Kandidater": 666,
+    "Selvstændig": 2387,
+    "Studerende DP": 1899,
+    "Ph.d. studerende": 45,
+    "Orlov uden løn DP": 44,
+    "Udland DP": 62,
+    "Anden forhandlingsret": 23,
+    "Efterløn DP": 17,
+    "DLF og DLF ret": 120,
+    "Ledig ikke ret til dagpenge": 52,
+    "Normaltansat under 20 timer": 113,
+    "DLF og DP ret": 40,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1092,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2025-03-31",
+   "total": 12678,
+   "categories": {
+    "Normaltansat over 19 timer": 5646,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 20,
+    "Ledig DP": 447,
+    "1 og 2 års Kandidater": 643,
+    "Selvstændig": 2401,
+    "Studerende DP": 1877,
+    "Ph.d. studerende": 46,
+    "Orlov uden løn DP": 48,
+    "Udland DP": 62,
+    "Anden forhandlingsret": 22,
+    "Efterløn DP": 17,
+    "DLF og DLF ret": 118,
+    "Ledig ikke ret til dagpenge": 54,
+    "Normaltansat under 20 timer": 115,
+    "DLF og DP ret": 36,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1092,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 8,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2025-06-30",
+   "total": 12706,
+   "categories": {
+    "Normaltansat over 19 timer": 5650,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 21,
+    "Ledig DP": 405,
+    "1 og 2 års Kandidater": 711,
+    "Selvstændig": 2423,
+    "Studerende DP": 1870,
+    "Ph.d. studerende": 47,
+    "Orlov uden løn DP": 42,
+    "Udland DP": 58,
+    "Anden forhandlingsret": 25,
+    "Efterløn DP": 16,
+    "DLF og DLF ret": 106,
+    "Ledig ikke ret til dagpenge": 55,
+    "Normaltansat under 20 timer": 112,
+    "DLF og DP ret": 34,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1095,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2025-09-30",
+   "total": 13090,
+   "categories": {
+    "Normaltansat over 19 timer": 5820,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 20,
+    "Ledig DP": 405,
+    "1 og 2 års Kandidater": 600,
+    "Selvstændig": 2464,
+    "Studerende DP": 2154,
+    "Ph.d. studerende": 51,
+    "Orlov uden løn DP": 39,
+    "Udland DP": 55,
+    "Anden forhandlingsret": 25,
+    "Efterløn DP": 15,
+    "DLF og DLF ret": 102,
+    "Ledig ikke ret til dagpenge": 58,
+    "Normaltansat under 20 timer": 109,
+    "DLF og DP ret": 34,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1103,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2025-12-31",
+   "total": 13248,
+   "categories": {
+    "Normaltansat over 19 timer": 5826,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 19,
+    "Ledig DP": 394,
+    "1 og 2 års Kandidater": 884,
+    "Selvstændig": 2481,
+    "Studerende DP": 1995,
+    "Ph.d. studerende": 50,
+    "Orlov uden løn DP": 58,
+    "Udland DP": 53,
+    "Anden forhandlingsret": 28,
+    "Efterløn DP": 15,
+    "DLF og DLF ret": 101,
+    "Ledig ikke ret til dagpenge": 60,
+    "Normaltansat under 20 timer": 107,
+    "DLF og DP ret": 32,
+    "Med løntilskud": 20,
+    "Pensionist DP": 1109,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2026-01-31",
+   "total": 13205,
+   "categories": {
+    "Normaltansat over 19 timer": 5847,
+    "Psykologistuderende": 1,
+    "Pensionist DP - Udland": 18,
+    "Ledig DP": 379,
+    "1 og 2 års Kandidater": 880,
+    "Selvstændig": 2468,
+    "Studerende DP": 1952,
+    "Ph.d. studerende": 51,
+    "Orlov uden løn DP": 65,
+    "Udland DP": 51,
+    "Anden forhandlingsret": 28,
+    "Efterløn DP": 15,
+    "DLF og DLF ret": 100,
+    "Ledig ikke ret til dagpenge": 65,
+    "Normaltansat under 20 timer": 107,
+    "DLF og DP ret": 32,
+    "Med løntilskud": 21,
+    "Pensionist DP": 1110,
+    "DM1 Mag. art.": 5,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2026-03-31",
+   "total": 13212,
+   "categories": {
+    "Normaltansat over 19 timer": 5899,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 18,
+    "Ledig DP": 383,
+    "1 og 2 års Kandidater": 795,
+    "Selvstændig": 2527,
+    "Studerende DP": 1936,
+    "Ph.d. studerende": 47,
+    "Orlov uden løn DP": 76,
+    "Udland DP": 51,
+    "Anden forhandlingsret": 27,
+    "Efterløn DP": 15,
+    "DLF og DLF ret": 100,
+    "Ledig ikke ret til dagpenge": 61,
+    "Normaltansat under 20 timer": 109,
+    "DLF og DP ret": 32,
+    "Med løntilskud": 21,
+    "Pensionist DP": 1101,
+    "DM1 Mag. art.": 4,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  },
+  {
+   "date": "2026-05-31",
+   "total": 13233,
+   "categories": {
+    "Normaltansat over 19 timer": 5896,
+    "Psykologistuderende": 0,
+    "Pensionist DP - Udland": 18,
+    "Ledig DP": 367,
+    "1 og 2 års Kandidater": 898,
+    "Selvstændig": 2551,
+    "Studerende DP": 1887,
+    "Ph.d. studerende": 47,
+    "Orlov uden løn DP": 66,
+    "Udland DP": 49,
+    "Anden forhandlingsret": 27,
+    "Efterløn DP": 15,
+    "DLF og DLF ret": 96,
+    "Ledig ikke ret til dagpenge": 54,
+    "Normaltansat under 20 timer": 110,
+    "DLF og DP ret": 31,
+    "Med løntilskud": 21,
+    "Pensionist DP": 1086,
+    "DM1 Mag. art.": 4,
+    "Æresmedlem": 10,
+    "DP medlem": 0
+   }
+  }
+ ],
+ "projection": {
+  "dates": [
+   "2026-12-31",
+   "2027-12-31",
+   "2028-12-31",
+   "2029-12-31"
+  ],
+  "byCategory": {
+   "Normaltansat over 19 timer": {
+    "start": 5306,
+    "latest": 5896,
+    "cagr": 0.02465738030422293,
+    "path": [
+     5981,
+     6128,
+     6280,
+     6434
+    ]
+   },
+   "Psykologistuderende": {
+    "start": 373,
+    "latest": 0,
+    "cagr": 0,
+    "path": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "Pensionist DP - Udland": {
+    "start": 9,
+    "latest": 18,
+    "cagr": 0.22510293107931534,
+    "path": [
+     20,
+     25,
+     30,
+     37
+    ]
+   },
+   "Ledig DP": {
+    "start": 411,
+    "latest": 367,
+    "cagr": -0.02582005002008836,
+    "path": [
+     361,
+     352,
+     343,
+     334
+    ]
+   },
+   "1 og 2 års Kandidater": {
+    "start": 461,
+    "latest": 898,
+    "cagr": 0.1665384639337697,
+    "path": [
+     983,
+     1146,
+     1338,
+     1560
+    ]
+   },
+   "Selvstændig": {
+    "start": 2210,
+    "latest": 2551,
+    "cagr": 0.03370600213431785,
+    "path": [
+     2601,
+     2689,
+     2779,
+     2873
+    ]
+   },
+   "Studerende DP": {
+    "start": 1213,
+    "latest": 1887,
+    "cagr": 0.10748078020156404,
+    "path": [
+     2003,
+     2218,
+     2457,
+     2721
+    ]
+   },
+   "Ph.d. studerende": {
+    "start": 60,
+    "latest": 47,
+    "cagr": -0.05485367453404011,
+    "path": [
+     45,
+     43,
+     41,
+     38
+    ]
+   },
+   "Orlov uden løn DP": {
+    "start": 83,
+    "latest": 66,
+    "cagr": -0.051570280228498744,
+    "path": [
+     64,
+     61,
+     58,
+     55
+    ]
+   },
+   "Udland DP": {
+    "start": 67,
+    "latest": 49,
+    "cagr": -0.06973075513629257,
+    "path": [
+     47,
+     44,
+     41,
+     38
+    ]
+   },
+   "Anden forhandlingsret": {
+    "start": 30,
+    "latest": 27,
+    "cagr": -0.024047027987097902,
+    "path": [
+     27,
+     26,
+     25,
+     25
+    ]
+   },
+   "Efterløn DP": {
+    "start": 24,
+    "latest": 15,
+    "cagr": -0.1028950587203753,
+    "path": [
+     14,
+     13,
+     11,
+     10
+    ]
+   },
+   "DLF og DLF ret": {
+    "start": 154,
+    "latest": 96,
+    "cagr": -0.10343391759389264,
+    "path": [
+     90,
+     81,
+     72,
+     65
+    ]
+   },
+   "Ledig ikke ret til dagpenge": {
+    "start": 31,
+    "latest": 54,
+    "cagr": 0.13680075408938275,
+    "path": [
+     58,
+     66,
+     75,
+     86
+    ]
+   },
+   "Normaltansat under 20 timer": {
+    "start": 98,
+    "latest": 110,
+    "cagr": 0.027045595131787836,
+    "path": [
+     112,
+     115,
+     118,
+     121
+    ]
+   },
+   "DLF og DP ret": {
+    "start": 52,
+    "latest": 31,
+    "cagr": -0.11263511759863098,
+    "path": [
+     29,
+     26,
+     23,
+     20
+    ]
+   },
+   "Med løntilskud": {
+    "start": 17,
+    "latest": 21,
+    "cagr": 0.050028821872843965,
+    "path": [
+     22,
+     23,
+     24,
+     25
+    ]
+   },
+   "Pensionist DP": {
+    "start": 1086,
+    "latest": 1086,
+    "cagr": 0,
+    "path": [
+     1086,
+     1086,
+     1086,
+     1086
+    ]
+   },
+   "DM1 Mag. art.": {
+    "start": 9,
+    "latest": 4,
+    "cagr": -0.17084227609606872,
+    "path": [
+     4,
+     3,
+     2,
+     2
+    ]
+   },
+   "Æresmedlem": {
+    "start": 10,
+    "latest": 10,
+    "cagr": 0,
+    "path": [
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   "DP medlem": {
+    "start": 1,
+    "latest": 0,
+    "cagr": 0,
+    "path": [
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "totalByCagr": {
+   "start": 11705,
+   "latest": 13233,
+   "cagr": 0.028751750245742613,
+   "path": [
+    13455,
+    13841,
+    14240,
+    14649
+   ]
+  },
+  "totalBySum": {
+   "start": 11705,
+   "latest": 13233,
+   "cagr": 0.028751750245742613,
+   "path": [
+    13557,
+    14155,
+    14813,
+    15540
+   ]
+  }
+ },
+ "flows": [
+  {
+   "month": "2025-11",
+   "ind": 91,
+   "ud": 41,
+   "note": null
+  },
+  {
+   "month": "2025-12",
+   "ind": 65,
+   "ud": 37,
+   "note": null
+  },
+  {
+   "month": "2026-01",
+   "ind": 87,
+   "ud": 119,
+   "note": "Årsskifte — forskudte udmeldelser"
+  },
+  {
+   "month": "2026-02",
+   "ind": 75,
+   "ud": 88,
+   "note": null
+  },
+  {
+   "month": "2026-03",
+   "ind": 76,
+   "ud": 35,
+   "note": null
+  },
+  {
+   "month": "2026-04",
+   "ind": 90,
+   "ud": 57,
+   "note": null
+  }
+ ]
+}
