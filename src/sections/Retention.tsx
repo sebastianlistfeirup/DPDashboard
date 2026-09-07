@@ -54,8 +54,30 @@ export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
   const shareAt25 = shiftTotal ? ((mov.shift.monthsSinceCand.find((x) => x.k === 25)?.n ?? 0) / shiftTotal) * 100 : 0
 
   // Kommende kontingentskift
-  const upcoming = mov.shift.upcoming.filter((u) => u.month > a.date.slice(0, 7)).slice(0, 24)
-  const upcomingTotal = upcoming.reduce((s, u) => s + u.n, 0)
+  const plannedShift = (m: string) => (mov.students.planned ?? []).find((p) => p.month === m)
+  const plannedN = (m: string, pairs: string[]) => { const p = plannedShift(m); return p ? pairs.reduce((t, k) => t + num(p[k]), 0) : 0 }
+  const upcomingMonths = (() => {
+    const start = a.date.slice(0, 7)
+    const out: string[] = []
+    let y = Number(start.slice(0, 4)), mo = Number(start.slice(5, 7))
+    for (let i = 0; i < 24; i++) { mo++; if (mo > 12) { mo = 1; y++ } out.push(`${y}-${String(mo).padStart(2, '0')}`) }
+    return out
+  })()
+  const upcomingItems = upcomingMonths.map((m) => {
+    const planned = plannedN(m, ['kandidat→normal', 'kandidat→selv', 'kandidat→phd'])
+    const computed = mov.shift.upcoming.find((u) => u.month === m)?.n ?? 0
+    return { label: monthLabel(m), parts: { planlagt: planned, beregnet: computed } }
+  })
+  const upcomingTotal = upcomingItems.reduce((t, it) => t + it.parts.planlagt + it.parts.beregnet, 0)
+  // Kandidattilgang: planlagte stud→kandidat + forventede dimissioner uden planlagt skift
+  const gradItems = upcomingMonths.map((m) => {
+    const planned = plannedN(m, ['stud→kandidat', 'ledig→kandidat'])
+    const expected = mov.students.byExpectedMonth?.[m] ?? 0
+    return { label: monthLabel(m), parts: { planlagt: planned, forventet: Math.max(0, expected - planned) } }
+  })
+  const gradTotal = gradItems.reduce((t, it) => t + it.parts.planlagt + it.parts.forventet, 0)
+  const join = mov.students.joinYear ?? []
+  const joinTotal = join.reduce((t, j) => t + j.students, 0) || 1
 
   // Bevægelser seneste 12 måneder som matrix
   const last12 = mov.transitions.filter((t) => t.month <= a.date.slice(0, 7)).slice(-12)
@@ -108,8 +130,9 @@ export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
               {fmtPct(shareAt25, 0)} af skiftene sker præcis 25 måneder efter cand.psych.-datoen — to år efter dimissionen, med virkning fra den følgende måned. Fordi de fleste bliver færdige i januar og juni, lander skiftene i februar og juli. Det er derfor kongeindikatoren springer de to måneder.
             </p>
           </ChartCard>
-          <ChartCard title={`Kommende kontingentskift: ${fmtNum(upcomingTotal)} på ${upcoming.length ? '24 måneder' : '–'}`} subtitle="Kandidater på den seneste liste, fremskrevet 25 måneder fra deres cand.psych.-dato. Med 95 % konvertering er det den sikreste forudsigelse af kongeindikatoren, vi har.">
-            <StackedBars items={upcoming.map((u) => ({ label: monthLabel(u.month), parts: { n: u.n } }))} keys={['n']} colors={{ n: '#4e4897' }} labels={{ n: 'Kontingentskift' }} height={170} width={520} />
+          <ChartCard title={`Kommende kontingentskift: ${fmtNum(upcomingTotal)} på 24 måneder`} subtitle="Mørk: skift, medlemssystemet allerede har planlagt (fremtidig medlemstype). Lys: kandidater, der endnu ikke har fået en planlagt dato, fremskrevet 25 måneder fra cand.psych.-datoen. Med 94 % konvertering er det den sikreste forudsigelse af kongeindikatoren, vi har.">
+            <StackedBars items={upcomingItems} keys={['planlagt', 'beregnet']} colors={{ planlagt: '#4e4897', beregnet: '#bcbbde' }} labels={{ planlagt: 'Planlagt i systemet', beregnet: 'Beregnet fra cand.psych.-dato' }} height={170} width={520} />
+            <Legend keys={['planlagt', 'beregnet']} colors={{ planlagt: '#4e4897', beregnet: '#bcbbde' }} labels={{ planlagt: 'Planlagt i systemet', beregnet: 'Beregnet fra cand.psych.-dato' }} />
           </ChartCard>
         </div>
       </div>
@@ -145,6 +168,33 @@ export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
               <p className="mt-2 text-[0.6875rem] text-dp-navy-400">Måneder efter cand.psych. Kun hver tredje måned vist. {fmtNum(cohort.n)} medlemmer i årgangen.</p>
             </>
           )}
+        </ChartCard>
+      </div>
+
+      <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <ChartCard title={`Hvornår kommer de nye kandidater? ${fmtNum(gradTotal)} på 24 måneder`} subtitle="Mørk: flytninger til kandidat, som systemet allerede har planlagt. Lys: studerende med forventet slutdato i måneden, som endnu ikke har en planlagt flytning. Historisk bliver godt halvdelen af dem kandidater, resten ledige eller udmeldte."
+                   table={<DataTable columns={[{ key: 'm', label: 'Måned' }, { key: 'p', label: 'Planlagt', align: 'right' }, { key: 'f', label: 'Forventet slutdato', align: 'right' }]}
+                                     rows={gradItems.map((g) => ({ m: g.label, p: fmtNum(g.parts.planlagt), f: fmtNum(g.parts.forventet) }))} />}>
+          <StackedBars items={gradItems} keys={['planlagt', 'forventet']} colors={{ planlagt: '#4fa388', forventet: '#c4dcdb' }} labels={{ planlagt: 'Planlagt flytning til kandidat', forventet: 'Forventet slutdato, ikke planlagt' }} height={200} />
+          <Legend keys={['planlagt', 'forventet']} colors={{ planlagt: '#4fa388', forventet: '#c4dcdb' }} labels={{ planlagt: 'Planlagt flytning til kandidat', forventet: 'Forventet slutdato, ikke planlagt' }} />
+          {mov.students.byLevel && (
+            <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+              Studerende i dag: {fmtNum(mov.students.byLevel.kandidatdel)} på kandidatdelen og {fmtNum(mov.students.byLevel.bachelordel)} på bachelordelen. Toppene i januar og juni er de to dimissionsterminer.
+            </p>
+          )}
+        </ChartCard>
+        <ChartCard title="Hvornår i studiet melder de sig ind?" subtitle="Nuværende studerende, efter hvor langt de var i studiet, da de meldte sig ind i DP.">
+          <ul className="space-y-2">
+            {join.filter((j) => j.students > 0).map((j) => (
+              <li key={j.band}>
+                <div className="mb-0.5 flex justify-between text-[0.8125rem]"><span className="text-dp-navy-800">{j.band === 'før studiestart' ? 'Ved optaget, før studiestart' : j.band === 'i bachelordelen' ? 'I bachelordelen (år ukendt)' : j.band}</span><span className="tnum font-semibold text-dp-navy-900">{fmtNum(j.students)} <span className="text-[0.6875rem] font-normal text-dp-navy-500">{fmtPct((j.students / joinTotal) * 100, 0)}</span></span></div>
+                <div className="h-1.5 rounded-full bg-dp-navy-100"><div className="h-full rounded-full" style={{ width: `${(j.students / Math.max(...join.map((x) => x.students))) * 100}%`, background: GROUP_COLOR.stud }} /></div>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+            To bølger: én ved studiestart og én ved overgangen til kandidatdelen. Årene imellem er stille — dér er der studerende, som endnu ikke er medlemmer.
+          </p>
         </ChartCard>
       </div>
 
@@ -190,7 +240,7 @@ export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
           <ul className="mt-3 grid gap-2.5 text-[0.875rem] leading-relaxed text-dp-navy-700 md:grid-cols-2">
             {[
               `${fmtPct(conv, 0)} af dem, der når kontingentskiftet, bliver fuldtidsbetalende. Kun ${fmtPct(allTotal ? (allOut.ud / allTotal) * 100 : 0, 1)} melder sig ud i den forbindelse.`,
-              `Skiftet sker i måned 25 efter cand.psych. — i februar og juli. Der er ${fmtNum(upcomingTotal)} kontingentskift på vej de næste 24 måneder.`,
+              `Skiftet sker i måned 25 efter cand.psych. — i februar og juli. Der er ${fmtNum(upcomingTotal)} kontingentskift på vej de næste 24 måneder, og ${fmtNum(gradTotal)} nye kandidater.`,
               'Frafaldet i en cand.psych.-årgang er jævnt, omkring 5 % om året, og det er ikke højere omkring kontingentskiftet.',
               'Studerende er det utætte led: hver tredje, der forlader studenterkategorien, forlader foreningen. Og godt 500 står med overskredet slutdato.',
               'Restance er den enkeltstørste kendte udmeldelsesårsag efter "anden årsag" — og den slår igennem i december og marts.',

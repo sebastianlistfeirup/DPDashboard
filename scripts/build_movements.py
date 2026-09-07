@@ -111,9 +111,10 @@ REASON_LABEL = {
 }
 
 
-def load_students() -> dict:
-    """Uddannelseslisten: nuværende studerende fordelt på forventet slutår, og
-    hvor mange nye kandidater der forventes pr. måned frem i tiden."""
+def load_students(L: dict, latest: dict) -> dict:
+    """Uddannelseslisten: nuværende studerende efter niveau og forventet slutdato,
+    de planlagte overgange (Fremtidig medlemstype/dato) og hvornår i studiet
+    medlemmerne meldte sig ind. Kun optællinger kommer ud."""
     path = os.path.join(SRC, 'MedlemslisteUddannelse_07_09_26.xlsx')
     if not os.path.exists(path): return {}
     wb = load_workbook(path, read_only=True, data_only=True)
@@ -121,24 +122,62 @@ def load_students() -> dict:
     it = ws.iter_rows(values_only=True)
     hdr = list(next(it))
     ix = {h: i for i, h in enumerate(hdr) if h}
-    by_year = collections.Counter(); by_month = collections.Counter(); uni = collections.Counter()
+    def dd(v):
+        if isinstance(v, datetime): return v.date()
+        return v if isinstance(v, date) else None
+    by_year = collections.Counter(); by_month = collections.Counter(); by_level_month = collections.defaultdict(collections.Counter)
+    uni = collections.Counter(); level = collections.Counter()
+    planned = collections.defaultdict(collections.Counter)   # måned → (fra→til) → n
+    planned_pairs = collections.Counter()
+    planned_sk = set()
+    join_year = collections.Counter()   # studieår ved indmeldelse, for nuværende studerende
+    join_year_all = collections.Counter()  # for alle med kendt studiestart
     seen = set()
     today = date(2026, 9, 7)
     for r in it:
         if len(r) < len(hdr): r = tuple(r) + (None,) * (len(hdr) - len(r))
-        if r[ix['Medlemstype']] != 'Studerende DP': continue
-        sk = r[ix['Stamkort Person']]
-        if sk in seen: continue
-        seen.add(sk)
-        v = r[ix['Beregnet slutdato']]
-        d = v.date() if isinstance(v, datetime) else (v if isinstance(v, date) else None)
+        sk = str(r[ix['Stamkort Person']]).strip() if r[ix['Stamkort Person']] else None
+        if not sk: continue
+        mtype = r[ix['Medlemstype']]
+        # Planlagte overgange (systemets egne)
+        ft, fdt = r[ix['Fremtidig Medlemstype']], dd(r[ix['Fremtidig Dato']])
+        if ft and fdt and fdt >= today and (sk, 'p') not in seen:
+            seen.add((sk, 'p'))
+            pair = f"{grp(mtype)}→{grp(ft)}"
+            planned[ym(fdt)][pair] += 1; planned_pairs[pair] += 1
+            planned_sk.add(sk)
+        # Hvornår i studiet meldte de sig ind? (studiestart → DP-indmeldelse)
+        start = dd(r[ix['Uddannelse startdato']])
+        rec = latest.get(sk)
+        if start and start.year > 1950 and rec and rec[1]['dpin'] and not is_migration_in(rec[1]['dpin']) and r[ix['Uddannelse']] in ('Bachelor i psykologi', 'Cand. psych.'):
+            k = months_between(ym(start), ym(rec[1]['dpin']))
+            # Rækken er enten bachelordelen eller kandidatdelen; studiestart gælder den del.
+            if r[ix['Uddannelse']] == 'Bachelor i psykologi':
+                band = 'før studiestart' if k < 0 else '1. år' if k < 12 else '2. år' if k < 24 else '3. år' if k < 36 else 'senere'
+            else:
+                band = 'i bachelordelen' if k < 0 else '4. år' if k < 12 else '5. år' if k < 24 else 'senere'
+            if (sk, 'j') not in seen:
+                seen.add((sk, 'j')); join_year_all[band] += 1
+                if mtype == 'Studerende DP': join_year[band] += 1
+        if mtype != 'Studerende DP' or (sk, 's') in seen: continue
+        seen.add((sk, 's'))
+        lvl = 'kandidatdel' if r[ix['Uddannelse']] == 'Cand. psych.' else 'bachelordel' if r[ix['Uddannelse']] == 'Bachelor i psykologi' else 'andet'
+        level[lvl] += 1
+        d = dd(r[ix['Beregnet slutdato']])
         if not d or d.year >= 2099: by_year['ukendt'] += 1; continue
-        if d < today: by_year['overskredet'] += 1; continue
+        if d < today: by_year['overskredet'] += 1; by_level_month['overskredet'][lvl] += 1; continue
         by_year[str(d.year)] += 1
         by_month[ym(d)] += 1
+        by_level_month[ym(d)][lvl] += 1
         uni[r[ix['Uddannelsessted']] or 'Ukendt'] += 1
+    order = ['før studiestart', '1. år', '2. år', '3. år', 'i bachelordelen', '4. år', '5. år', 'senere']
     return dict(byExpectedYear=dict(sorted(by_year.items())), byExpectedMonth=dict(sorted(by_month.items())),
-                byUniversity=dict(uni.most_common()))
+                byExpectedMonthLevel={m: dict(c) for m, c in sorted(by_level_month.items())},
+                byUniversity=dict(uni.most_common()), byLevel=dict(level),
+                planned=[dict(month=m, **dict(c)) for m, c in sorted(planned.items())],
+                plannedPairs=dict(planned_pairs.most_common()),
+                joinYear=[dict(band=b, students=join_year.get(b, 0), all=join_year_all.get(b, 0)) for b in order],
+                _plannedSk=planned_sk)
 
 
 def main() -> None:
@@ -248,10 +287,13 @@ def main() -> None:
         outcome[m27[:4]][grp(r27['type']) if r27 else 'ud'] += 1
     outcome_list = [dict(year=y, **{k: v for k, v in c.items()}) for y, c in sorted(outcome.items())]
 
-    # Forventede kontingentskift frem i tiden: kandidater på seneste liste, cand + 25 mdr.
+    students = load_students(L, latest)
+    planned_sk = students.pop('_plannedSk', set())
+    # Forventede kontingentskift frem i tiden: kandidater på seneste liste UDEN en
+    # planlagt overgang i systemet, cand + 25 mdr. (De planlagte tælles fra uddannelseslisten.)
     upcoming = collections.Counter()
     for sk, r in L[last].items():
-        if r['type'] == '1 og 2 års Kandidater' and r['cand']:
+        if r['type'] == '1 og 2 års Kandidater' and r['cand'] and sk not in planned_sk:
             m = add_months(ym(r['cand']), 25)
             if m > last: upcoming[m] += 1
     upcoming_list = [dict(month=m, n=n) for m, n in sorted(upcoming.items())]
@@ -366,7 +408,7 @@ def main() -> None:
                    outcomeByYear=outcome_list, upcoming=upcoming_list,
                    kandidatOutByYear=[dict(year=y, to=t, n=n) for (y, t), n in sorted(shift_year_out.items())]),
         cohorts=cohorts,
-        students=dict(outByYear=stud_out_list, **load_students()),
+        students=dict(outByYear=stud_out_list, **students),
         members=dict(ageByGroup={g: dict(c) for g, c in age_by_group.items()}, avgAge=avg_age,
                      sexByGroup={g: dict(c) for g, c in sex_by_group.items()},
                      kreds=kreds_list, sektor=dict(sektor_now.most_common()), ansaettelse=dict(ans_now.most_common()),

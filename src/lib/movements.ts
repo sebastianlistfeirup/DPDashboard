@@ -44,7 +44,12 @@ export interface Movements {
     outByYear: ({ year: string } & Record<string, number | string>)[]
     byExpectedYear?: Record<string, number>
     byExpectedMonth?: Record<string, number>
+    byExpectedMonthLevel?: Record<string, Record<string, number>>
     byUniversity?: Record<string, number>
+    byLevel?: Record<string, number>
+    planned?: ({ month: string } & Record<string, number | string>)[]
+    plannedPairs?: Record<string, number>
+    joinYear?: { band: string; students: number; all: number }[]
   }
   members: {
     ageByGroup: Record<string, Record<string, number>>
