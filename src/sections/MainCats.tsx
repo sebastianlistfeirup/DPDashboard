@@ -24,7 +24,7 @@ const NOTES: Record<string, string> = {
 export function MainCats({ data, a }: { data: Dashboard; a: AsOf }) {
   const year = yearOf(a.date)
   const byDate = new Map(data.monthlyMain.map((m) => [m.date, m.categories]))
-  const years = [...new Set(data.monthlyMain.map((m) => yearOf(m.date)))].filter((y) => y <= year).sort()
+  const years = [...new Set(data.monthlyMain.map((m) => yearOf(m.date)))].filter((y) => y <= year && y >= year - 3).sort()
 
   const seriesFor = (cat: string): Series[] => years.map((y) => ({
     key: `${cat}-${y}`, label: String(y), color: yearColor(y), endLabel: true, width: y === year ? 3 : 2,
@@ -42,7 +42,7 @@ export function MainCats({ data, a }: { data: Dashboard; a: AsOf }) {
     <>
       <SectionHeading
         kicker="Hovedkategorier"
-        title="Fem kategorier, tre år, samme måned"
+        title="Fem kategorier, fire år, samme måned"
         lead="Hver figur viser én kontingentkategori med ét år pr. kurve. Sæsonmønstret går igen fra år til år, så det interessante er afstanden mellem kurverne."
       />
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

@@ -158,6 +158,7 @@ export const GROUP_COLORS: Record<string, string> = {
 }
 
 export const YEAR_COLORS: Record<number, string> = {
+  2022: '#d4dbe1',
   2023: '#aebdd4',
   2024: '#8299bb',
   2025: '#4c7bbd',

@@ -37,7 +37,12 @@ Når der kommer en ny liste:
    (og en ny `IndUdm_*.xlsx`, `UdmeldteListe_*.xlsx`, `MedlemslisteUddannelse_*.xlsx`
    hvis de er trukket igen — scriptet bruger dem, der ligger der).
 2. Kør `python3 scripts/parse_lists.py && python3 scripts/build_movements.py`.
-3. Commit `public/data/movements.json` og push. Resten sker i GitHub Actions.
+3. Commit `public/data/movements.json` **og** `data/liste_maaneder.json` og push. Resten sker i GitHub Actions.
+
+`data/liste_maaneder.json` er månedens optælling pr. kontingenttype og sektion fra
+listen (kun tal). `build_data.py` bruger den for de måneder, hvor der ikke ligger
+et Ledelsesoverblik-ark — så dashboardet altid går frem til den nyeste liste.
+Findes der både et ark og en liste for en måned, vinder arket.
 
 `build_movements.py` tjekker selv, at intet medlemsnummer slipper med i output.
 

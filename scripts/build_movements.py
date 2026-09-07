@@ -38,6 +38,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'data', 'medlemslister')
 CACHE = os.path.join(ROOT, '.cache', 'lists.pkl')
 OUT = os.path.join(ROOT, 'public', 'data', 'movements.json')
+OUT_MONTHS = os.path.join(ROOT, 'data', 'liste_maaneder.json')
 
 # Kontingenttype → gruppe. Grupperne er dem, bevægelserne fortælles i.
 GROUP = {
@@ -420,6 +421,23 @@ def main() -> None:
     )
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+
+    # Månedstal fra listerne — samme optælling som Ledelsesoverblik-arkene
+    # (kontingenttype, sektion, total), så build_data.py kan bruge listerne
+    # for de måneder, hvor der ikke findes et ark. Kun tal.
+    import calendar as _cal
+    months_out = {}
+    for k in keys:
+        y, mo = int(k[:4]), int(k[5:])
+        cats = collections.Counter(r['type'] for r in L[k].values() if r['type'])
+        # Før systemskiftet (dec. 2022) var 'Pensionist DP' og 'Pensionist DP - Udland' byttet om.
+        if k < '2022-12' and cats.get('Pensionist DP - Udland', 0) > cats.get('Pensionist DP', 0):
+            cats['Pensionist DP'], cats['Pensionist DP - Udland'] = cats.get('Pensionist DP - Udland', 0), cats.get('Pensionist DP', 0)
+        secs = collections.Counter(r['sek'] for r in L[k].values() if r['sek'])
+        months_out[k] = dict(date=f'{y}-{mo:02d}-{_cal.monthrange(y, mo)[1]:02d}', total=len(L[k]),
+                             categories=dict(cats.most_common()), sections=dict(secs.most_common()))
+    json.dump(months_out, open(OUT_MONTHS, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+    print(f'Skrev {OUT_MONTHS}: {len(months_out)} måneder')
     print(f'Skrev {OUT} ({os.path.getsize(OUT) // 1024} KB): {len(keys)} lister {first} → {last}, '
           f'{sum(f["ind"] for f in flow_list)} indmeldelser og {sum(f["ud"] for f in flow_list)} udmeldelser siden 2022')
     # Sikkerhedstjek: intet stamkort må slippe igennem

@@ -25,6 +25,11 @@ Kilder (alle læses hver gang, så ét nyt ark = én ny måned i dashboardet):
   data/ind_udmeldelser.csv
       Måned;Indmeldelser;Udmeldelser — redigeres i hånden.
 
+  data/liste_maaneder.json
+      Månedstal talt op fra medlemslisterne (skrevet af build_movements.py).
+      Bruges for de måneder, hvor der ikke findes et Ledelsesoverblik-ark —
+      samme tal, blot talt direkte på listen.
+
 Kør:  python3 scripts/build_data.py
 """
 from __future__ import annotations
@@ -268,6 +273,14 @@ def load_projection() -> dict | None:
     return dict(dates=year_dates, byCategory=cats, totalByCagr=total_cagr, totalBySum=total_sum)
 
 
+def load_list_months() -> dict:
+    path = os.path.join(DATA, 'liste_maaneder.json')
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding='utf-8') as fh:
+        return json.load(fh)
+
+
 def load_flows() -> list[dict]:
     path = os.path.join(DATA, 'ind_udmeldelser.csv')
     if not os.path.exists(path):
@@ -297,6 +310,49 @@ def main() -> None:
     if not snaps:
         raise SystemExit('Ingen månedsfiler i data/ultimo/')
 
+    # Måneder uden ark: byg et øjebliksbillede fra medlemslisten. Basis pr. 31.12
+    # tages fra arkene når de findes (så 2026-tallene stemmer med det rapporterede),
+    # ellers fra listen for december året før. Samme måned sidste år fra listen.
+    list_months = load_list_months()
+    have = {s['date'] for s in snaps}
+    ark_base: dict[int, dict] = {}
+    for s in snaps:
+        y = int(s['baseDate'][:4])
+        rec = ark_base.setdefault(y, dict(total=None, categories={}))
+        if s['total'] and s['total']['base'] is not None:
+            rec['total'] = s['total']['base']
+        for c, v in s['categories'].items():
+            if v['base'] is not None:
+                rec['categories'][c] = v['base']
+    added = 0
+    for k, lm in sorted(list_months.items()):
+        if lm['date'] in have or k < '2022-01':
+            continue
+        y = int(k[:4])
+        base = ark_base.get(y - 1)
+        dec = list_months.get(f'{y - 1}-12')
+        # Kategorien '1 og 2 års Kandidater' blev indført januar 2022; en december
+        # uden den kan ikke bruges som basis for kongeindikatoren.
+        if base is None and dec and dec['categories'].get('1 og 2 års Kandidater', 0) >= 100:
+            base = dict(total=dec['total'], categories=dec['categories'])
+        ly = list_months.get(f'{y - 1}-{k[5:]}')
+        cats = {}
+        for c, n in lm['categories'].items():
+            cats[c] = dict(now=n, ly=(ly['categories'].get(c) if ly else None),
+                           base=(base['categories'].get(c) if base else None), konge=None)
+        for c in FULLTIME:
+            if c in cats and cats[c]['base'] is not None:
+                cats[c]['konge'] = cats[c]['now'] - cats[c]['base']
+        konge = sum(cats[c]['konge'] for c in FULLTIME if c in cats and cats[c]['konge'] is not None) if base else None
+        total = dict(now=lm['total'], ly=(ly['total'] if ly else None), base=(base['total'] if base else None), konge=konge)
+        secs = {sname: dict(now=n, ly=(ly['sections'].get(sname) if ly else None)) for sname, n in lm['sections'].items()}
+        snaps.append(dict(date=lm['date'], baseDate=f'{y - 1}-12-31', total=total, categories=cats, sections=secs,
+                          file='medlemsliste', warnings=[]))
+        added += 1
+    snaps.sort(key=lambda s: s['date'])
+    if added:
+        print(f'{added} måneder taget fra medlemslisterne (ingen ark for dem)')
+
     # Basistal pr. 31.12 for hvert år, fra månedsfilerne (de tal ledergruppen
     # faktisk har fået) og ellers fra kvartalsdata.
     base_by_year: dict[int, dict] = {}
@@ -313,13 +369,24 @@ def main() -> None:
             y = int(q['date'][:4])
             if y not in base_by_year:
                 base_by_year[y] = dict(total=q['total'], categories=dict(q['categories']), source='kvartalsdata')
+    # listernes december-tal er kun fallback — sættes efter arkene (se nedenfor)
 
-    # Månedsrækker for hovedkategorier 2024→, som en flad liste pr. måned.
+    # Månedsrækker for hovedkategorier: fra visualiserings-arket, suppleret med
+    # listerne for de måneder arket ikke dækker.
     monthly_main: dict[str, dict[str, int]] = {}
     for cat, years in series.items():
         for yr, vals in years.items():
             for i, v in enumerate(vals):
                 monthly_main.setdefault(month_end(int(yr), i + 1), {})[cat] = v
+    for k, lm in list_months.items():
+        for cat in ['Normaltansat over 19 timer', 'Selvstændig', 'Studerende DP', '1 og 2 års Kandidater', 'Ph.d. studerende']:
+            monthly_main.setdefault(lm['date'], {}).setdefault(cat, lm['categories'].get(cat, 0))
+    for k, lm in list_months.items():
+        if k.endswith('-12') and lm['categories'].get('1 og 2 års Kandidater', 0) >= 100:
+            y = int(k[:4])
+            if y not in base_by_year or base_by_year[y]['total'] is None:
+                base_by_year[y] = dict(total=lm['total'], categories=dict(lm['categories']), source='medlemsliste')
+    base_by_year = {y: v for y, v in base_by_year.items() if v['total'] is not None}
 
     # Månedsvis kongeindikator pr. år: registreret hvor vi har en månedsfil,
     # ellers beregnet ud fra hovedkategori-rækkerne og samme 31.12-basis.
@@ -337,6 +404,7 @@ def main() -> None:
             v = sum(monthly_main[d][c] for c in FULLTIME) - sum(base['categories'][c] for c in FULLTIME)
             entry.update(value=v, source='beregnet')
         konge.setdefault(str(y), []).append(entry)
+    konge = {y: pts for y, pts in konge.items() if any(p['value'] is not None for p in pts)}
 
     # Samlet månedstal: månedsfil når den findes, kvartalsnedslag ellers.
     q_by_date = {q['date']: q for q in quarterly}
@@ -367,7 +435,7 @@ def main() -> None:
         meta=meta,
         snapshots=snaps,
         baseByYear={str(k): v for k, v in sorted(base_by_year.items())},
-        monthlyMain=[dict(date=d, categories=c) for d, c in sorted(monthly_main.items())],
+        monthlyMain=[dict(date=d, categories=c) for d, c in sorted(monthly_main.items()) if d >= '2022-01-01'],
         konge=konge,
         totals=totals,
         quarterly=quarterly,
