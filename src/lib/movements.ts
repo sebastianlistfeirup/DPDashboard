@@ -75,7 +75,7 @@ export function useMovements() {
   const [missing, setMissing] = useState(false)
   useEffect(() => {
     if (window.__DP_MOVEMENTS__) return
-    fetch(`${import.meta.env.BASE_URL}data/movements.json?t=${Date.now()}`)
+    fetch(`${import.meta.env.BASE_URL}data/movements.json?t=${Date.now()}`, { cache: 'no-store' })
       .then((r) => { if (!r.ok) throw new Error(); return r.json() })
       .then((d: Movements) => setData(d))
       .catch(() => setMissing(true))

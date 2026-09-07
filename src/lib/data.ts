@@ -72,7 +72,7 @@ export function useDashboard() {
   useEffect(() => {
     if (embedded) return
     const url = `${import.meta.env.BASE_URL}data/members.json?t=${Date.now()}`
-    fetch(url)
+    fetch(url, { cache: 'no-store' })
       .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
       .then((d: Dashboard) => setData(d))
       .catch((e: Error) => setError(e.message))
