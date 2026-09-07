@@ -13,7 +13,11 @@ import { Goal } from '@/sections/Goal'
 import { MainCats } from '@/sections/MainCats'
 import { YearWheel } from '@/sections/YearWheel'
 import { Categories } from '@/sections/Categories'
-import { DataNeeds, Flows, Retention, Sections } from '@/sections/Movements'
+import { DataNeeds, Sections } from '@/sections/Movements'
+import { Flows } from '@/sections/Flows'
+import { Retention } from '@/sections/Retention'
+import { Members } from '@/sections/Members'
+import { useMovements } from '@/lib/movements'
 import { computeGoal, ddmmyy, useAsOf, useDashboard } from '@/lib/data'
 import { motion as mo } from '@/design/tokens'
 
@@ -25,6 +29,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'aarshjul', label: 'Årshjul', group: 'Udvikling' },
   { id: 'kategorier', label: 'Alle kategorier', group: 'Segmenter' },
   { id: 'sektioner', label: 'Sektioner', group: 'Segmenter' },
+  { id: 'medlemmerne', label: 'Medlemmerne', group: 'Segmenter' },
   { id: 'bevaegelser', label: 'Ind og ud', group: 'Bevægelser' },
   { id: 'frafald', label: 'Frafald', group: 'Bevægelser' },
   { id: 'data', label: 'Næste skridt', group: 'Bevægelser' },
@@ -46,6 +51,7 @@ function useMonthParam(latest: string | null) {
 
 export default function App() {
   const { data, error, embedded } = useDashboard()
+  const { mov } = useMovements()
   const [month, setMonth] = useMonthParam(data?.meta.latest ?? null)
   const a = useAsOf(data, month)
   const goal = useMemo(() => (data && a ? computeGoal(data, a) : null), [data, a])
@@ -86,8 +92,9 @@ export default function App() {
         <Section id="aarshjul" tone="sunken"><YearWheel data={data} a={a} /></Section>
         <Section id="kategorier"><Categories data={data} a={a} /></Section>
         <Section id="sektioner" tone="sunken"><Sections data={data} a={a} /></Section>
-        <Section id="bevaegelser"><Flows data={data} a={a} /></Section>
-        <Section id="frafald" tone="dark"><Retention data={data} a={a} /></Section>
+        {mov && <Section id="medlemmerne"><Members mov={mov} /></Section>}
+        {mov && <Section id="bevaegelser" tone="sunken"><Flows mov={mov} a={a} /></Section>}
+        {mov && <Section id="frafald" tone="dark"><Retention mov={mov} a={a} /></Section>}
         <Section id="data" tone="sunken"><DataNeeds data={data} /></Section>
       </main>
 

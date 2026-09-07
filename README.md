@@ -24,6 +24,23 @@ vedhæftning) ligger som artifact på hver kørsel under *Actions*.
 
 Lokalt: `python3 scripts/build_data.py` (kræver `pip install openpyxl`), derefter `npm run dev`.
 
+### Medlemslisterne (personoplysninger — kun lokalt)
+
+Sektionerne *Medlemmerne*, *Ind og ud* og *Frafald* bygger på de månedlige
+medlemslister fra medlemssystemet. De indeholder personoplysninger og må
+**aldrig** committes. De ligger i `data/medlemslister/` (ignoreres af git),
+og kun optællingerne ender i `public/data/movements.json`.
+
+Når der kommer en ny liste:
+
+1. Læg `Medlemsliste_-_<dato>_periode_<dd>_<mm>_<åå>_a.xlsx` i `data/medlemslister/`
+   (og en ny `IndUdm_*.xlsx`, `UdmeldteListe_*.xlsx`, `MedlemslisteUddannelse_*.xlsx`
+   hvis de er trukket igen — scriptet bruger dem, der ligger der).
+2. Kør `python3 scripts/parse_lists.py && python3 scripts/build_movements.py`.
+3. Commit `public/data/movements.json` og push. Resten sker i GitHub Actions.
+
+`build_movements.py` tjekker selv, at intet medlemsnummer slipper med i output.
+
 ## Hvad dashboardet kan
 
 | Sektion | Hvad den svarer på |
@@ -36,9 +53,10 @@ Lokalt: `python3 scripts/build_data.py` (kræver `pip install openpyxl`), dereft
 | **Årshjul** | Kongeindikatoren som spiral gennem året, med månedens medlemsændring på kanten |
 | **Alle kategorier** | Sorterbar tabel med udvikling, og et varmekort over ændringer måned for måned |
 | **Sektioner** | Medlemmer pr. sektion og udviklingen i procent |
-| **Ind og ud** | Ind- og udmeldelser pr. måned, netto, frafaldsprocent |
-| **Frafald** | Det kritiske kontingentskift: hvor stor en del af kandidaterne genfindes som fuldtidsbetalende |
-| **Næste skridt** | Hvilke data der ville gøre analyserne skarpere |
+| **Medlemmerne** | Alder og kontingentgruppe, køn, kredse, sektor, universitet — og pensionsafgangen frem mod 2035 |
+| **Ind og ud** | Ind- og udmeldelser pr. måned siden 2022 fra medlemslisterne, fordelt på gruppe, alder, anciennitet og årsag; udmeldelsesrate pr. gruppe; opsigelser der endnu ikke er trådt i kraft |
+| **Frafald** | Kontingentskiftet målt på hvert medlem, cand.psych.-årgange fulgt måned for måned, de studerendes vej ud af studiet, kommende kontingentskift, bevægelser mellem grupper |
+| **Næste skridt** | Hvad der stadig kan gøre analyserne skarpere |
 
 Månedsvælgeren øverst viser dashboardet, som det så ud en tidligere måned
 (`?m=2026-04-30` i URL'en giver april).
@@ -54,6 +72,8 @@ data/ind_udmeldelser.csv ─┘
 
 - `scripts/build_data.py` — læser alle ark, samler dem, regner kongeindikatoren
   for måneder uden månedsfil, og skriver advarsler når arkene er uenige.
+- `scripts/parse_lists.py` + `scripts/build_movements.py` — læser medlemslisterne
+  (lokalt) og skriver `public/data/movements.json` med optællinger.
 - `src/lib/data.ts` — alle afledte tal for én valgt måned.
 - `src/lib/report.ts` — månedens tekst.
 - `src/sections/*` — én fil pr. sektion.
@@ -74,3 +94,8 @@ dashboardet under *Næste skridt*. Kendte forhold i det nuværende materiale:
 - Juni 2025 findes ikke som månedsfil; totalen tages fra kvartalsdata og kongeindikatoren beregnes.
 - 2024 findes kun for de fem hovedkategorier (fra visualiserings-arket).
 - Findes der to ark for samme måned, vinder det der hedder `_værdier`; afvigelser logges.
+- Systemskiftet 1.–2. december 2022 gav alle daværende medlemmer en DP-udmeldelsesdato
+  01.12.22 og -indmeldelsesdato 02.12.22. De to datoer er ikke bevægelser og udelades.
+  Anciennitet kendes derfor ikke for medlemmer fra før systemskiftet.
+- Udmeldelser tælles i den måned, DP Udm.dato ligger i. Medlemmet står på listen den
+  måned og er væk måneden efter — mailen har historisk talt dem måneden efter.

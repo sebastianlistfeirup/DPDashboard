@@ -8,3 +8,7 @@ dist/
 dist-single/
 /shot.mjs
 DP-udsendelsesdashboard.html
+
+# Personoplysninger — aldrig i repoet
+data/medlemslister/
+.cache/
