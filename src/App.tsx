@@ -93,7 +93,7 @@ export default function App() {
           </div>
           <div className="border-t border-dp-navy-50 py-1.5">
             {/* På store skærme står alle sektioner fremme; på små skærme foldes de ud fra en knap, så toppen ikke sluger skærmen. */}
-            <div className="hidden lg:block"><SectionNav sections={SECTIONS} /></div>
+            <div className="hidden lg:block"><SectionNav sections={SECTIONS} id="desktop" /></div>
             <div className="lg:hidden">
               <button type="button" onClick={() => setNavOpen((v) => !v)} aria-expanded={navOpen}
                       className="flex w-full items-center justify-between py-1 text-[0.8125rem] font-semibold text-dp-navy-800">
@@ -102,7 +102,7 @@ export default function App() {
                   <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
-              {navOpen && <div className="pb-2" onClick={() => setNavOpen(false)}><SectionNav sections={SECTIONS} /></div>}
+              {navOpen && <div className="pb-2" onClick={() => setNavOpen(false)}><SectionNav sections={SECTIONS} id="mobile" /></div>}
             </div>
           </div>
         </div>

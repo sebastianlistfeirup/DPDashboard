@@ -6,7 +6,7 @@
  * det er præcis det overblik ledergruppen fik den måned.
  */
 import { motion } from 'framer-motion'
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { cap, monthYear, type Snapshot } from '@/lib/data'
 
 /* ── Afsendermærke ───────────────────────────────────────────────────────── */
@@ -116,16 +116,25 @@ const GROUP_TINT: Record<string, { bg: string; label: string }> = {
  * har sin egen svage farve. Der scrolles ikke — på smalle skærme ombrydes
  * grupperne i stedet.
  */
-export function SectionNav({ sections }: { sections: SectionDef[] }) {
+export function SectionNav({ sections, id = 'nav' }: { sections: SectionDef[]; id?: string }) {
   const [active, setActive] = useState(sections[0]?.id)
+  // Når man klikker, låses markeringen til målet, indtil siden er færdig med
+  // at rulle. Ellers hopper markeringen forbi hver sektion undervejs.
+  const lock = useRef<{ id: string; timer: number } | null>(null)
+  const pending = useRef<{ id: string; timer: number } | null>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        if (lock.current) return
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]
-        if (visible) setActive(visible.target.id)
+        if (!visible) return
+        // Små forsinkelse, så en sektion, der bare passerer forbi, ikke når at tænde.
+        if (pending.current) window.clearTimeout(pending.current.timer)
+        const target = visible.target.id
+        pending.current = { id: target, timer: window.setTimeout(() => { setActive(target); pending.current = null }, 140) }
       },
       { rootMargin: '-30% 0px -60% 0px', threshold: 0 },
     )
@@ -136,15 +145,29 @@ export function SectionNav({ sections }: { sections: SectionDef[] }) {
     return () => observer.disconnect()
   }, [sections])
 
+  useEffect(() => {
+    // Låsen slippes, når rulningen har været stille i et lille stykke tid.
+    const onScroll = () => {
+      if (!lock.current) return
+      window.clearTimeout(lock.current.timer)
+      lock.current.timer = window.setTimeout(() => { lock.current = null }, 180)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     const target = document.getElementById(id)
     if (!target) return
     e.preventDefault()
+    if (pending.current) { window.clearTimeout(pending.current.timer); pending.current = null }
+    if (lock.current) window.clearTimeout(lock.current.timer)
+    lock.current = { id, timer: window.setTimeout(() => { lock.current = null }, 1200) }
+    setActive(id)
     const header = document.querySelector('header')
     const top = target.getBoundingClientRect().top + window.scrollY - (header?.getBoundingClientRect().height ?? 0) - 8
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
     history.replaceState(null, '', `#${id}`)
-    setActive(id)
   }
 
   const groups: { name: string; items: SectionDef[] }[] = []
@@ -175,9 +198,9 @@ export function SectionNav({ sections }: { sections: SectionDef[] }) {
                 >
                   {active === s.id && (
                     <motion.span
-                      layoutId="nav-pill"
+                      layoutId={`${id}-pill`}
                       className="absolute inset-0 rounded-full bg-dp-navy-600"
-                      transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                      transition={{ type: 'tween', duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                     />
                   )}
                   <span className="relative">{s.label}</span>
