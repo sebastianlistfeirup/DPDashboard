@@ -39,13 +39,14 @@ export interface Movements {
     upcoming: { month: string; n: number }[]
     kandidatOutByYear: { year: string; to: string; n: number }[]
   }
-  cohorts: Record<string, { n: number; series: ({ k: number } & Record<string, number>)[] }>
+  cohorts: Record<string, { n: number; series: ({ k: number } & Record<string, number>)[]; byUniversity?: Record<string, number> }>
   students: {
     outByYear: ({ year: string } & Record<string, number | string>)[]
     byExpectedYear?: Record<string, number>
     byExpectedMonth?: Record<string, number>
     byExpectedMonthLevel?: Record<string, Record<string, number>>
     byUniversity?: Record<string, number>
+    byUniversityAll?: Record<string, Record<string, number>>
     byLevel?: Record<string, number>
     planned?: ({ month: string } & Record<string, number | string>)[]
     plannedPairs?: Record<string, number>

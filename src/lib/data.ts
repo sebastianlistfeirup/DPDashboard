@@ -48,7 +48,9 @@ export interface Dashboard {
     fullPriceCategories: string[]
     groups: Group[]
     rates?: Record<string, { monthly: number | null; note: string | null }>
-    studies?: Record<'tilgang' | 'bestand' | 'afbrudte' | 'fuldførte', Record<'bachelor' | 'kandidat', Record<string, number>>>
+    studies?: Record<'tilgang' | 'bestand' | 'afbrudte' | 'fuldførte', Record<'bachelor' | 'kandidat', Record<string, number>>> & {
+      byInstitution?: Record<string, Record<'bachelor' | 'kandidat', Record<string, Record<string, number>>>>
+    }
   }
   snapshots: Snapshot[]
   baseByYear: Record<string, { total: number | null; categories: Record<string, number>; source: string }>

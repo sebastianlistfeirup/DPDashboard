@@ -17,13 +17,20 @@ export function Studies({ data, mov }: { data: Dashboard; mov: Movements | null 
   const st = data.meta.studies
   if (!st?.tilgang) return null
   const years = Object.keys(st.tilgang.bachelor).sort()
-  const at = (m: keyof typeof st, lvl: 'bachelor' | 'kandidat', y: string) => st[m]?.[lvl]?.[y] ?? null
+  type M = 'tilgang' | 'bestand' | 'afbrudte' | 'fuldførte'
+  const at = (m: M, lvl: 'bachelor' | 'kandidat', y: string) => (st[m] as Record<string, Record<string, number>> | undefined)?.[lvl]?.[y] ?? null
   const lastY = years[years.length - 1]
   const firstY = years[0]
 
+  const inst = st.byInstitution
+  const unis = inst ? Object.keys(inst.tilgang?.bachelor ?? {}).concat(Object.keys(inst.tilgang?.kandidat ?? {})).filter((u, i, arr) => arr.indexOf(u) === i).sort() : []
+  const short = (u: string) => u.replace('Københavns Universitet', 'KU').replace('Aarhus Universitet', 'AU').replace('Aalborg Universitet', 'AAU').replace('Syddansk Universitet', 'SDU').replace('Roskilde Universitet', 'RUC')
+  const uniColor: Record<string, string> = { 'Københavns Universitet': '#4c7bbd', 'Aarhus Universitet': '#df790d', 'Aalborg Universitet': '#4fa388', 'Syddansk Universitet': '#4e4897', 'Roskilde Universitet': '#aebdd4' }
+  const lastFullCohort = String(yearOf(data.meta.latest) - 1)
+
   const intakeItems = years.map((y) => ({ label: y, parts: { bachelor: at('tilgang', 'bachelor', y) ?? 0, kandidat: at('tilgang', 'kandidat', y) ?? 0 } }))
 
-  const lineFor = (m: keyof typeof st, lvl: 'bachelor' | 'kandidat', dashed = false): Series => ({
+  const lineFor = (m: M, lvl: 'bachelor' | 'kandidat', dashed = false): Series => ({
     key: `${m}-${lvl}`, label: `${L[lvl]}, ${m}`, shortLabel: L[lvl], color: C[lvl], dashed, endLabel: true,
     points: years.map((y, i) => ({ x: i, y: at(m, lvl, y) })),
   })
@@ -109,6 +116,51 @@ export function Studies({ data, mov }: { data: Dashboard; mov: Movements | null 
         </ChartCard>
       </div>
 
+      {inst && (
+        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+          <ChartCard
+            title="Optaget pr. universitet"
+            subtitle="Nye bachelorstuderende i psykologi pr. universitet. Roskilde havde en kandidatuddannelse frem til 2022."
+            table={<DataTable columns={[{ key: 'y', label: 'År' }, ...unis.map((u) => ({ key: u, label: short(u), align: 'right' as const }))]}
+                              rows={years.map((y) => ({ y, ...Object.fromEntries(unis.map((u) => [u, fmtNum(inst.tilgang?.bachelor?.[u]?.[y] ?? null)])) }))} />}
+          >
+            <StackedBars items={years.map((y) => ({ label: y, parts: Object.fromEntries(unis.map((u) => [u, inst.tilgang?.bachelor?.[u]?.[y] ?? 0])) }))}
+                         keys={unis} colors={uniColor} labels={Object.fromEntries(unis.map((u) => [u, short(u)]))} height={240} />
+            <Legend keys={unis} colors={uniColor} labels={Object.fromEntries(unis.map((u) => [u, short(u)]))} />
+          </ChartCard>
+
+          <ChartCard title="DP's andel pr. universitet" subtitle={`Studerende: DP's studentermedlemmer mod bestanden ${lastY}. Nyuddannede: cand.psych.-årgang ${lastFullCohort} i DP mod fuldførte kandidater samme år.`}>
+            <div className="thin-scroll -mx-2 overflow-x-auto px-2">
+              <table className="w-full min-w-[22rem] border-collapse text-[0.8125rem]">
+                <thead><tr className="border-b border-dp-navy-100 text-dp-navy-500">
+                  <th className="py-2 pr-3 text-left font-semibold">Universitet</th>
+                  <th className="py-2 pr-3 text-right font-semibold">Studerende</th>
+                  <th className="py-2 text-right font-semibold">Nyuddannede</th>
+                </tr></thead>
+                <tbody>
+                  {unis.filter((u) => !/Roskilde/.test(u)).map((u) => {
+                    const bestand = (inst.bestand?.bachelor?.[u]?.[lastY] ?? 0) + (inst.bestand?.kandidat?.[u]?.[lastY] ?? 0)
+                    const dpStud = mov?.students.byUniversityAll?.[u] ? Object.values(mov.students.byUniversityAll[u]).reduce((t, v) => t + v, 0) : null
+                    const done = inst.fuldførte?.kandidat?.[u]?.[lastFullCohort] ?? null
+                    const dpGrad = mov?.cohorts[lastFullCohort]?.byUniversity?.[u] ?? null
+                    return (
+                      <tr key={u} className="border-b border-dp-navy-50 last:border-0">
+                        <td className="py-2 pr-3 font-semibold" style={{ color: uniColor[u] }}>{short(u)}</td>
+                        <Cell a={dpStud} b={bestand} share={dpStud && bestand ? (dpStud / bestand) * 100 : null} />
+                        <Cell a={dpGrad} b={done} share={dpGrad && done ? (dpGrad / done) * 100 : null} />
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+              Andelene svinger med, hvor godt dimittenddatoer og universitet er registreret i DP's system — men forskellene mellem universiteterne er større end støjen.
+            </p>
+          </ChartCard>
+        </div>
+      )}
+
       <div className="mt-5">
         <Reveal className="card p-5 sm:p-6">
           <h3 className="text-[1.0625rem] font-semibold text-dp-navy-900">Det siger tallene</h3>
@@ -116,7 +168,7 @@ export function Studies({ data, mov }: { data: Dashboard; mov: Movements | null 
             {[
               `Der starter ${fmtNum(at('tilgang', 'bachelor', lastY))} på psykologi hvert år, og ${fmtNum(at('fuldførte', 'kandidat', lastY))} bliver færdige. Kandidatoptaget har ligget fast omkring 750 i ti år — det er loftet for tilgangen af nye psykologer, uanset hvor godt foreningen rekrutterer.`,
               shareRows.find((r) => r.gradShare)?.gradShare ? `Omkring ${fmtPct(shareRows.filter((r) => r.gradShare).slice(-1)[0].gradShare, 0)} af en cand.psych.-årgang er medlem inden for et halvt år. De øvrige ${fmtPct(100 - (shareRows.filter((r) => r.gradShare).slice(-1)[0].gradShare ?? 0), 0)} er det største uudnyttede potentiale i kongeindikatoren.` : '',
-              shareRows.find((r) => r.studentShare)?.studentShare ? `${fmtPct(shareRows.filter((r) => r.studentShare).slice(-1)[0].studentShare, 0)} af de indskrevne psykologistuderende er medlem af DP. På kandidatdelen er andelen formentlig højere end på bacheloren — det kan vi se, når vi får optaget fordelt på universitet.` : '',
+              shareRows.find((r) => r.studentShare)?.studentShare ? `${fmtPct(shareRows.filter((r) => r.studentShare).slice(-1)[0].studentShare, 0)} af de indskrevne psykologistuderende er medlem af DP. Andelen er højest på SDU og AAU og lavest på KU og AU — de to største universiteter er dér, der er mest at hente.` : '',
               'Frafaldet på studiet (omkring 100 på bacheloren, 20 på kandidaten om året) er langt mindre end DP\'s frafald blandt studentermedlemmer. Det er altså ikke studiestop, der forklarer udmeldelserne — det er dimission uden overgang.',
             ].filter(Boolean).map((s) => (
               <li key={s} className="flex gap-2.5"><span className="mt-[0.5rem] h-1.5 w-1.5 shrink-0 rounded-full bg-dp-orange" /><span>{s}</span></li>

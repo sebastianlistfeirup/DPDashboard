@@ -286,25 +286,33 @@ def load_studies() -> dict:
     datavarehus (tilgang, bestand, afbrudte, fuldførte pr. uddannelse). Kun
     rækkerne for psykologi (bachelor og kandidat) tages med."""
     folder = os.path.join(DATA, 'studiestatistik')
-    out: dict[str, dict[str, dict[str, int]]] = {}
+    out: dict = {}
     if not os.path.isdir(folder):
         return out
+    inst: dict = {}
     for f in sorted(glob.glob(os.path.join(folder, '*.xlsx'))):
         name = os.path.basename(f).lower()
-        if 'uddannelse' not in name:
-            continue
         measure = next((m for m in ('tilgang', 'bestand', 'afbrudte', 'fuldførte') if name.startswith(m)), None)
         if not measure:
             continue
         ws = load_workbook(f, data_only=True).active
-        for r in ws.iter_rows(values_only=True):
-            if not r or len(r) < 5 or not isinstance(r[3], (int, float)) or r[4] is None:
-                continue
-            u = str(r[2] or '')
-            if 'sykolog' not in u:
-                continue
-            level = 'bachelor' if 'bach' in u.lower() else 'kandidat'
-            out.setdefault(measure, {}).setdefault(level, {})[str(int(r[3]))] = int(r[4])
+        rows = [r for r in ws.iter_rows(values_only=True) if r and len(r) >= 5 and isinstance(r[3], (int, float)) and r[4] is not None]
+        if 'uddannelse' in name:
+            for r in rows:
+                u = str(r[2] or '')
+                if 'sykolog' not in u:
+                    continue
+                level = 'bachelor' if 'bach' in u.lower() else 'kandidat'
+                out.setdefault(measure, {}).setdefault(level, {})[str(int(r[3]))] = int(r[4])
+        elif 'institution' in name and 'psy' in name:
+            level = 'bachelor' if 'bach' in name else 'kandidat'
+            tgt = inst.setdefault(measure, {}).setdefault(level, {})
+            for r in rows:
+                u = str(r[1] or '').strip()  # hovedinstitution — campusser lægges sammen
+                tgt.setdefault(u, {})
+                tgt[u][str(int(r[3]))] = tgt[u].get(str(int(r[3])), 0) + int(r[4])
+    if inst:
+        out['byInstitution'] = inst
     return out
 
 

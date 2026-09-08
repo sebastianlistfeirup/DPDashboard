@@ -127,7 +127,7 @@ def load_students(L: dict, latest: dict) -> dict:
         if isinstance(v, datetime): return v.date()
         return v if isinstance(v, date) else None
     by_year = collections.Counter(); by_month = collections.Counter(); by_level_month = collections.defaultdict(collections.Counter)
-    uni = collections.Counter(); level = collections.Counter()
+    uni = collections.Counter(); level = collections.Counter(); uni_all = collections.defaultdict(collections.Counter)
     planned = collections.defaultdict(collections.Counter)   # måned → (fra→til) → n
     planned_pairs = collections.Counter()
     planned_sk = set()
@@ -164,6 +164,7 @@ def load_students(L: dict, latest: dict) -> dict:
         seen.add((sk, 's'))
         lvl = 'kandidatdel' if r[ix['Uddannelse']] == 'Cand. psych.' else 'bachelordel' if r[ix['Uddannelse']] == 'Bachelor i psykologi' else 'andet'
         level[lvl] += 1
+        uni_all[(r[ix['Uddannelsessted']] or 'Ukendt')][lvl] += 1
         d = dd(r[ix['Beregnet slutdato']])
         if not d or d.year >= 2099: by_year['ukendt'] += 1; continue
         if d < today: by_year['overskredet'] += 1; by_level_month['overskredet'][lvl] += 1; continue
@@ -175,6 +176,7 @@ def load_students(L: dict, latest: dict) -> dict:
     return dict(byExpectedYear=dict(sorted(by_year.items())), byExpectedMonth=dict(sorted(by_month.items())),
                 byExpectedMonthLevel={m: dict(c) for m, c in sorted(by_level_month.items())},
                 byUniversity=dict(uni.most_common()), byLevel=dict(level),
+                byUniversityAll={u: dict(c) for u, c in sorted(uni_all.items(), key=lambda t: -sum(t[1].values()))},
                 planned=[dict(month=m, **dict(c)) for m, c in sorted(planned.items())],
                 plannedPairs=dict(planned_pairs.most_common()),
                 joinYear=[dict(band=b, students=join_year.get(b, 0), all=join_year_all.get(b, 0)) for b in order],
@@ -321,7 +323,8 @@ def main() -> None:
                 if r: series[k][grp(r['type'])] += 1
                 elif m > first_seen.get(sk, '9999'): series[k]['ud'] += 1
                 else: series[k]['ikke_endnu'] += 1
-        cohorts[str(year)] = dict(n=len(base), series=[dict(k=k, **{g: n for g, n in c.items()}) for k, c in sorted(series.items())])
+        by_uni = collections.Counter(latest[sk][1]['uni'] or 'Ukendt' for sk in base)
+        cohorts[str(year)] = dict(n=len(base), series=[dict(k=k, **{g: n for g, n in c.items()}) for k, c in sorted(series.items())], byUniversity=dict(by_uni.most_common()))
 
     # Studerende-tragt: hvad sker der med studerende, der forlader kategorien
     stud_out = collections.defaultdict(collections.Counter)
