@@ -110,7 +110,7 @@ export function Lines({
   const n = xLabels.length
   const anyEnd = series.some((s) => s.endLabel)
   const W = width ?? (narrow ? 440 : 760)
-  const pad = { top: 18, right: narrow ? Math.min(padRight ?? 96, anyEnd ? 64 : 12) : (padRight ?? (anyEnd ? 96 : 18)), bottom: 28, left: 48 }
+  const pad = { top: 18, right: narrow && width === undefined ? Math.min(padRight ?? 96, anyEnd ? 64 : 12) : (padRight ?? (anyEnd ? 96 : 18)), bottom: 28, left: 48 }
   // Højden følger bredden, så grafen ikke får tomrum over og under sig på små skærme.
   const H = narrow ? Math.round(height * 0.9) : height
   const innerH = H - pad.top - pad.bottom

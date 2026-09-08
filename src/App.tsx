@@ -18,6 +18,7 @@ import { DataNeeds, Sections } from '@/sections/Movements'
 import { Flows } from '@/sections/Flows'
 import { Retention } from '@/sections/Retention'
 import { Members } from '@/sections/Members'
+import { Studies } from '@/sections/Studies'
 import { useMovements } from '@/lib/movements'
 import { computeGoal, ddmmyy, useAsOf, useDashboard } from '@/lib/data'
 import { motion as mo } from '@/design/tokens'
@@ -32,6 +33,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'kategorier', label: 'Alle kategorier', group: 'Segmenter' },
   { id: 'sektioner', label: 'Sektioner', group: 'Segmenter' },
   { id: 'medlemmerne', label: 'Medlemmerne', group: 'Segmenter' },
+  { id: 'studiet', label: 'Psykologistudiet', group: 'Segmenter' },
   { id: 'bevaegelser', label: 'Ind og ud', group: 'Bevægelser' },
   { id: 'frafald', label: 'Frafald', group: 'Bevægelser' },
   { id: 'data', label: 'Næste skridt', group: 'Bevægelser' },
@@ -118,6 +120,7 @@ export default function App() {
         <Section id="kategorier"><Categories data={data} a={a} /></Section>
         <Section id="sektioner" tone="sunken"><Sections data={data} a={a} /></Section>
         {mov && <Section id="medlemmerne"><Members mov={mov} /></Section>}
+        {data.meta.studies?.tilgang && <Section id="studiet" tone="sunken"><Studies data={data} mov={mov} /></Section>}
         {mov && <Section id="bevaegelser" tone="sunken"><Flows mov={mov} a={a} /></Section>}
         {mov && <Section id="frafald" tone="dark"><Retention mov={mov} a={a} /></Section>}
         <Section id="data" tone="sunken"><DataNeeds data={data} /></Section>

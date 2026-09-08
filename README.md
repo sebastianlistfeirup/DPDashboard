@@ -77,6 +77,9 @@ data/ind_udmeldelser.csv ─┘
 
 - `scripts/build_data.py` — læser alle ark, samler dem, regner kongeindikatoren
   for måneder uden månedsfil, og skriver advarsler når arkene er uenige.
+- `data/studiestatistik/*.xlsx` — udtræk fra UFM's datavarehus (tilgang, bestand,
+  afbrudte, fuldførte pr. uddannelse); kun psykologi-rækkerne læses. Offentlige tal.
+- `data/kontingent.csv` — kontingentsatser pr. kategori.
 - `scripts/parse_lists.py` + `scripts/build_movements.py` — læser medlemslisterne
   (lokalt) og skriver `public/data/movements.json` med optællinger.
 - `src/lib/data.ts` — alle afledte tal for én valgt måned.

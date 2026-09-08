@@ -281,6 +281,33 @@ def load_list_months() -> dict:
         return json.load(fh)
 
 
+def load_studies() -> dict:
+    """data/studiestatistik/*.xlsx: udtræk fra Uddannelses- og Forskningsministeriets
+    datavarehus (tilgang, bestand, afbrudte, fuldførte pr. uddannelse). Kun
+    rækkerne for psykologi (bachelor og kandidat) tages med."""
+    folder = os.path.join(DATA, 'studiestatistik')
+    out: dict[str, dict[str, dict[str, int]]] = {}
+    if not os.path.isdir(folder):
+        return out
+    for f in sorted(glob.glob(os.path.join(folder, '*.xlsx'))):
+        name = os.path.basename(f).lower()
+        if 'uddannelse' not in name:
+            continue
+        measure = next((m for m in ('tilgang', 'bestand', 'afbrudte', 'fuldførte') if name.startswith(m)), None)
+        if not measure:
+            continue
+        ws = load_workbook(f, data_only=True).active
+        for r in ws.iter_rows(values_only=True):
+            if not r or len(r) < 5 or not isinstance(r[3], (int, float)) or r[4] is None:
+                continue
+            u = str(r[2] or '')
+            if 'sykolog' not in u:
+                continue
+            level = 'bachelor' if 'bach' in u.lower() else 'kandidat'
+            out.setdefault(measure, {}).setdefault(level, {})[str(int(r[3]))] = int(r[4])
+    return out
+
+
 def load_rates() -> dict:
     """data/kontingent.csv: Kontingenttype;Pr. måned;Note. Tom sats = ukendt."""
     path = os.path.join(DATA, 'kontingent.csv')
@@ -446,6 +473,7 @@ def main() -> None:
         fullPriceCategories=sorted(FULL_PRICE),
         groups=[dict(key=k, label=l, categories=c) for k, l, c in GROUPS],
         rates=load_rates(),
+        studies=load_studies(),
     )
 
     out = dict(
