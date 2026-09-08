@@ -7,6 +7,7 @@ import { ChartCard, SectionHeading, Reveal } from '@/components/primitives'
 import { DataTable } from '@/components/charts'
 import { Lines, type Series } from '@/components/lines'
 import { StackedBars, Legend } from '@/components/stacked'
+import { GROUP_COLOR, REASON_COLOR } from '@/lib/movements'
 import { fmtNum, fmtPct, fmtPctSigned, type Dashboard } from '@/lib/data'
 import type { Movements } from '@/lib/movements'
 
@@ -71,6 +72,18 @@ export function Market({ data, mov }: { data: Dashboard; mov: Movements | null }
 
   const trend = (r(last).faerdig ?? 0) - (r(first).faerdig ?? 0)
 
+  // De 30–44-årige
+  const mid = mov?.middle
+  const l30 = mid?.loss['30–44'] ?? {}
+  const loss30 = { total: Object.values(l30.group ?? {}).reduce((t, v) => t + v, 0), group: l30.group ?? {}, sinceCand: l30.sinceCand ?? {}, reason: l30.reason ?? {} }
+  const rw = mid?.reentry.returnedWithin24 ?? []
+  const returnRate = rw.length ? (rw.reduce((t, x) => t + x.returned, 0) / Math.max(1, rw.reduce((t, x) => t + x.left, 0))) * 100 : null
+  const org3044 = Object.entries(emp?.byAgeYear ?? {}).filter(([y]) => mid?.dp30to44ByYear[y]).map(([y, ages]) => {
+    const pop = (ages['30-34 år'] ?? 0) + (ages['35-39 år'] ?? 0) + (ages['40-44 år'] ?? 0)
+    const dp = mid!.dp30to44ByYear[y]
+    return { year: y, dp, pop, share: pop ? (dp / pop) * 100 : null }
+  }).sort((a, b) => a.year.localeCompare(b.year))
+
   return (
     <>
       <SectionHeading
@@ -130,6 +143,70 @@ export function Market({ data, mov }: { data: Dashboard; mov: Movements | null }
         </ChartCard>
       </div>
 
+      {mid && (
+        <div className="mt-5">
+          <div className="mb-4 max-w-3xl">
+            <h3 className="font-serif text-[1.375rem] font-semibold text-white">De 30–44-årige: hvornår i karrieren taber vi dem?</h3>
+            <p className="mt-1 text-[0.875rem] leading-relaxed text-dp-navy-300">
+              {fmtNum(loss30.total)} medlemmer mellem 30 og 44 har meldt sig ud siden 2023. Her er, hvem de var, hvor langt de var i karrieren — og hvor mange af dem, der kommer tilbage.
+            </p>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-3">
+            <ChartCard title="Hvad var de, da de gik?" subtitle="Kontingentgruppe ved udmeldelsen, 30–44-årige, 2023 og frem.">
+              <Bars rows={loss30.group} colors={GROUP_COLOR} labels={{ ...mov!.meta.groupLabels, ud: 'Udmeldt' }} />
+            </ChartCard>
+            <ChartCard title="Hvor langt efter cand.psych.?" subtitle="Tid fra cand.psych.-dato til udmeldelse.">
+              <Bars rows={loss30.sinceCand} colors={{ 'under 2 år': '#4e4897', '2–5 år': '#4c7bbd', '5–10 år': '#3a557d', 'over 10 år': '#8299bb', 'ingen cand.psych.': '#aebdd4', 'før cand.psych.': '#4fa388' }} labels={{}} order={['før cand.psych.', 'under 2 år', '2–5 år', '5–10 år', 'over 10 år', 'ingen cand.psych.']} />
+              <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">Tabet sker ikke ved kontingentskiftet — det sker 2–10 år inde i karrieren, når man er etableret og overenskomsten føles fjern.</p>
+            </ChartCard>
+            <ChartCard title="Hvorfor?" subtitle="Registreret udmeldelsesårsag, 30–44-årige.">
+              <Bars rows={loss30.reason} colors={REASON_COLOR} labels={{}} />
+              <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">"For dyrt" og "økonomi" er tilsammen den største kendte årsag i denne aldersgruppe — det er også dem med de højeste kontingenter og de laveste indkomster relativt til livsfasen.</p>
+            </ChartCard>
+          </div>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+            <ChartCard title={`Genindmeldelse: ${fmtPct(returnRate, 0)} kommer tilbage inden for to år`} subtitle="Medlemmer, der forsvandt fra listen, og som dukkede op igen. Af dem, der forlod foreningen 2022–2024, hvor mange var tilbage senest 24 måneder efter?">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <ul className="space-y-2">
+                    {mid.reentry.returnedWithin24.map((r) => (
+                      <li key={r.year}>
+                        <div className="mb-0.5 flex justify-between text-[0.8125rem]"><span className="text-dp-navy-800">Forlod os i {r.year}</span><span className="tnum font-semibold text-dp-navy-900">{fmtPct((r.returned / (r.left || 1)) * 100, 0)} <span className="text-[0.6875rem] font-normal text-dp-navy-500">{fmtNum(r.returned)} / {fmtNum(r.left)}</span></span></div>
+                        <div className="h-2 rounded-full bg-dp-navy-100"><div className="h-full rounded-full bg-dp-navy-600" style={{ width: `${(r.returned / (r.left || 1)) * 100}%` }} /></div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="text-[0.8125rem] text-dp-navy-700">
+                  <div className="font-semibold text-dp-navy-900">Hvor hurtigt?</div>
+                  <ul className="mt-1 space-y-1">
+                    {['under 1 år', '1–2 år', 'over 2 år'].map((g) => <li key={g} className="flex justify-between"><span>{g}</span><span className="tnum font-semibold">{fmtNum(mid.reentry.gap[g] ?? 0)}</span></li>)}
+                  </ul>
+                  <div className="mt-3 font-semibold text-dp-navy-900">Seneste 12 måneder</div>
+                  <p className="mt-1 leading-relaxed">{fmtNum(mid.reentry.last12.genindmeldt)} genindmeldte mod {fmtNum(mid.reentry.last12.nye)} helt nye — hver sjette indmeldelse er et tidligere medlem.</p>
+                </div>
+              </div>
+              <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+                Målt på stamkortnummer: samme nummer, væk fra listen i mindst to måneder, tilbage igen. Genindmeldte kommer oftest tilbage som normalansatte ({fmtNum(mid.reentry.toGroup.normal ?? 0)} af {fmtNum(mid.reentry.n)}) — de fik et job, hvor det igen gav mening. Det er et argument for at holde kontakten i stedet for at lukke døren.
+              </p>
+            </ChartCard>
+            <ChartCard title="Organisationsgrad 30–44 år over tid" subtitle="DP's medlemmer 30–44 (uden studerende, pr. december) mod Danmarks Statistiks bestand samme år.">
+              <ul className="space-y-2.5">
+                {org3044.map((r) => (
+                  <li key={r.year}>
+                    <div className="mb-0.5 flex justify-between text-[0.8125rem]"><span className="text-dp-navy-800">{r.year}</span><span className="tnum font-semibold text-dp-navy-900">{fmtPct(r.share, 0)} <span className="text-[0.6875rem] font-normal text-dp-navy-500">{fmtNum(r.dp)} / {fmtNum(r.pop)}</span></span></div>
+                    <div className="h-2 rounded-full bg-dp-navy-100"><div className="h-full rounded-full bg-dp-navy-600" style={{ width: `${Math.min(100, r.share ?? 0)}%` }} /></div>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+                {org3044.length ? `${fmtNum((org3044[org3044.length - 1].pop ?? 0) - (org3044[org3044.length - 1].dp ?? 0))} psykologer mellem 30 og 44 var ikke medlem i ${org3044[org3044.length - 1].year}.` : ''} DST's tal kommer med to års forsinkelse; DP's tal for de seneste år står i Medlemmerne.
+              </p>
+            </ChartCard>
+          </div>
+        </div>
+      )}
+
       <div className="mt-5">
         <Reveal className="card p-5 sm:p-6">
           <h3 className="text-[1.0625rem] font-semibold text-dp-navy-900">Det siger tallene</h3>
@@ -146,6 +223,22 @@ export function Market({ data, mov }: { data: Dashboard; mov: Movements | null }
         </Reveal>
       </div>
     </>
+  )
+}
+
+function Bars({ rows, colors, labels, order }: { rows: Record<string, number>; colors: Record<string, string>; labels: Record<string, string>; order?: string[] }) {
+  const entries = (order ? order.filter((k) => rows[k]).map((k) => [k, rows[k]] as [string, number]) : Object.entries(rows).sort((a, b) => b[1] - a[1])).slice(0, 7)
+  const total = Object.values(rows).reduce((t, v) => t + v, 0) || 1
+  const max = Math.max(1, ...entries.map(([, v]) => v))
+  return (
+    <ul className="space-y-2">
+      {entries.map(([k, v]) => (
+        <li key={k}>
+          <div className="mb-0.5 flex justify-between text-[0.8125rem]"><span className="text-dp-navy-800">{labels[k] ?? k}</span><span className="tnum font-semibold text-dp-navy-900">{fmtNum(v)} <span className="text-[0.6875rem] font-normal text-dp-navy-500">{fmtPct((v / total) * 100, 0)}</span></span></div>
+          <div className="h-1.5 rounded-full bg-dp-navy-100"><div className="h-full rounded-full" style={{ width: `${(v / max) * 100}%`, background: colors[k] ?? '#8299bb' }} /></div>
+        </li>
+      ))}
+    </ul>
   )
 }
 

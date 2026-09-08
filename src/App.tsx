@@ -20,6 +20,8 @@ import { Retention } from '@/sections/Retention'
 import { Members } from '@/sections/Members'
 import { Studies } from '@/sections/Studies'
 import { Market } from '@/sections/Market'
+import { Prognosis } from '@/sections/Prognosis'
+import { Warning } from '@/sections/Warning'
 import { useMovements } from '@/lib/movements'
 import { computeGoal, ddmmyy, useAsOf, useDashboard } from '@/lib/data'
 import { motion as mo } from '@/design/tokens'
@@ -27,6 +29,7 @@ import { motion as mo } from '@/design/tokens'
 const SECTIONS: SectionDef[] = [
   { id: 'status', label: 'Status', group: 'Overblik' },
   { id: 'kongeindikator', label: 'Kongeindikator', group: 'Overblik' },
+  { id: 'prognose', label: 'Prognose', group: 'Overblik' },
   { id: 'maal', label: 'Mål 2029', group: 'Udvikling' },
   { id: 'oekonomi', label: 'Økonomi', group: 'Udvikling' },
   { id: 'hovedkategorier', label: 'Hovedkategorier', group: 'Udvikling' },
@@ -38,6 +41,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'organisationsgrad', label: 'Organisationsgrad', group: 'Segmenter' },
   { id: 'bevaegelser', label: 'Ind og ud', group: 'Bevægelser' },
   { id: 'frafald', label: 'Frafald', group: 'Bevægelser' },
+  { id: 'varsling', label: 'Varsling', group: 'Bevægelser' },
   { id: 'data', label: 'Næste skridt', group: 'Bevægelser' },
 ]
 
@@ -115,6 +119,7 @@ export default function App() {
           <Hero data={data} a={a} goal={goal} />
         </div>
         <Section id="kongeindikator"><Konge data={data} a={a} /></Section>
+        {mov?.prognosis && <Section id="prognose" tone="sunken"><Prognosis data={data} mov={mov} a={a} /></Section>}
         <Section id="maal" tone="dark"><Goal data={data} a={a} goal={goal} /></Section>
         <Section id="oekonomi" tone="dark" className="border-t border-white/10"><Economy data={data} a={a} goal={goal} /></Section>
         <Section id="hovedkategorier"><MainCats data={data} a={a} /></Section>
@@ -126,6 +131,7 @@ export default function App() {
         {data.meta.market?.orgRate && <Section id="organisationsgrad" tone="dark"><Market data={data} mov={mov} /></Section>}
         {mov && <Section id="bevaegelser" tone="sunken"><Flows mov={mov} a={a} /></Section>}
         {mov && <Section id="frafald" tone="dark"><Retention mov={mov} a={a} /></Section>}
+        {mov?.warning && <Section id="varsling" tone="sunken"><Warning mov={mov} /></Section>}
         <Section id="data" tone="sunken"><DataNeeds data={data} /></Section>
       </main>
 

@@ -479,6 +479,258 @@ def main() -> None:
         avg = sum(stock) / len(stock) if stock else 0
         rate[g] = dict(ud12=ud12, avgStock=round(avg), pct=round(ud12 / avg * 100, 1) if avg else None)
 
+    # ══════════════════════════════════════════════════════════════════════
+    # 1. PROGNOSE: fuldtidsbetalende 24 måneder frem
+    #
+    # Bestanden af fuldtidsbetalende (normal + selv + phd) fremskrives måned
+    # for måned. Tilgangen fra kandidater kommer fra de planlagte kontingent-
+    # skift (uddannelseslisten) × den historiske konvertering. Alle andre
+    # bevægelser ind og ud af gruppen (nye medlemmer, ledige der får job,
+    # udmeldelser, pension, ledighed …) tages som gennemsnittet for samme
+    # kalendermåned de seneste to år. Usikkerheden er spredningen på de
+    # historiske måneder, kumuleret.
+    # ══════════════════════════════════════════════════════════════════════
+    FT = ('normal', 'selv', 'phd')
+    def ft_count(k): return sum(1 for r in L[k].values() if grp(r['type']) in FT)
+    # Månedlige bevægelser ind/ud af fuldtidsgruppen, opdelt på kilde
+    mv_hist = {}  # måned → dict(skift, ind_new, ind_ledig, ind_andet, ud_ud, ud_pens, ud_ledig, ud_andet, net)
+    for a, b in zip(keys, keys[1:]):
+        if months_between(a, b) != 1: continue
+        c = collections.Counter()
+        A, B = L[a], L[b]
+        for sk, r in A.items():
+            ga = grp(r['type']); gb = grp(B[sk]['type']) if sk in B else 'ud'
+            if ga in FT and gb not in FT:
+                c['ud_' + ('ud' if gb == 'ud' else 'pens' if gb == 'pens' else 'ledig' if gb == 'ledig' else 'andet')] += 1
+            elif ga not in FT and gb in FT:
+                c['ind_' + ('skift' if ga == 'kandidat' else 'ledig' if ga == 'ledig' else 'andet')] += 1
+        for sk, r in B.items():
+            if sk not in A and grp(r['type']) in FT: c['ind_new'] += 1
+        c['stock_a'] = ft_count(a); c['stock_b'] = ft_count(b)
+        mv_hist[b] = dict(c)
+    hist_months = sorted(mv_hist)
+    # Gennemsnit pr. kalendermåned af de "andre" bevægelser, seneste 24 måneder
+    OTHER = ['ind_new', 'ind_ledig', 'ind_andet', 'ud_ud', 'ud_pens', 'ud_ledig', 'ud_andet']
+    def other_net(m): c = mv_hist[m]; return sum(c.get(k, 0) for k in OTHER if k.startswith('ind')) - sum(c.get(k, 0) for k in OTHER if k.startswith('ud'))
+    recent = hist_months[-24:]
+    by_cal = collections.defaultdict(list)
+    for m in recent: by_cal[int(m[5:])].append(m)
+    avg_other = {mo: {k: sum(mv_hist[m].get(k, 0) for m in ms) / len(ms) for k in OTHER} for mo, ms in by_cal.items()}
+    resid = [other_net(m) - (sum(avg_other[int(m[5:])][k] for k in OTHER if k.startswith('ind')) - sum(avg_other[int(m[5:])][k] for k in OTHER if k.startswith('ud'))) for m in recent]
+    sd = (sum(x * x for x in resid) / max(1, len(resid) - 1)) ** 0.5
+    # Konvertering ved skiftet (andel af planlagte, der rent faktisk bliver fuldtid)
+    conv = 0.94
+    if outcome_list:
+        tot = sum(sum(v for k, v in o.items() if k != 'year') for o in outcome_list)
+        ft_ok = sum(sum(v for k, v in o.items() if k in FT) for o in outcome_list)
+        if tot: conv = ft_ok / tot
+    planned_by_month = {p['month']: sum(v for k, v in p.items() if k in ('kandidat→normal', 'kandidat→selv', 'kandidat→phd')) for p in students.get('planned', [])}
+    computed_by_month = {u['month']: u['n'] for u in upcoming_list}
+    # Længere ude: dem, der endnu ikke er kandidater. Planlagte flytninger til
+    # kandidat (typisk 1. oktober, 4 mdr. efter cand.psych.) giver skift 21 mdr.
+    # senere; studerende med forventet slutdato uden planlagt flytning bliver
+    # kandidater i godt halvdelen af tilfældene (se studerende-tragten) og
+    # skifter 25 mdr. efter slutdatoen.
+    future_kand = collections.Counter()
+    for pth in students.get('planned', []):
+        n = sum(v for k, v in pth.items() if k in ('stud→kandidat', 'ledig→kandidat'))
+        if n: future_kand[add_months(pth['month'], 21)] += n
+    stud_share = 0.55
+    for mth, n in students.get('byExpectedMonth', {}).items():
+        planned_here = sum(v for k, v in (next((x for x in students.get('planned', []) if x['month'] == mth), {}) or {}).items() if k in ('stud→kandidat', 'ledig→kandidat'))
+        future_kand[add_months(mth, 25)] += max(0, n - planned_here) * stud_share
+    # Pension: erstat den historiske pens-afgang med aldersfordelingen, hvis den er større
+    stock = ft_count(last)
+    base_year = int(last[:4]); base_ft = None
+    dec_prev = f'{base_year - 1}-12'
+    if dec_prev in L: base_ft = ft_count(dec_prev)
+    forecast = []
+    m = last
+    lo = hi = stock
+    cum_var = 0.0
+    year_end_ft = {}
+    for i in range(24):
+        m = add_months(m, 1); mo = int(m[5:])
+        skift = (planned_by_month.get(m, 0) + computed_by_month.get(m, 0) + future_kand.get(m, 0)) * conv
+        o = avg_other.get(mo, {k: 0 for k in OTHER})
+        ind = o['ind_new'] + o['ind_ledig'] + o['ind_andet']
+        ud = o['ud_ud'] + o['ud_pens'] + o['ud_ledig'] + o['ud_andet']
+        stock = stock + skift + ind - ud
+        cum_var += sd * sd
+        band = cum_var ** 0.5
+        y = int(m[:4])
+        if mo == 12: year_end_ft[y] = stock
+        base = base_ft if y == base_year else year_end_ft.get(y - 1)
+        forecast.append(dict(month=m, stock=round(stock), low=round(stock - band), high=round(stock + band),
+                             konge=round(stock - base) if base else None, kongeLow=round(stock - band - base) if base else None, kongeHigh=round(stock + band - base) if base else None,
+                             skift=round(skift), ind=round(ind), ud=round(ud)))
+    # Backtest: samme metode startet 12 måneder tidligere (skift = cand + 25 mdr. fra listen dengang)
+    back = []
+    start = add_months(last, -12)
+    if start in L:
+        st = ft_count(start)
+        bstart_year = int(start[:4]); bbase = ft_count(f'{bstart_year - 1}-12') if f'{bstart_year - 1}-12' in L else None
+        b_year_end = {}
+        # planlagte skift dengang: kandidater på listen start-måned, cand + 25
+        b_skift = collections.Counter()
+        for sk, r in L[start].items():
+            if r['type'] == '1 og 2 års Kandidater' and r['cand']:
+                mm = add_months(ym(r['cand']), 25)
+                if mm > start: b_skift[mm] += 1
+        bm = start
+        for i in range(12):
+            bm = add_months(bm, 1); mo = int(bm[5:])
+            o = avg_other.get(mo, {k: 0 for k in OTHER})
+            st = st + b_skift.get(bm, 0) * conv + (o['ind_new'] + o['ind_ledig'] + o['ind_andet']) - (o['ud_ud'] + o['ud_pens'] + o['ud_ledig'] + o['ud_andet'])
+            y = int(bm[:4])
+            if mo == 12: b_year_end[y] = st
+            base = bbase if y == bstart_year else b_year_end.get(y - 1)
+            actual = ft_count(bm) if bm in L else None
+            actual_base = ft_count(f'{y - 1}-12') if f'{y - 1}-12' in L else None
+            back.append(dict(month=bm, expected=round(st), actual=actual,
+                             kongeExpected=round(st - base) if base else None,
+                             kongeActual=(actual - actual_base) if actual is not None and actual_base is not None else None))
+    # Usikkerhed: den in-sample-spredning er for optimistisk. Brug den største af
+    # (spredning × √k) og den faktiske fejl på samme horisont i backtesten.
+    bt_err = [abs(b['expected'] - b['actual']) for b in back if b['actual'] is not None]
+    for i, f in enumerate(forecast):
+        k = i + 1
+        band = sd * (k ** 0.5)
+        if bt_err:
+            e = bt_err[min(k, len(bt_err)) - 1]
+            band = max(band, e)
+        f['low'] = round(f['stock'] - band); f['high'] = round(f['stock'] + band)
+        f['delta'] = f['stock'] - ft_count(last)
+        f['band'] = round(band)
+    prognosis = dict(forecast=forecast, backtest=back, sd=round(sd, 1), conversion=round(conv, 3),
+                     stockNow=ft_count(last), baseFt=base_ft,
+                     history=[dict(month=m, **{k: mv_hist[m].get(k, 0) for k in ['ind_skift'] + OTHER}, stock=mv_hist[m]['stock_b']) for m in hist_months[-24:]])
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 2. DE 30–44-ÅRIGE OG GENINDMELDELSE
+    # ══════════════════════════════════════════════════════════════════════
+    # Udmeldelser 2023→ efter alder (10-års bånd), gruppe, år siden cand.psych., anciennitet
+    def age10(a):
+        if a is None: return 'ukendt'
+        return 'under 30' if a < 30 else '30–44' if a < 45 else '45–59' if a < 60 else '60+'
+    def since_cand_band(r, d):
+        if not r['cand']: return 'ingen cand.psych.'
+        k = months_between(ym(r['cand']), ym(d))
+        return 'før cand.psych.' if k < 0 else 'under 2 år' if k < 24 else '2–5 år' if k < 60 else '5–10 år' if k < 120 else 'over 10 år'
+    loss = collections.defaultdict(lambda: collections.defaultdict(collections.Counter))
+    seen3 = set()
+    for k in keys:
+        for sk, r in L[k].items():
+            d = r['dpud']
+            if not d or is_migration_ud(d) or d < date(2023, 1, 1) or d > last_date or (sk, d) in seen3: continue
+            seen3.add((sk, d))
+            ab = age10(age_at(r, ym(d)))
+            loss[ab]['group'][grp(r['type'])] += 1
+            loss[ab]['sinceCand'][since_cand_band(r, d)] += 1
+            loss[ab]['reason'][REASON_LABEL.get(reasons.get(sk, 'Årsag Ukendt'), 'Ukendt')] += 1
+            loss[ab]['year'][str(d.year)] += 1
+            ten = 'før dec. 2022' if (r['dpin'] and is_migration_in(r['dpin'])) else tenure_band(months_between(ym(r['dpin']), ym(d)) if r['dpin'] else None)
+            loss[ab]['tenure'][ten] += 1
+    # Genindmeldelse: stamkort der forsvinder fra listen og dukker op igen
+    presence = collections.defaultdict(list)
+    for i, k in enumerate(keys):
+        for sk in L[k]: presence[sk].append(i)
+    reentry = collections.Counter(); reentry_gap = collections.Counter(); reentry_from = collections.Counter(); reentry_to = collections.Counter()
+    left_total = collections.Counter()
+    for sk, idxs in presence.items():
+        # find huller
+        for a, b in zip(idxs, idxs[1:]):
+            if b - a > 1:
+                gap = b - a - 1  # måneder væk
+                ka, kb = keys[a], keys[b]
+                ra, rb = L[ka][sk], L[kb][sk]
+                if gap < 2: continue  # én manglende liste = støj
+                reentry['n'] += 1
+                reentry_gap['under 1 år' if gap < 12 else '1–2 år' if gap < 24 else 'over 2 år'] += 1
+                reentry_from[grp(ra['type'])] += 1
+                reentry_to[grp(rb['type'])] += 1
+    # hvor mange, der forsvandt 2022-2023, er kommet tilbage inden for 24 mdr.?
+    returned = collections.Counter(); left_cnt = collections.Counter()
+    for sk, idxs in presence.items():
+        for a in idxs:
+            if a + 1 < len(keys) and (a + 1) not in idxs:
+                kl = keys[a]
+                if kl < '2022-01' or kl > add_months(last, -24): continue
+                left_cnt[kl[:4]] += 1
+                if any(i > a + 1 and i - a - 1 >= 2 and keys[i] <= add_months(kl, 24) for i in idxs):
+                    returned[kl[:4]] += 1
+    # Indmeldelser i det seneste år: hvor mange var medlem før (genindmeldte)?
+    re_new = collections.Counter()
+    for m in months[-12:]:
+        pass
+    first_idx = {sk: idxs[0] for sk, idxs in presence.items()}
+    for sk, idxs in presence.items():
+        for a, b in zip(idxs, idxs[1:]):
+            if b - a - 1 >= 2 and keys[b] > add_months(last, -12): re_new['genindmeldt'] += 1
+    new12 = sum(1 for sk, i in first_idx.items() if keys[i] > add_months(last, -12))
+    re_new['nye'] = new12
+    # Organisationsgrad 30–44 over tid: DP (dec., uden studerende) — DST-bestanden lægges på i frontend
+    age_30_44 = {y: sum(v for b, v in c.items() if b in ('30–34', '35–39', '40–44')) for y, c in age_dec.items()}
+    middle = dict(loss={ab: {dim: dict(c.most_common()) for dim, c in d.items()} for ab, d in loss.items()},
+                  reentry=dict(n=reentry['n'], gap=dict(reentry_gap), fromGroup=dict(reentry_from.most_common()), toGroup=dict(reentry_to.most_common()),
+                               returnedWithin24=[dict(year=y, left=left_cnt[y], returned=returned.get(y, 0)) for y in sorted(left_cnt)],
+                               last12=dict(re_new)),
+                  dp30to44ByYear=age_30_44)
+
+    # ══════════════════════════════════════════════════════════════════════
+    # 3. VARSLING: hvem er i risiko for at melde sig ud?
+    #
+    # Historisk udmeldelsesrate pr. profil (gruppe × alder × anciennitet),
+    # målt som: af dem, der stod på listen i august 2023/2024/2025, hvor
+    # mange var væk 12 måneder senere? Raten lægges på den seneste liste.
+    # ══════════════════════════════════════════════════════════════════════
+    def ten_band3(r, k):
+        if r['dpin'] and is_migration_in(r['dpin']): return 'før 2023'
+        if not r['dpin']: return 'ukendt'
+        mm = months_between(ym(r['dpin']), k)
+        return 'under 1 år' if mm < 12 else '1–3 år' if mm < 36 else '3–10 år' if mm < 120 else 'over 10 år'
+    def cell(r, k): return (grp(r['type']), age10(age_at(r, k)), ten_band3(r, k))
+    cell_n = collections.Counter(); cell_gone = collections.Counter()
+    snap_keys = [k for k in keys if k[5:] == '08' and add_months(k, 12) in L]
+    for k in snap_keys:
+        later = L[add_months(k, 12)]
+        for sk, r in L[k].items():
+            c = cell(r, k); cell_n[c] += 1
+            if sk not in later: cell_gone[c] += 1
+    overall = sum(cell_gone.values()) / max(1, sum(cell_n.values()))
+    cur_cells = collections.Counter(cell(r, last) for r in L[last].values())
+    risk_rows = []
+    for c, n in cur_cells.items():
+        hn = cell_n.get(c, 0)
+        crate = (cell_gone.get(c, 0) / hn) if hn >= 40 else None
+        risk_rows.append(dict(group=c[0], age=c[1], tenure=c[2], n=n, histN=hn, rate=(round(crate * 100, 1) if crate is not None else None),
+                              expected=(round(n * crate) if crate is not None else None)))
+    risk_rows.sort(key=lambda x: -(x['rate'] or 0))
+    expected_total = sum(x['expected'] or 0 for x in risk_rows)
+    high = [x for x in risk_rows if x['rate'] is not None and x['rate'] >= overall * 100 * 1.5 and x['n'] >= 20]
+    # Konkrete flag på seneste liste
+    students_over = students.get('byExpectedYear', {}).get('overskredet', 0)
+    ledig_long = sum(v for b, v in stock_now.items() if b in ('over 2 år', 'over 4 år (fra før 2022)'))
+    flags = [
+        dict(key='opsagt', label='Har opsagt (udmeldelsesdato i fremtiden)', n=sum(pending.values()), why='Kan stadig nås — de er ikke ude endnu.'),
+        dict(key='stud_over', label='Studerende med overskredet slutdato', n=students_over, why='Formentlig færdige. Hver tredje forsvinder, hvis ikke de flyttes til kandidat.'),
+        dict(key='ledig_long', label='Ledige i over to år', n=ledig_long, why='Næppe jobsøgende — hver femte af dem ender med at melde sig ud.'),
+        dict(key='ny_ft', label='Fuldtidsbetalende, medlem under 1 år', n=sum(1 for r in L[last].values() if grp(r['type']) in FT and r['dpin'] and not is_migration_in(r['dpin']) and months_between(ym(r['dpin']), last) < 12), why='Første år er det farligste for nye fuldtidsbetalende.'),
+        dict(key='30_44_ft', label='Fuldtidsbetalende 30–44 år, medlem 1–3 år', n=sum(1 for r in L[last].values() if grp(r['type']) in FT and age10(age_at(r, last)) == '30–44' and ten_band3(r, last) == '1–3 år'), why='Den aldersgruppe, hvor organisationsgraden er lavest.'),
+    ]
+    # Udmeldelsesrate i risikogruppen over tid (til før/efter-måling): høj-risiko-celler pr. august-snapshot
+    high_cells = {(x['group'], x['age'], x['tenure']) for x in high}
+    risk_trend = []
+    for k in snap_keys:
+        later = L[add_months(k, 12)]
+        n = gone = 0
+        for sk, r in L[k].items():
+            if cell(r, k) in high_cells:
+                n += 1; gone += (sk not in later)
+        risk_trend.append(dict(from_=k, n=n, gone=gone, rate=round(gone / n * 100, 1) if n else None))
+    warning = dict(overallRate=round(overall * 100, 1), expectedNext12=expected_total, cells=risk_rows[:40], high=high, flags=flags,
+                   riskTrend=risk_trend, snapshots=snap_keys)
+
     # ── Afstemning mod listestørrelserne ────────────────────────────────────
     sizes = [dict(month=k, n=len(L[k])) for k in keys]
 
@@ -505,6 +757,9 @@ def main() -> None:
                      byGroup={g: dict(c.most_common()) for g, c in reason_group.items()}),
         churnRate=rate,
         unemployment=unemployment,
+        prognosis=prognosis,
+        middle=middle,
+        warning=warning,
         sizes=sizes,
     )
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

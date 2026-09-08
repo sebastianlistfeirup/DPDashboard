@@ -60,7 +60,12 @@ Findes der både et ark og en liste for en måned, vinder arket.
 | **Sektioner** | Medlemmer pr. sektion og udviklingen i procent |
 | **Medlemmerne** | Alder og kontingentgruppe, køn, kredse, sektor, universitet — og pensionsafgangen frem mod 2035 |
 | **Ind og ud** | Ind- og udmeldelser pr. måned siden 2022 fra medlemslisterne, fordelt på gruppe, alder, anciennitet og årsag; udmeldelsesrate pr. gruppe; opsigelser der endnu ikke er trådt i kraft |
-| **Frafald** | Kontingentskiftet målt på hvert medlem, cand.psych.-årgange fulgt måned for måned, de studerendes vej ud af studiet, kommende kontingentskift, bevægelser mellem grupper |
+| **Prognose** | Kongeindikatoren 24 måneder frem med usikkerhedsbånd, backtest, og "som forventet eller signal" for seneste måned |
+| **Økonomi** | Kontingent i kroner pr. kategori, kongeindikatoren i kroner, målet i kroner |
+| **Psykologistudiet** | Optag, bestand, fuldførte og afbrudte (UFM) pr. år og universitet; DP's andel |
+| **Organisationsgrad** | DP's organisationsgrader 2012–2024; DP mod SDS/DST efter alder, sektor, region; de 30–44-årige; genindmeldelse |
+| **Frafald** | Kontingentskiftet målt på hvert medlem, cand.psych.-årgange fulgt måned for måned, de studerendes vej ud af studiet, kommende kontingentskift, bevægelser mellem grupper, de ledige |
+| **Varsling** | Målt udmeldelsesrate pr. profil lagt på den seneste liste; fem konkrete ringelister (kun antal); rate i risikozonen år for år |
 | **Næste skridt** | Hvad der stadig kan gøre analyserne skarpere |
 
 Månedsvælgeren øverst viser dashboardet, som det så ud en tidligere måned

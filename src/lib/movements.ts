@@ -77,6 +77,25 @@ export interface Movements {
     measurableSpells: number
     udByMonth: { k: number; n: number }[]
   }
+  prognosis?: {
+    forecast: { month: string; stock: number; low: number; high: number; delta: number; band: number; konge: number | null; skift: number; ind: number; ud: number }[]
+    backtest: { month: string; expected: number; actual: number | null; kongeExpected: number | null; kongeActual: number | null }[]
+    sd: number; conversion: number; stockNow: number; baseFt: number | null
+    history: ({ month: string; stock: number } & Record<string, number>)[]
+  }
+  middle?: {
+    loss: Record<string, Record<string, Record<string, number>>>
+    reentry: { n: number; gap: Record<string, number>; fromGroup: Record<string, number>; toGroup: Record<string, number>; returnedWithin24: { year: string; left: number; returned: number }[]; last12: Record<string, number> }
+    dp30to44ByYear: Record<string, number>
+  }
+  warning?: {
+    overallRate: number; expectedNext12: number
+    cells: { group: string; age: string; tenure: string; n: number; histN: number; rate: number | null; expected: number | null }[]
+    high: { group: string; age: string; tenure: string; n: number; histN: number; rate: number | null; expected: number | null }[]
+    flags: { key: string; label: string; n: number; why: string }[]
+    riskTrend: { from_: string; n: number; gone: number; rate: number | null }[]
+    snapshots: string[]
+  }
   sizes: { month: string; n: number }[]
 }
 

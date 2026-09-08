@@ -382,11 +382,17 @@ def load_market() -> dict:
             y = str(r[0]).strip(); latest = max(latest, int(y))
             by_year.setdefault(y, {})
             by_year[y][str(r[2])] = by_year[y].get(str(r[2]), 0) + int(num(r[4]) or 0)
+        by_age_year: dict = {}
         for r in ws.iter_rows(min_row=2, values_only=True):
-            if not r or str(r[0]).strip() != str(latest): continue
-            by_age.setdefault(str(r[3]), {})
-            by_age[str(r[3])][str(r[2])] = by_age[str(r[3])].get(str(r[2]), 0) + int(num(r[4]) or 0)
-        out['employment'] = dict(byYear=by_year, byAgeLatest=by_age, latest=str(latest))
+            if not r or r[0] is None or not str(r[0]).strip().isdigit(): continue
+            y = str(r[0]).strip()
+            if r[2] == 'Diskretioneret': continue
+            by_age_year.setdefault(y, {})
+            by_age_year[y][str(r[3])] = by_age_year[y].get(str(r[3]), 0) + int(num(r[4]) or 0)
+            if y == str(latest):
+                by_age.setdefault(str(r[3]), {})
+                by_age[str(r[3])][str(r[2])] = by_age[str(r[3])].get(str(r[2]), 0) + int(num(r[4]) or 0)
+        out['employment'] = dict(byYear=by_year, byAgeLatest=by_age, byAgeYear=by_age_year, latest=str(latest))
     for f in glob.glob(os.path.join(folder, 'Psykologers_dimissionsaar*.xlsx')):
         wb = load_workbook(f, data_only=True)
         def tab(name):
