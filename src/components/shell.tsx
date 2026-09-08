@@ -6,7 +6,7 @@
  * det er præcis det overblik ledergruppen fik den måned.
  */
 import { motion } from 'framer-motion'
-import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { cap, monthYear, type Snapshot } from '@/lib/data'
 
 /* ── Afsendermærke ───────────────────────────────────────────────────────── */
@@ -104,9 +104,20 @@ export function MonthPicker({
 
 export interface SectionDef { id: string; label: string; group?: string }
 
+const GROUP_TINT: Record<string, { bg: string; label: string }> = {
+  Overblik: { bg: 'rgba(58,85,125,0.07)', label: '#3a557d' },
+  Udvikling: { bg: 'rgba(223,121,13,0.09)', label: '#b3600a' },
+  Segmenter: { bg: 'rgba(79,163,136,0.11)', label: '#2f7a62' },
+  Bevægelser: { bg: 'rgba(78,72,151,0.09)', label: '#4e4897' },
+}
+
+/**
+ * Sektionerne i grupper: gruppens navn står over sine links, og hver gruppe
+ * har sin egen svage farve. Der scrolles ikke — på smalle skærme ombrydes
+ * grupperne i stedet.
+ */
 export function SectionNav({ sections }: { sections: SectionDef[] }) {
   const [active, setActive] = useState(sections[0]?.id)
-  const railRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -125,15 +136,6 @@ export function SectionNav({ sections }: { sections: SectionDef[] }) {
     return () => observer.disconnect()
   }, [sections])
 
-  useEffect(() => {
-    const rail = railRef.current
-    const el = rail?.querySelector<HTMLElement>(`[data-nav="${active}"]`)
-    if (!rail || !el) return
-    const target = el.offsetLeft - rail.clientWidth / 2 + el.clientWidth / 2
-    const max = rail.scrollWidth - rail.clientWidth
-    rail.scrollTo({ left: Math.max(0, Math.min(max, target)), behavior: 'smooth' })
-  }, [active])
-
   const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     const target = document.getElementById(id)
     if (!target) return
@@ -145,49 +147,46 @@ export function SectionNav({ sections }: { sections: SectionDef[] }) {
     setActive(id)
   }
 
-  const [edges, setEdges] = useState({ left: false, right: false })
-  useEffect(() => {
-    const el = railRef.current
-    if (!el) return
-    const read = () => setEdges({ left: el.scrollLeft > 4, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 4 })
-    read()
-    el.addEventListener('scroll', read, { passive: true })
-    window.addEventListener('resize', read)
-    return () => { el.removeEventListener('scroll', read); window.removeEventListener('resize', read) }
-  }, [sections])
+  const groups: { name: string; items: SectionDef[] }[] = []
+  for (const s of sections) {
+    const g = s.group ?? ''
+    const last = groups[groups.length - 1]
+    if (last && last.name === g) last.items.push(s)
+    else groups.push({ name: g, items: [s] })
+  }
 
   return (
-    <nav aria-label="Sektioner" className="relative">
-      <div ref={railRef} className="thin-scroll -mx-1 flex items-center gap-1 overflow-x-auto px-1 py-1">
-        {sections.map((s, i) => (
-          <Fragment key={s.id}>
-            {s.group && s.group !== sections[i - 1]?.group && (
-              <span className="ml-1.5 mr-0.5 flex shrink-0 items-center gap-1.5 first:ml-0">
-                {i > 0 && <span className="h-4 w-px bg-dp-navy-200" aria-hidden="true" />}
-                <span className="text-[0.5625rem] font-bold uppercase tracking-[0.14em] text-dp-navy-400">{s.group}</span>
-              </span>
+    <nav aria-label="Sektioner" className="flex flex-wrap gap-1.5">
+      {groups.map((g) => {
+        const tint = GROUP_TINT[g.name] ?? { bg: 'rgba(58,85,125,0.06)', label: '#4a5a72' }
+        return (
+          <div key={g.name || 'x'} className="rounded-xl px-1.5 pb-1 pt-1" style={{ background: tint.bg }}>
+            {g.name && (
+              <div className="px-2 text-[0.5625rem] font-bold uppercase leading-4 tracking-[0.14em]" style={{ color: tint.label }}>{g.name}</div>
             )}
-            <a
-              href={`#${s.id}`}
-              data-nav={s.id}
-              onClick={(e) => jumpTo(e, s.id)}
-              className="relative shrink-0 rounded-full px-3.5 py-1.5 text-[0.75rem] font-semibold transition-colors duration-200"
-              style={{ color: active === s.id ? '#fff' : '#4a5a72' }}
-            >
-              {active === s.id && (
-                <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-dp-navy-600"
-                  transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                />
-              )}
-              <span className="relative">{s.label}</span>
-            </a>
-          </Fragment>
-        ))}
-      </div>
-      <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white to-transparent transition-opacity duration-300" style={{ opacity: edges.left ? 1 : 0 }} />
-      <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent transition-opacity duration-300" style={{ opacity: edges.right ? 1 : 0 }} />
+            <div className="flex flex-wrap items-center">
+              {g.items.map((s) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  onClick={(e) => jumpTo(e, s.id)}
+                  className="relative whitespace-nowrap rounded-full px-2.5 py-1 text-[0.75rem] font-semibold transition-colors duration-200"
+                  style={{ color: active === s.id ? '#fff' : '#2f3f58' }}
+                >
+                  {active === s.id && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 rounded-full bg-dp-navy-600"
+                      transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                    />
+                  )}
+                  <span className="relative">{s.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      })}
     </nav>
   )
 }

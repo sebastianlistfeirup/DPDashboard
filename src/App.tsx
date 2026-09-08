@@ -57,6 +57,17 @@ export default function App() {
   const [month, setMonth] = useMonthParam(data?.meta.latest ?? null)
   const a = useAsOf(data, month)
   const goal = useMemo(() => (data && a ? computeGoal(data, a) : null), [data, a])
+  const [navOpen, setNavOpen] = useState(false)
+  const [activeId, setActiveId] = useState('status')
+  useEffect(() => {
+    if (!data) return
+    const observer = new IntersectionObserver((entries) => {
+      const v = entries.filter((e) => e.isIntersecting).sort((x, y) => x.boundingClientRect.top - y.boundingClientRect.top)[0]
+      if (v) setActiveId(v.target.id)
+    }, { rootMargin: '-30% 0px -60% 0px' })
+    for (const s of SECTIONS) { const el = document.getElementById(s.id); if (el) observer.observe(el) }
+    return () => observer.disconnect()
+  }, [data])
 
   useEffect(() => {
     if (a) document.title = `Medlemsudvikling pr. ${ddmmyy(a.date)} · Dansk Psykolog Forening`
@@ -78,8 +89,19 @@ export default function App() {
               </span>
             </div>
           </div>
-          <div className="border-t border-dp-navy-50 py-2">
-            <SectionNav sections={SECTIONS} />
+          <div className="border-t border-dp-navy-50 py-1.5">
+            {/* På store skærme står alle sektioner fremme; på små skærme foldes de ud fra en knap, så toppen ikke sluger skærmen. */}
+            <div className="hidden lg:block"><SectionNav sections={SECTIONS} /></div>
+            <div className="lg:hidden">
+              <button type="button" onClick={() => setNavOpen((v) => !v)} aria-expanded={navOpen}
+                      className="flex w-full items-center justify-between py-1 text-[0.8125rem] font-semibold text-dp-navy-800">
+                <span>{navOpen ? 'Sektioner' : `Sektion: ${SECTIONS.find((s) => s.id === activeId)?.label ?? 'Status'}`}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ transform: navOpen ? 'rotate(180deg)' : undefined }}>
+                  <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              {navOpen && <div className="pb-2" onClick={() => setNavOpen(false)}><SectionNav sections={SECTIONS} /></div>}
+            </div>
           </div>
         </div>
       </header>
