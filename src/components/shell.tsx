@@ -68,7 +68,7 @@ export function MonthPicker({
           className="tnum h-8 appearance-none rounded-full border border-dp-navy-200 bg-white pl-3.5 pr-8 text-[0.8125rem] font-semibold text-dp-navy-900 outline-none transition focus:border-dp-orange"
         >
           {[...snapshots].reverse().map((s) => (
-            <option key={s.date} value={s.date}>Pr. {cap(monthYear(s.date))}</option>
+            <option key={s.date} value={s.date}>{cap(monthYear(s.date))}</option>
           ))}
         </select>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"
@@ -108,7 +108,7 @@ const GROUP_TINT: Record<string, { bg: string; label: string }> = {
   Overblik: { bg: 'rgba(58,85,125,0.07)', label: '#3a557d' },
   Udvikling: { bg: 'rgba(223,121,13,0.09)', label: '#b3600a' },
   Segmenter: { bg: 'rgba(79,163,136,0.11)', label: '#2f7a62' },
-  Bevægelser: { bg: 'rgba(78,72,151,0.09)', label: '#4e4897' },
+  Bevægelser: { bg: 'rgba(210,78,70,0.08)', label: '#b03a33' },
 }
 
 /**
@@ -179,21 +179,21 @@ export function SectionNav({ sections, id = 'nav' }: { sections: SectionDef[]; i
   }
 
   return (
-    <nav aria-label="Sektioner" className="flex flex-wrap gap-1.5">
+    <nav aria-label="Sektioner" className="flex flex-wrap gap-1">
       {groups.map((g) => {
         const tint = GROUP_TINT[g.name] ?? { bg: 'rgba(58,85,125,0.06)', label: '#4a5a72' }
         return (
-          <div key={g.name || 'x'} className="rounded-xl px-1.5 pb-1 pt-1" style={{ background: tint.bg }}>
+          <div key={g.name || 'x'} className="rounded-xl px-1 pb-1 pt-1" style={{ background: tint.bg }}>
             {g.name && (
               <div className="px-2 text-[0.5625rem] font-bold uppercase leading-4 tracking-[0.14em]" style={{ color: tint.label }}>{g.name}</div>
             )}
-            <div className="flex flex-wrap items-center">
+            <div className="flex flex-wrap items-center gap-x-0.5">
               {g.items.map((s) => (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
                   onClick={(e) => jumpTo(e, s.id)}
-                  className="relative whitespace-nowrap rounded-full px-2.5 py-1 text-[0.75rem] font-semibold transition-colors duration-200"
+                  className="relative whitespace-nowrap rounded-full px-1.5 py-1 text-[0.72rem] font-semibold transition-colors duration-200"
                   style={{ color: active === s.id ? '#fff' : '#2f3f58' }}
                 >
                   {active === s.id && (

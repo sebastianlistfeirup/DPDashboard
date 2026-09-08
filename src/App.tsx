@@ -14,7 +14,7 @@ import { MainCats } from '@/sections/MainCats'
 import { Economy } from '@/sections/Economy'
 import { YearWheel } from '@/sections/YearWheel'
 import { Categories } from '@/sections/Categories'
-import { DataNeeds, Sections } from '@/sections/Movements'
+import { Sections } from '@/sections/Movements'
 import { Flows } from '@/sections/Flows'
 import { Retention } from '@/sections/Retention'
 import { Members } from '@/sections/Members'
@@ -34,15 +34,14 @@ const SECTIONS: SectionDef[] = [
   { id: 'oekonomi', label: 'Økonomi', group: 'Udvikling' },
   { id: 'hovedkategorier', label: 'Hovedkategorier', group: 'Udvikling' },
   { id: 'aarshjul', label: 'Årshjul', group: 'Udvikling' },
-  { id: 'kategorier', label: 'Alle kategorier', group: 'Segmenter' },
+  { id: 'kategorier', label: 'Alle', group: 'Segmenter' },
   { id: 'sektioner', label: 'Sektioner', group: 'Segmenter' },
   { id: 'medlemmerne', label: 'Medlemmerne', group: 'Segmenter' },
-  { id: 'studiet', label: 'Psykologistudiet', group: 'Segmenter' },
+  { id: 'studiet', label: 'Studiet', group: 'Segmenter' },
   { id: 'organisationsgrad', label: 'Organisationsgrad', group: 'Segmenter' },
   { id: 'bevaegelser', label: 'Ind og ud', group: 'Bevægelser' },
   { id: 'frafald', label: 'Frafald', group: 'Bevægelser' },
   { id: 'varsling', label: 'Varsling', group: 'Bevægelser' },
-  { id: 'data', label: 'Næste skridt', group: 'Bevægelser' },
 ]
 
 /** Den valgte måned lever i URL'en, så et link til "april" viser april. */
@@ -132,7 +131,6 @@ export default function App() {
         {mov && <Section id="bevaegelser" tone="sunken"><Flows mov={mov} a={a} /></Section>}
         {mov && <Section id="frafald" tone="dark"><Retention mov={mov} a={a} /></Section>}
         {mov?.warning && <Section id="varsling" tone="sunken"><Warning mov={mov} /></Section>}
-        <Section id="data" tone="sunken"><DataNeeds data={data} /></Section>
       </main>
 
       <footer className="border-t border-dp-navy-100 bg-white">
