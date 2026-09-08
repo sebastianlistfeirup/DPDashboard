@@ -51,6 +51,15 @@ export interface Dashboard {
     studies?: Record<'tilgang' | 'bestand' | 'afbrudte' | 'fuldførte', Record<'bachelor' | 'kandidat', Record<string, number>>> & {
       byInstitution?: Record<string, Record<'bachelor' | 'kandidat', Record<string, Record<string, number>>>>
     }
+    market?: {
+      orgRate?: Record<string, { faerdig: number | null; beskaeftigede: number | null; studerendeDk: number | null; studerendeAlle: number | null }>
+      dream?: Record<string, number>
+      workforce?: { total: Record<string, number>; region: Record<string, Record<string, number>>; age: Record<string, Record<string, number | null>>; sektor: Record<string, Record<string, number | null>> }
+      employment?: { byYear: Record<string, Record<string, number>>; byAgeLatest: Record<string, Record<string, number>>; latest: string }
+      graduatesByYear?: Record<string, { alle: number; candpsych: number }>
+      populationByRegion?: { year: string; regions: Record<string, number> }
+      sectorByYear?: Record<string, Record<string, number>>
+    }
   }
   snapshots: Snapshot[]
   baseByYear: Record<string, { total: number | null; categories: Record<string, number>; source: string }>

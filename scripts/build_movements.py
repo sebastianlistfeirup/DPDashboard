@@ -415,7 +415,7 @@ def main() -> None:
     age_by_group = collections.defaultdict(collections.Counter)
     sex_by_group = collections.defaultdict(collections.Counter)
     kreds_now = collections.Counter(); kreds_ly = collections.Counter()
-    sektor_now = collections.Counter(); ans_now = collections.Counter(); uni_now = collections.Counter()
+    sektor_now = collections.Counter(); ans_now = collections.Counter(); uni_now = collections.Counter(); region_now = collections.Counter()
     ly = add_months(last, -12)
     for sk, r in cur.items():
         g = grp(r['type'])
@@ -425,6 +425,7 @@ def main() -> None:
         if g in ('normal', 'selv', 'phd', 'kandidat'):
             sektor_now[r['sektor'] or 'Ikke oplyst'] += 1
             ans_now[r['ans'] or 'Ikke oplyst'] += 1
+            region_now[r['region'] or 'Ikke oplyst'] += 1
         if r['cand']: uni_now[r['uni'] or 'Ukendt'] += 1
     for sk, r in L.get(ly, {}).items():
         kreds_ly[kreds(r['kreds'])] += 1
@@ -435,6 +436,14 @@ def main() -> None:
         for kk, n in flows[m]['udByKreds'].items(): kreds_out12[kk] += n
     kreds_list = [dict(kreds=k, n=n, ly=kreds_ly.get(k, 0), ind12=kreds_in12.get(k, 0), ud12=kreds_out12.get(k, 0))
                   for k, n in kreds_now.most_common()]
+
+    # Aldersfordeling (uden studerende) pr. december — til sammenligning med
+    # DST's bestand af psykologuddannede samme år.
+    age_dec = {}
+    for k in keys:
+        if not k.endswith('-12'): continue
+        c = collections.Counter(age_band(age_at(r, k)) for r in L[k].values() if grp(r['type']) != 'stud')
+        age_dec[k[:4]] = dict(c)
 
     # Pension-pipelinen: fuldtidsbetalende der fylder 67 (folkepensionsalder 2026→) pr. år
     pension = collections.Counter()
@@ -491,7 +500,7 @@ def main() -> None:
         members=dict(ageByGroup={g: dict(c) for g, c in age_by_group.items()}, avgAge=avg_age,
                      sexByGroup={g: dict(c) for g, c in sex_by_group.items()},
                      kreds=kreds_list, sektor=dict(sektor_now.most_common()), ansaettelse=dict(ans_now.most_common()),
-                     university=dict(uni_now.most_common()), pensionByYear=dict(sorted(pension.items()))),
+                     university=dict(uni_now.most_common()), regionWork=dict(region_now.most_common()), ageNonStudentByYear=age_dec, pensionByYear=dict(sorted(pension.items()))),
         reasons=dict(byYear={y: dict(c.most_common()) for y, c in sorted(reason_year.items())},
                      byGroup={g: dict(c.most_common()) for g, c in reason_group.items()}),
         churnRate=rate,

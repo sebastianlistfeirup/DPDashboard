@@ -60,6 +60,8 @@ export interface Movements {
     sektor: Record<string, number>
     ansaettelse: Record<string, number>
     university: Record<string, number>
+    regionWork?: Record<string, number>
+    ageNonStudentByYear?: Record<string, Record<string, number>>
     pensionByYear: Record<string, number>
   }
   reasons: { byYear: Record<string, Record<string, number>>; byGroup: Record<string, Record<string, number>> }

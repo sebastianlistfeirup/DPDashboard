@@ -316,6 +316,104 @@ def load_studies() -> dict:
     return out
 
 
+def load_market() -> dict:
+    """data/marked/: organisationsgrad (aflæst fra DP's egne grafer), DREAM-
+    fremskrivningen af antal psykologer, Sundhedsdatastyrelsens arbejdsstyrke-
+    tal og DST's beskæftigelsestal. Alt er offentlige eller aggregerede tal."""
+    folder = os.path.join(DATA, 'marked')
+    out: dict = {}
+    if not os.path.isdir(folder):
+        return out
+    def num(v):
+        if v is None or v == '' or v == '.': return None
+        if isinstance(v, (int, float)): return v
+        t = str(v).strip().replace(',', '.')
+        return None if '-' in t and not t.startswith('-') else (float(t) if re.fullmatch(r'-?\d+(\.\d+)?', t) else None)
+    p = os.path.join(folder, 'organisationsgrad.csv')
+    if os.path.exists(p):
+        with open(p, encoding='utf-8') as fh:
+            out['orgRate'] = {row['År']: dict(faerdig=num(row['Færdiguddannede']), beskaeftigede=num(row['Beskæftigede']),
+                                              studerendeDk=num(row['Studerende danske']), studerendeAlle=num(row['Studerende alle']))
+                              for row in csv.DictReader(fh, delimiter=';')}
+    p = os.path.join(folder, 'dream.csv')
+    if os.path.exists(p):
+        with open(p, encoding='utf-8') as fh:
+            out['dream'] = {row['År']: num(row['Psykologer DREAM']) for row in csv.DictReader(fh, delimiter=';')}
+    # Sundhedsdatastyrelsen: arbejdsstyrken af psykologer
+    for f in glob.glob(os.path.join(folder, 'Arbejdsstyrken*.xlsx')):
+        wb = load_workbook(f, data_only=True)
+        wf: dict = {}
+        ws = wb['Sundhedsuddannede']
+        for r in ws.iter_rows(values_only=True):
+            if r and r[1] and 'sykolog' in str(r[1]):
+                wf['total'] = {'2022': num(r[2]), '2023': num(r[3])}
+        ws = wb['Region']
+        reg = {}
+        for r in ws.iter_rows(values_only=True):
+            if r and r[2] and str(r[2]).startswith('Region'):
+                reg[str(r[2])] = {'2022': num(r[3]), '2023': num(r[4])}
+        wf['region'] = reg
+        ws = wb['Alder og køn']
+        age = {}
+        for r in ws.iter_rows(values_only=True):
+            if r and r[2] and ('år' in str(r[2])):
+                age[str(r[2])] = dict(m2022=num(r[3]), k2022=num(r[4]), m2023=num(r[5]), k2023=num(r[6]))
+        wf['age'] = age
+        ws = wb['Sektor']
+        rows = [list(r) for r in ws.iter_rows(values_only=True)]
+        hdr_i = next(i for i, r in enumerate(rows) if r and r[1] and 'sykolog' in str(r[1]))
+        names = [str(v) for v in rows[hdr_i][2:] if v] + ['Ikke i beskæftigelse']
+        sek = {}
+        for r in rows[hdr_i + 1:]:
+            if r and r[1] and str(r[1]).isdigit():
+                vals = [v for v in r[2:] if v is not None]
+                sek[str(r[1])] = {n: num(v) for n, v in zip(names, vals)}
+        wf['sektor'] = sek
+        out['workforce'] = wf
+    # DST: beskæftigelsesstatus pr. år (alle psykologuddannelser lagt sammen)
+    for f in glob.glob(os.path.join(folder, 'Psykologers_beskaeftigelse*.xlsx')):
+        ws = load_workbook(f, data_only=True).active
+        by_year: dict = {}
+        by_age: dict = {}
+        latest = 0
+        for r in ws.iter_rows(min_row=2, values_only=True):
+            if not r or r[0] is None or not str(r[0]).strip().isdigit():
+                continue
+            y = str(r[0]).strip(); latest = max(latest, int(y))
+            by_year.setdefault(y, {})
+            by_year[y][str(r[2])] = by_year[y].get(str(r[2]), 0) + int(num(r[4]) or 0)
+        for r in ws.iter_rows(min_row=2, values_only=True):
+            if not r or str(r[0]).strip() != str(latest): continue
+            by_age.setdefault(str(r[3]), {})
+            by_age[str(r[3])][str(r[2])] = by_age[str(r[3])].get(str(r[2]), 0) + int(num(r[4]) or 0)
+        out['employment'] = dict(byYear=by_year, byAgeLatest=by_age, latest=str(latest))
+    for f in glob.glob(os.path.join(folder, 'Psykologers_dimissionsaar*.xlsx')):
+        wb = load_workbook(f, data_only=True)
+        def tab(name):
+            return [r for r in wb[name].iter_rows(min_row=2, values_only=True) if r and r[0] is not None and re.fullmatch(r'\d{4}', str(r[0]).strip())]
+        # Tabel1: kandidater pr. dimissionsår (alle psykologuddannelser, og cand.psych. alene)
+        grads: dict = {}
+        for r in tab('Tabel1'):
+            y = str(r[0]).strip(); grads.setdefault(y, dict(alle=0, candpsych=0))
+            grads[y]['alle'] += int(num(r[2]) or 0)
+            if 'c.psych' in str(r[1]): grads[y]['candpsych'] += int(num(r[2]) or 0)
+        out['graduatesByYear'] = dict(sorted(grads.items()))
+        # Tabel3: bopælsregion, seneste år
+        reg: dict = {}; latest = max(str(r[0]).strip() for r in tab('Tabel3'))
+        for r in tab('Tabel3'):
+            if str(r[0]).strip() != latest: continue
+            k = re.sub(r'^\d+ ', '', str(r[2]))
+            reg[k] = reg.get(k, 0) + int(num(r[4]) or 0)
+        out['populationByRegion'] = dict(year=latest, regions=reg)
+        # Tabel5a: sektor pr. år (alle uddannelser)
+        sek: dict = {}
+        for r in tab('Tabel5a'):
+            y = str(r[0]).strip(); k = re.sub(r'^\d+ ', '', str(r[2]))
+            sek.setdefault(y, {}); sek[y][k] = sek[y].get(k, 0) + int(num(r[3]) or 0)
+        out['sectorByYear'] = sek
+    return out
+
+
 def load_rates() -> dict:
     """data/kontingent.csv: Kontingenttype;Pr. måned;Note. Tom sats = ukendt."""
     path = os.path.join(DATA, 'kontingent.csv')
@@ -482,6 +580,7 @@ def main() -> None:
         groups=[dict(key=k, label=l, categories=c) for k, l, c in GROUPS],
         rates=load_rates(),
         studies=load_studies(),
+        market=load_market(),
     )
 
     out = dict(

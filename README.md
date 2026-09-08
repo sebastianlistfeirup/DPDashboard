@@ -80,6 +80,9 @@ data/ind_udmeldelser.csv ─┘
 - `data/studiestatistik/*.xlsx` — udtræk fra UFM's datavarehus (tilgang, bestand,
   afbrudte, fuldførte pr. uddannelse); kun psykologi-rækkerne læses. Offentlige tal.
 - `data/kontingent.csv` — kontingentsatser pr. kategori.
+- `data/marked/` — organisationsgrad 2012–2024 (aflæst fra DP's egne grafer), DREAM-
+  fremskrivningen (kun tallene), Sundhedsdatastyrelsens arbejdsstyrketal og DST's
+  beskæftigelsestal. Alt aggregeret/offentligt — ingen medlemslister.
 - `scripts/parse_lists.py` + `scripts/build_movements.py` — læser medlemslisterne
   (lokalt) og skriver `public/data/movements.json` med optællinger.
 - `src/lib/data.ts` — alle afledte tal for én valgt måned.

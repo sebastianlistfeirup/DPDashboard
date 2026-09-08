@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-09-08T07:08:42+00:00",
+  "generatedAt": "2026-09-08T07:42:50+00:00",
   "latest": "2026-08-31",
   "first": "2022-01-31",
   "months": 56,
@@ -745,6 +745,688 @@
        "2025": 198
       }
      }
+    }
+   }
+  },
+  "market": {
+   "orgRate": {
+    "2012": {
+     "faerdig": 89.2,
+     "beskaeftigede": 85.6,
+     "studerendeDk": 44.3,
+     "studerendeAlle": 38.0
+    },
+    "2013": {
+     "faerdig": 87.4,
+     "beskaeftigede": 85.4,
+     "studerendeDk": 45.4,
+     "studerendeAlle": 40.0
+    },
+    "2014": {
+     "faerdig": 85.8,
+     "beskaeftigede": 86.1,
+     "studerendeDk": 43.5,
+     "studerendeAlle": 38.0
+    },
+    "2015": {
+     "faerdig": 83.5,
+     "beskaeftigede": 84.2,
+     "studerendeDk": 42.3,
+     "studerendeAlle": 37.0
+    },
+    "2016": {
+     "faerdig": 82.0,
+     "beskaeftigede": 83.5,
+     "studerendeDk": 43.7,
+     "studerendeAlle": 39.0
+    },
+    "2017": {
+     "faerdig": 80.9,
+     "beskaeftigede": 82.3,
+     "studerendeDk": 45.4,
+     "studerendeAlle": 41.0
+    },
+    "2018": {
+     "faerdig": 80.6,
+     "beskaeftigede": 82.6,
+     "studerendeDk": 48.4,
+     "studerendeAlle": 43.0
+    },
+    "2019": {
+     "faerdig": 79.9,
+     "beskaeftigede": 82.4,
+     "studerendeDk": 47.2,
+     "studerendeAlle": 41.0
+    },
+    "2020": {
+     "faerdig": 78.7,
+     "beskaeftigede": 81.2,
+     "studerendeDk": 45.7,
+     "studerendeAlle": 39.0
+    },
+    "2021": {
+     "faerdig": 77.2,
+     "beskaeftigede": 83.5,
+     "studerendeDk": 45.3,
+     "studerendeAlle": 39.0
+    },
+    "2022": {
+     "faerdig": 77.9,
+     "beskaeftigede": 83.0,
+     "studerendeDk": 38.6,
+     "studerendeAlle": 34.0
+    },
+    "2023": {
+     "faerdig": 76.5,
+     "beskaeftigede": 82.7,
+     "studerendeDk": 42.6,
+     "studerendeAlle": 37.0
+    },
+    "2024": {
+     "faerdig": 75.5,
+     "beskaeftigede": 80.4,
+     "studerendeDk": 50.8,
+     "studerendeAlle": 45.0
+    }
+   },
+   "dream": {
+    "2020": 10000.0,
+    "2025": 11559.0,
+    "2030": 13000.0,
+    "2040": 16000.0,
+    "2050": 18000.0,
+    "2060": 21500.0,
+    "2070": 23000.0,
+    "2080": 23500.0
+   },
+   "workforce": {
+    "total": {
+     "2022": 10551,
+     "2023": 10908
+    },
+    "region": {
+     "Region Hovedstaden": {
+      "2022": 4503,
+      "2023": 4681
+     },
+     "Region Midtjylland": {
+      "2022": 2498,
+      "2023": 2553
+     },
+     "Region Nordjylland": {
+      "2022": 849,
+      "2023": 889
+     },
+     "Region Sjælland": {
+      "2022": 1036,
+      "2023": 1051
+     },
+     "Region Syddanmark": {
+      "2022": 1381,
+      "2023": 1441
+     }
+    },
+    "age": {
+     "24 år eller derunder": {
+      "m2022": null,
+      "k2022": 19,
+      "m2023": null,
+      "k2023": 7
+     },
+     "25-34 år": {
+      "m2022": 567,
+      "k2022": 2810,
+      "m2023": 570,
+      "k2023": 2859
+     },
+     "35-44 år": {
+      "m2022": 428,
+      "k2022": 2108,
+      "m2023": 472,
+      "k2023": 2238
+     },
+     "45-54 år": {
+      "m2022": 498,
+      "k2022": 1644,
+      "m2023": 510,
+      "k2023": 1733
+     },
+     "55-64 år": {
+      "m2022": 383,
+      "k2022": 1066,
+      "m2023": 388,
+      "k2023": 1074
+     },
+     "65-74 år": {
+      "m2022": 298,
+      "k2022": 597,
+      "m2023": 287,
+      "k2023": 608
+     },
+     "75 år eller derover": {
+      "m2022": 61,
+      "k2022": 70,
+      "m2023": 77,
+      "k2023": 82
+     }
+    },
+    "sektor": {
+     "2022": {
+      "Kommuner": 2794,
+      "Regioner/Amter": 1979,
+      "Stat": 857,
+      "Øvrige": 18,
+      "Private sektor": 4326,
+      "Non-profit organisationer": 295,
+      "Ikke i beskæftigelse": 282
+     },
+     "2023": {
+      "Kommuner": 2868,
+      "Regioner/Amter": 1994,
+      "Stat": 888,
+      "Øvrige": 21,
+      "Private sektor": 4547,
+      "Non-profit organisationer": 298,
+      "Ikke i beskæftigelse": 292
+     }
+    }
+   },
+   "employment": {
+    "byYear": {
+     "2012": {
+      "Diskretioneret": 28,
+      "Lønmodtagere": 5325,
+      "Selvstændige": 1818,
+      "Uden for arbejdsstyrken": 1368,
+      "Arbejdsløse": 170,
+      "Personer under uddannelse": 15
+     },
+     "2013": {
+      "Diskretioneret": 33,
+      "Lønmodtagere": 5489,
+      "Selvstændige": 1830,
+      "Uden for arbejdsstyrken": 1506,
+      "Arbejdsløse": 128,
+      "Personer under uddannelse": 14
+     },
+     "2014": {
+      "Arbejdsløse": 125,
+      "Lønmodtagere": 5721,
+      "Selvstændige": 1786,
+      "Uden for arbejdsstyrken": 1693,
+      "Personer under uddannelse": 20
+     },
+     "2015": {
+      "Arbejdsløse": 126,
+      "Lønmodtagere": 5821,
+      "Selvstændige": 1956,
+      "Uden for arbejdsstyrken": 1798,
+      "Personer under uddannelse": 18
+     },
+     "2016": {
+      "Arbejdsløse": 152,
+      "Lønmodtagere": 6038,
+      "Selvstændige": 2008,
+      "Uden for arbejdsstyrken": 1980,
+      "Personer under uddannelse": 11
+     },
+     "2017": {
+      "Arbejdsløse": 198,
+      "Lønmodtagere": 6307,
+      "Selvstændige": 2095,
+      "Uden for arbejdsstyrken": 2137,
+      "Personer under uddannelse": 12
+     },
+     "2018": {
+      "Arbejdsløse": 198,
+      "Lønmodtagere": 6589,
+      "Selvstændige": 2205,
+      "Uden for arbejdsstyrken": 2292,
+      "Personer under uddannelse": 8
+     },
+     "2019": {
+      "Arbejdsløse": 199,
+      "Lønmodtagere": 6809,
+      "Selvstændige": 2330,
+      "Uden for arbejdsstyrken": 2401,
+      "Diskretioneret": 17,
+      "Personer under uddannelse": 21
+     },
+     "2020": {
+      "Arbejdsløse": 258,
+      "Lønmodtagere": 7005,
+      "Selvstændige": 2414,
+      "Uden for arbejdsstyrken": 2553,
+      "Diskretioneret": 14,
+      "Personer under uddannelse": 28
+     },
+     "2021": {
+      "Arbejdsløse": 176,
+      "Lønmodtagere": 7266,
+      "Selvstændige": 2516,
+      "Uden for arbejdsstyrken": 2721,
+      "Diskretioneret": 13,
+      "Personer under uddannelse": 16
+     },
+     "2022": {
+      "Arbejdsløse": 181,
+      "Lønmodtagere": 7422,
+      "Selvstændige": 2737,
+      "Uden for arbejdsstyrken": 2810,
+      "Personer under uddannelse": 21
+     },
+     "2023": {
+      "Diskretioneret": 349,
+      "Lønmodtagere": 7649,
+      "Uden for arbejdsstyrken": 2917,
+      "Selvstændige": 2509,
+      "Arbejdsløse": 199,
+      "Personer under uddannelse": 13
+     }
+    },
+    "byAgeLatest": {
+     "50-54 år": {
+      "Diskretioneret": 34,
+      "Lønmodtagere": 608,
+      "Arbejdsløse": 9,
+      "Selvstændige": 371,
+      "Uden for arbejdsstyrken": 41
+     },
+     "55-59 år": {
+      "Diskretioneret": 62,
+      "Lønmodtagere": 482,
+      "Arbejdsløse": 7,
+      "Selvstændige": 294,
+      "Uden for arbejdsstyrken": 51
+     },
+     "60-64 år": {
+      "Diskretioneret": 82,
+      "Lønmodtagere": 393,
+      "Uden for arbejdsstyrken": 103,
+      "Arbejdsløse": 6,
+      "Selvstændige": 240
+     },
+     "65-66 år": {
+      "Diskretioneret": 32,
+      "Lønmodtagere": 138,
+      "Uden for arbejdsstyrken": 87,
+      "Arbejdsløse": 3,
+      "Selvstændige": 101
+     },
+     "67 år og derover": {
+      "Diskretioneret": 139,
+      "Lønmodtagere": 280,
+      "Uden for arbejdsstyrken": 2223,
+      "Selvstændige": 389
+     },
+     "Diskretioneret": {
+      "Lønmodtagere": 39,
+      "Uden for arbejdsstyrken": 13,
+      "Selvstændige": 12,
+      "Personer under uddannelse": 6
+     },
+     "<30 år": {
+      "Arbejdsløse": 33,
+      "Lønmodtagere": 960,
+      "Selvstændige": 41,
+      "Uden for arbejdsstyrken": 54
+     },
+     "30-34 år": {
+      "Arbejdsløse": 73,
+      "Lønmodtagere": 1807,
+      "Personer under uddannelse": 7,
+      "Selvstændige": 120,
+      "Uden for arbejdsstyrken": 123
+     },
+     "35-39 år": {
+      "Arbejdsløse": 34,
+      "Lønmodtagere": 1199,
+      "Selvstændige": 214,
+      "Uden for arbejdsstyrken": 84
+     },
+     "40-44 år": {
+      "Arbejdsløse": 22,
+      "Lønmodtagere": 903,
+      "Selvstændige": 336,
+      "Uden for arbejdsstyrken": 84
+     },
+     "45-49 år": {
+      "Arbejdsløse": 12,
+      "Lønmodtagere": 840,
+      "Selvstændige": 391,
+      "Uden for arbejdsstyrken": 54
+     }
+    },
+    "latest": "2023"
+   },
+   "graduatesByYear": {
+    "1971": {
+     "alle": 19,
+     "candpsych": 0
+    },
+    "1972": {
+     "alle": 40,
+     "candpsych": 0
+    },
+    "1973": {
+     "alle": 115,
+     "candpsych": 80
+    },
+    "1974": {
+     "alle": 152,
+     "candpsych": 94
+    },
+    "1975": {
+     "alle": 121,
+     "candpsych": 79
+    },
+    "1976": {
+     "alle": 149,
+     "candpsych": 109
+    },
+    "1977": {
+     "alle": 165,
+     "candpsych": 106
+    },
+    "1978": {
+     "alle": 206,
+     "candpsych": 154
+    },
+    "1979": {
+     "alle": 158,
+     "candpsych": 132
+    },
+    "1980": {
+     "alle": 154,
+     "candpsych": 119
+    },
+    "1981": {
+     "alle": 193,
+     "candpsych": 166
+    },
+    "1982": {
+     "alle": 177,
+     "candpsych": 158
+    },
+    "1983": {
+     "alle": 213,
+     "candpsych": 182
+    },
+    "1984": {
+     "alle": 209,
+     "candpsych": 157
+    },
+    "1985": {
+     "alle": 194,
+     "candpsych": 149
+    },
+    "1986": {
+     "alle": 204,
+     "candpsych": 159
+    },
+    "1987": {
+     "alle": 168,
+     "candpsych": 138
+    },
+    "1988": {
+     "alle": 169,
+     "candpsych": 135
+    },
+    "1989": {
+     "alle": 205,
+     "candpsych": 162
+    },
+    "1990": {
+     "alle": 178,
+     "candpsych": 144
+    },
+    "1991": {
+     "alle": 189,
+     "candpsych": 153
+    },
+    "1992": {
+     "alle": 236,
+     "candpsych": 189
+    },
+    "1993": {
+     "alle": 188,
+     "candpsych": 140
+    },
+    "1994": {
+     "alle": 209,
+     "candpsych": 165
+    },
+    "1995": {
+     "alle": 212,
+     "candpsych": 168
+    },
+    "1996": {
+     "alle": 196,
+     "candpsych": 149
+    },
+    "1997": {
+     "alle": 204,
+     "candpsych": 161
+    },
+    "1998": {
+     "alle": 229,
+     "candpsych": 180
+    },
+    "1999": {
+     "alle": 227,
+     "candpsych": 176
+    },
+    "2000": {
+     "alle": 300,
+     "candpsych": 251
+    },
+    "2001": {
+     "alle": 280,
+     "candpsych": 231
+    },
+    "2002": {
+     "alle": 367,
+     "candpsych": 297
+    },
+    "2003": {
+     "alle": 443,
+     "candpsych": 270
+    },
+    "2004": {
+     "alle": 739,
+     "candpsych": 0
+    },
+    "2005": {
+     "alle": 382,
+     "candpsych": 339
+    },
+    "2006": {
+     "alle": 366,
+     "candpsych": 366
+    },
+    "2007": {
+     "alle": 382,
+     "candpsych": 382
+    },
+    "2008": {
+     "alle": 420,
+     "candpsych": 420
+    },
+    "2009": {
+     "alle": 489,
+     "candpsych": 489
+    },
+    "2010": {
+     "alle": 487,
+     "candpsych": 487
+    },
+    "2011": {
+     "alle": 435,
+     "candpsych": 435
+    },
+    "2012": {
+     "alle": 466,
+     "candpsych": 466
+    },
+    "2013": {
+     "alle": 532,
+     "candpsych": 532
+    },
+    "2014": {
+     "alle": 519,
+     "candpsych": 519
+    },
+    "2015": {
+     "alle": 620,
+     "candpsych": 620
+    },
+    "2016": {
+     "alle": 719,
+     "candpsych": 719
+    },
+    "2017": {
+     "alle": 727,
+     "candpsych": 727
+    },
+    "2018": {
+     "alle": 618,
+     "candpsych": 618
+    },
+    "2019": {
+     "alle": 668,
+     "candpsych": 668
+    },
+    "2020": {
+     "alle": 601,
+     "candpsych": 601
+    },
+    "2021": {
+     "alle": 691,
+     "candpsych": 691
+    },
+    "2022": {
+     "alle": 682,
+     "candpsych": 682
+    },
+    "2023": {
+     "alle": 629,
+     "candpsych": 629
+    }
+   },
+   "populationByRegion": {
+    "year": "2024",
+    "regions": {
+     "Nordjylland": 1127,
+     "Midtjylland": 3714,
+     "Syddanmark": 1868,
+     "Hovedstaden": 6227,
+     "Sjælland": 1209,
+     "Ikke i befolkningen": 3489,
+     "Diskretioneret": 7
+    }
+   },
+   "sectorByYear": {
+    "2012": {
+     "Stat": 723,
+     "Regioner": 1288,
+     "Kommuner": 2262,
+     "Private virksomheder": 2687,
+     "Diskretioneret": 56,
+     "Ikke beskæftiget": 1563,
+     "Private non-profit organisationer": 145
+    },
+    "2013": {
+     "Stat": 742,
+     "Regioner": 1384,
+     "Kommuner": 2277,
+     "Private virksomheder": 2723,
+     "Diskretioneret": 50,
+     "Ikke beskæftiget": 1661,
+     "Private non-profit organisationer": 163
+    },
+    "2014": {
+     "Stat": 770,
+     "Regioner": 1458,
+     "Kommuner": 2294,
+     "Private virksomheder": 2750,
+     "Diskretioneret": 31,
+     "Ikke beskæftiget": 1838,
+     "Offentlige virksomheder": 16,
+     "Private non-profit organisationer": 188
+    },
+    "2015": {
+     "Stat": 759,
+     "Regioner": 1506,
+     "Kommuner": 2291,
+     "Private virksomheder": 2965,
+     "Diskretioneret": 41,
+     "Ikke beskæftiget": 1942,
+     "Offentlige virksomheder": 13,
+     "Private non-profit organisationer": 202
+    },
+    "2016": {
+     "Stat": 746,
+     "Regioner": 1580,
+     "Kommuner": 2321,
+     "Private virksomheder": 3118,
+     "Diskretioneret": 68,
+     "Ikke beskæftiget": 2143,
+     "Private non-profit organisationer": 213
+    },
+    "2017": {
+     "Stat": 742,
+     "Regioner": 1615,
+     "Kommuner": 2476,
+     "Private virksomheder": 3266,
+     "Diskretioneret": 56,
+     "Ikke beskæftiget": 2347,
+     "Private non-profit organisationer": 247
+    },
+    "2018": {
+     "Stat": 767,
+     "Regioner": 1670,
+     "Kommuner": 2582,
+     "Private virksomheder": 3482,
+     "Diskretioneret": 60,
+     "Ikke beskæftiget": 2498,
+     "Private non-profit organisationer": 233
+    },
+    "2019": {
+     "Stat": 756,
+     "Kommuner": 2655,
+     "Private virksomheder": 3697,
+     "Private non-profit organisationer": 291,
+     "Diskretioneret": 66,
+     "Ikke beskæftiget": 2622,
+     "Regioner": 1690
+    },
+    "2020": {
+     "Stat": 765,
+     "Regioner": 1812,
+     "Kommuner": 2690,
+     "Private virksomheder": 3841,
+     "Diskretioneret": 64,
+     "Ikke beskæftiget": 2840,
+     "Private non-profit organisationer": 260
+    },
+    "2021": {
+     "Stat": 774,
+     "Regioner": 1862,
+     "Kommuner": 2727,
+     "Private virksomheder": 4103,
+     "Diskretioneret": 60,
+     "Ikke beskæftiget": 2914,
+     "Private non-profit organisationer": 268
+    },
+    "2022": {
+     "Stat": 850,
+     "Regioner": 1937,
+     "Kommuner": 2695,
+     "Private virksomheder": 4370,
+     "Diskretioneret": 25,
+     "Ikke beskæftiget": 3012,
+     "Offentlige virksomheder": 16,
+     "Private non-profit organisationer": 266
     }
    }
   }

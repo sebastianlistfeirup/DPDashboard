@@ -56,10 +56,18 @@ export function Goal({ data, a, goal }: { data: Dashboard; a: AsOf; goal: GoalPa
   const pacePerYear = needed / yearsLeft
   const lastFullYear = goal.yearlyGrowth[goal.yearlyGrowth.length - 1]
 
+  // DREAM: arbejdsstyrken af psykologer fremskrevet; DP følger samme vækst fra 31.12.25
+  const dream = data.meta.market?.dream
+  const dreamEnd = dream && dream['2025'] && dream['2030']
+    ? Math.round(goal.from.total * (dream['2030'] / dream['2025']) ** ((yearOf(goal.targetDate) - yearOf(goal.from.date)) / 5))
+    : null
+  const dreamRate = dream && dream['2025'] && dream['2030'] ? ((dream['2030'] / dream['2025']) ** (1 / 5) - 1) * 100 : null
+
   const scenarios: { title: string; how: string; end: number | null }[] = [
     { title: 'Seneste års tempo', how: `${fmtSigned(paceYear)} medlemmer på 12 måneder, fortsat til 2029`, end: paceEnd },
     { title: 'Regnearkets fremskrivning', how: `${fmtPct((proj?.totalByCagr?.cagr ?? 0) * 100)} om året — totalens gennemsnit siden 2022`, end: cagrEnd },
     { title: 'Sum af kategorierne', how: 'Hver kontingentkategori fremskrevet med sin egen vækst', end: sumEnd },
+    { title: 'Følger arbejdsstyrken (DREAM)', how: `Antallet af psykologer vokser ${fmtPct(dreamRate)} om året ifølge DREAM — hvis DP holder sin andel`, end: dreamEnd },
   ]
 
   return (
@@ -119,7 +127,7 @@ export function Goal({ data, a, goal }: { data: Dashboard; a: AsOf; goal: GoalPa
 
           <Reveal className="card p-5 sm:p-6" delay={0.1}>
             <h3 className="text-[1.0625rem] font-semibold text-dp-navy-900">Hvor ender vi 31.12.29?</h3>
-            <p className="mt-1 text-[0.8125rem] text-dp-navy-500">Tre måder at regne frem på. Målet er {fmtNum(goal.target)}.</p>
+            <p className="mt-1 text-[0.8125rem] text-dp-navy-500">Fire måder at regne frem på. Målet er {fmtNum(goal.target)}.</p>
             <ul className="mt-4 divide-y divide-dp-navy-50">
               {scenarios.filter((s) => s.end !== null).map((s) => {
                 const gap = (s.end ?? 0) - goal.target
