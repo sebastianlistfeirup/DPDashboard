@@ -63,6 +63,17 @@ export interface Movements {
   }
   reasons: { byYear: Record<string, Record<string, number>>; byGroup: Record<string, Record<string, number>> }
   churnRate: Record<string, { ud12: number; avgStock: number; pct: number | null }>
+  unemployment?: {
+    outcomeByStartYear: ({ year: string } & Record<string, number | string>)[]
+    entryByStartYear: ({ year: string } & Record<string, number | string>)[]
+    survival: { k: number; n: number; still: number }[]
+    durationByOutcome: Record<string, Record<string, number>>
+    stockNow: Record<string, number>
+    medianMonths: number | null
+    completedSpells: number
+    measurableSpells: number
+    udByMonth: { k: number; n: number }[]
+  }
   sizes: { month: string; n: number }[]
 }
 

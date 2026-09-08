@@ -15,6 +15,13 @@ import { MONTHS_SHORT, fmtNum, fmtPct, monthYear, cap, type AsOf } from '@/lib/d
 import { GROUP_COLOR, GROUP_ORDER, monthLabel, type Movements } from '@/lib/movements'
 
 const num = (v: unknown) => (typeof v === 'number' ? v : 0)
+/** Lægger år sammen til [nøgle, antal, andel] i den givne rækkefølge. */
+function sumBy(rows: ({ year: string } & Record<string, number | string>)[], keys: string[]) {
+  const tot: Record<string, number> = {}
+  for (const r of rows) for (const [k, v] of Object.entries(r)) if (k !== 'year') tot[k] = (tot[k] ?? 0) + num(v)
+  const all = Object.values(tot).reduce((t, v) => t + v, 0) || 1
+  return keys.filter((k) => tot[k]).map((k) => [k, tot[k], (tot[k] / all) * 100] as [string, number, number])
+}
 
 export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
   const labels = mov.meta.groupLabels
@@ -78,6 +85,8 @@ export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
   const gradTotal = gradItems.reduce((t, it) => t + it.parts.planlagt + it.parts.forventet, 0)
   const join = mov.students.joinYear ?? []
   const joinTotal = join.reduce((t, j) => t + j.students, 0) || 1
+
+  const un = mov.unemployment
 
   // Bevægelser seneste 12 måneder som matrix
   const last12 = mov.transitions.filter((t) => t.month <= a.date.slice(0, 7)).slice(-12)
@@ -233,6 +242,61 @@ export function Retention({ mov, a }: { mov: Movements; a: AsOf }) {
           </p>
         </ChartCard>
       </div>
+
+      {un && (
+        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+          <ChartCard
+            title={`De ledige: halvdelen er videre efter ${un.medianMonths ?? '–'} måneder`}
+            subtitle={`Andel, der stadig er ledig k måneder efter, at forløbet startede. ${fmtNum(un.measurableSpells)} ledighedsforløb siden februar 2022, ${fmtNum(un.completedSpells)} afsluttede.`}
+            table={<DataTable columns={[{ key: 'k', label: 'Måneder' }, { key: 'n', label: 'Forløb', align: 'right' }, { key: 's', label: 'Stadig ledig', align: 'right' }]}
+                              rows={un.survival.filter((x) => x.k % 3 === 0).map((x) => ({ k: String(x.k), n: fmtNum(x.n), s: fmtPct((x.still / (x.n || 1)) * 100, 0) }))} />}
+          >
+            <Lines series={[{ key: 'surv', label: 'Stadig ledig', color: GROUP_COLOR.ledig, width: 2.5, area: true,
+                              points: un.survival.map((x) => ({ x: x.k, y: x.n ? (x.still / x.n) * 100 : null })) }]}
+                   xLabels={un.survival.map((x) => (x.k % 3 === 0 ? `${x.k} mdr.` : ''))} height={220} valueFormat={(n) => fmtPct(n, 0)} yMin={0} yMax={100} xTickEvery={1}
+                   tooltipTitle={(i) => `${i} måneder ledig`} padRight={16} />
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div>
+                <div className="text-[0.75rem] font-semibold text-dp-navy-600">Hvor kommer de fra?</div>
+                <ul className="mt-1 space-y-1 text-[0.8125rem]">
+                  {sumBy(un.entryByStartYear, ['stud', 'normal', 'ind', 'kandidat', 'selv', 'ledig', 'andet']).map(([k, n, share]) => (
+                    <li key={k} className="flex justify-between"><span className="text-dp-navy-800">{k === 'ind' ? 'Nyindmeldt som ledig' : labels[k] ?? k}</span><span className="tnum font-semibold text-dp-navy-900">{fmtNum(n)} <span className="text-[0.6875rem] font-normal text-dp-navy-500">{fmtPct(share, 0)}</span></span></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <div className="text-[0.75rem] font-semibold text-dp-navy-600">Hvor ender de?</div>
+                <ul className="mt-1 space-y-1 text-[0.8125rem]">
+                  {sumBy(un.outcomeByStartYear, ['kandidat', 'normal', 'selv', 'ud', 'stadig ledig', 'andet', 'pens']).map(([k, n, share]) => (
+                    <li key={k} className="flex justify-between"><span className="text-dp-navy-800" style={{ color: k === 'ud' ? '#d24e46' : undefined }}>{k === 'stadig ledig' ? 'Stadig ledig' : k === 'ud' ? 'Udmeldt' : labels[k] ?? k}</span><span className="tnum font-semibold text-dp-navy-900">{fmtNum(n)} <span className="text-[0.6875rem] font-normal text-dp-navy-500">{fmtPct(share, 0)}</span></span></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+              To slags ledige: nyuddannede, der står som ledige, indtil dimittenddatoen er registreret (de går videre til kandidat), og erfarne, der mister et job (de går tilbage til normalansat). Kun omkring hver tiende melder sig ud i løbet af ledigheden — og det sker jævnt, ikke lige efter starten.
+            </p>
+          </ChartCard>
+
+          <div className="grid gap-5">
+            <ChartCard title="Hvad de blev til, efter hvor længe de var ledige" subtitle="Afsluttede forløb. Jo længere ledighed, jo større andel udmeldte.">
+              <StackedBars items={['1–3 mdr.', '4–6 mdr.', '7–12 mdr.', '1–2 år', 'over 2 år'].filter((b) => un.durationByOutcome[b]).map((b) => ({ label: b, parts: un.durationByOutcome[b] }))}
+                           keys={['kandidat', 'normal', 'selv', 'andet', 'ud']} colors={GROUP_COLOR} labels={{ ...labels, ud: 'Udmeldt' }} height={200} width={420} percent />
+              <Legend keys={['kandidat', 'normal', 'selv', 'andet', 'ud']} colors={GROUP_COLOR} labels={{ ...labels, ud: 'Udmeldt' }} />
+            </ChartCard>
+            <ChartCard title={`Ledige i dag: ${fmtNum(Object.values(un.stockNow).reduce((t, v) => t + v, 0))}`} subtitle="Efter hvor længe de har været ledige.">
+              <ul className="space-y-1.5 text-[0.8125rem]">
+                {['1–3 mdr.', '4–6 mdr.', '7–12 mdr.', '1–2 år', 'over 2 år', 'over 4 år (fra før 2022)'].filter((b) => un.stockNow[b]).map((b) => (
+                  <li key={b} className="flex justify-between"><span className="text-dp-navy-800">{b}</span><span className="tnum font-semibold text-dp-navy-900">{fmtNum(un.stockNow[b])}</span></li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[0.75rem] leading-relaxed text-dp-navy-500">
+                De {fmtNum((un.stockNow['over 2 år'] ?? 0) + (un.stockNow['over 4 år (fra før 2022)'] ?? 0))} langtidsledige er formentlig ikke jobsøgende psykologer, men medlemmer, der står i en billig kategori. Det er værd at kigge på.
+              </p>
+            </ChartCard>
+          </div>
+        </div>
+      )}
 
       <div className="mt-5">
         <Reveal className="card p-5 sm:p-6">

@@ -281,6 +281,22 @@ def load_list_months() -> dict:
         return json.load(fh)
 
 
+def load_rates() -> dict:
+    """data/kontingent.csv: Kontingenttype;Pr. måned;Note. Tom sats = ukendt."""
+    path = os.path.join(DATA, 'kontingent.csv')
+    out = {}
+    if not os.path.exists(path):
+        return out
+    with open(path, encoding='utf-8') as fh:
+        for row in csv.DictReader(fh, delimiter=';'):
+            k = (row.get('Kontingenttype') or '').strip()
+            if not k:
+                continue
+            v = (row.get('Pr. måned') or '').strip().replace('.', '').replace(',', '.')
+            out[k] = dict(monthly=float(v) if v else None, note=(row.get('Note') or '').strip() or None)
+    return out
+
+
 def load_flows() -> list[dict]:
     path = os.path.join(DATA, 'ind_udmeldelser.csv')
     if not os.path.exists(path):
@@ -429,6 +445,7 @@ def main() -> None:
         fulltimeCategories=FULLTIME,
         fullPriceCategories=sorted(FULL_PRICE),
         groups=[dict(key=k, label=l, categories=c) for k, l, c in GROUPS],
+        rates=load_rates(),
     )
 
     out = dict(

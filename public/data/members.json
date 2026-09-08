@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-09-07T15:00:06+00:00",
+  "generatedAt": "2026-09-08T06:17:18+00:00",
   "latest": "2026-08-31",
   "first": "2022-01-31",
   "months": 56,
@@ -80,7 +80,93 @@
      "DP medlem"
     ]
    }
-  ]
+  ],
+  "rates": {
+   "Normaltansat over 19 timer": {
+    "monthly": 694.0,
+    "note": null
+   },
+   "Selvstændig": {
+    "monthly": 694.0,
+    "note": null
+   },
+   "Ph.d. studerende": {
+    "monthly": 694.0,
+    "note": null
+   },
+   "1 og 2 års Kandidater": {
+    "monthly": 347.0,
+    "note": null
+   },
+   "Normaltansat under 20 timer": {
+    "monthly": 312.0,
+    "note": null
+   },
+   "Udland DP": {
+    "monthly": 312.0,
+    "note": null
+   },
+   "Anden forhandlingsret": {
+    "monthly": 312.0,
+    "note": "anden organisation har forhandlingsretten"
+   },
+   "DLF og DLF ret": {
+    "monthly": 312.0,
+    "note": "antaget: som anden forhandlingsret — bekræft"
+   },
+   "DLF og DP ret": {
+    "monthly": 694.0,
+    "note": "antaget: DP har forhandlingsretten — bekræft"
+   },
+   "Ledig DP": {
+    "monthly": 272.0,
+    "note": null
+   },
+   "Efterløn DP": {
+    "monthly": 272.0,
+    "note": null
+   },
+   "Orlov uden løn DP": {
+    "monthly": 272.0,
+    "note": null
+   },
+   "Med løntilskud": {
+    "monthly": 272.0,
+    "note": null
+   },
+   "Ledig ikke ret til dagpenge": {
+    "monthly": 35.0,
+    "note": "ledige på kontanthjælp"
+   },
+   "Studerende DP": {
+    "monthly": 35.0,
+    "note": null
+   },
+   "Psykologistuderende": {
+    "monthly": 35.0,
+    "note": "udgået kategori"
+   },
+   "Pensionist DP": {
+    "monthly": null,
+    "note": "sats mangler"
+   },
+   "Pensionist DP - Udland": {
+    "monthly": null,
+    "note": "sats mangler"
+   },
+   "Æresmedlem": {
+    "monthly": 0.0,
+    "note": null
+   },
+   "DM1 Mag. art.": {
+    "monthly": null,
+    "note": "sats mangler"
+   },
+   "DP medlem": {
+    "monthly": null,
+    "note": "sats mangler, udgået kategori"
+   }
+  }
  },
  "snapshots": [
   {

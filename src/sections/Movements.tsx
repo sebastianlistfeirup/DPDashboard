@@ -108,14 +108,9 @@ export function DataNeeds({ data }: { data: Dashboard }) {
       how: 'Offentlige tal fra uddannelsesministeriet, ét tal pr. universitet pr. år.',
     },
     {
-      title: 'Hvad de ledige bliver til',
-      why: 'Ledig → normalansat er den næststørste bevægelse ind i kongeindikatoren. Hvor længe er de ledige, og hvor mange melder sig ud undervejs?',
-      how: 'Det kan vi regne på listerne allerede — sig til, så laver vi en varighedsanalyse for ledige.',
-    },
-    {
-      title: 'Kontingentsatser pr. gruppe',
-      why: 'Så kan bevægelserne oversættes til kroner: hvad et kontingentskift, en udmeldelse og en pensionering betyder for kontingentindtægten — og hvad 15.000 medlemmer er værd.',
-      how: 'Én linje pr. kontingenttype: årligt kontingent. Ligger formentlig i et regneark i økonomi.',
+      title: 'Kontingentsats for pensionister (og mag.art.)',
+      why: 'De 1.100 pensionister er den eneste større gruppe uden en sats i regnestykket, så økonomisektionen mangler dem — og pensionsafgangen kan ikke sættes i kroner.',
+      how: 'Én linje i data/kontingent.csv. Bekræft samtidig antagelserne for DLF-medlemmer (DLF-ret = 312 kr., DP-ret = 694 kr.).',
     },
   ]
   return (

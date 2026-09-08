@@ -47,6 +47,7 @@ export interface Dashboard {
     fulltimeCategories: string[]
     fullPriceCategories: string[]
     groups: Group[]
+    rates?: Record<string, { monthly: number | null; note: string | null }>
   }
   snapshots: Snapshot[]
   baseByYear: Record<string, { total: number | null; categories: Record<string, number>; source: string }>

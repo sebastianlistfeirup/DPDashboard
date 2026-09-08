@@ -332,6 +332,81 @@ def main() -> None:
             if gb != 'stud': stud_out[b[:4]][gb] += 1
     stud_out_list = [dict(year=y, **dict(c)) for y, c in sorted(stud_out.items())]
 
+    # ── De ledige: forløb, varighed og udfald ───────────────────────────────
+    # Et forløb = sammenhængende måneder i en ledig-kategori (Ledig DP, Ledig
+    # uden dagpengeret, løntilskud — orlov holdes udenfor). Forløb, der allerede
+    # var i gang på første liste, kan ikke måles i længde (kun i bestanden).
+    UNEMP = {'Ledig DP', 'Ledig ikke ret til dagpenge', 'Med løntilskud'}
+    is_un = lambda r: r is not None and r['type'] in UNEMP  # noqa: E731
+    spells = []  # dict(start, end, entry_from, exit_to, months, censored)
+    open_sp: dict[str, dict] = {}
+    for i, k in enumerate(keys):
+        prev = L[keys[i - 1]] if i else {}
+        cur = L[k]
+        # afslut forløb for dem, der ikke længere er ledige
+        for sk, sp in list(open_sp.items()):
+            r = cur.get(sk)
+            if is_un(r):
+                sp['last'] = k
+                continue
+            sp['exit_to'] = grp(r['type']) if r else 'ud'
+            sp['end'] = k
+            spells.append(sp); del open_sp[sk]
+        # start forløb for nye ledige
+        for sk, r in cur.items():
+            if is_un(r) and sk not in open_sp:
+                p = prev.get(sk)
+                open_sp[sk] = dict(start=k, last=k, entry_from=(grp(p['type']) if p else ('ind' if i else 'ukendt')),
+                                   left_censored=(i == 0), age=age_at(r, k), sex=r['sex'])
+    for sk, sp in open_sp.items():
+        sp['exit_to'] = 'stadig ledig'; sp['end'] = None; spells.append(sp)
+    def spell_len(sp):  # måneder i ledighed (mindst 1)
+        end = sp['end'] or last
+        return max(1, months_between(sp['start'], end))
+    measurable = [sp for sp in spells if not sp['left_censored'] and sp['start'] >= '2022-02']
+    # Udfald pr. startår (kun afsluttede + stadig ledige)
+    un_outcome = collections.defaultdict(collections.Counter)
+    un_entry = collections.defaultdict(collections.Counter)
+    for sp in measurable:
+        un_outcome[sp['start'][:4]][sp['exit_to']] += 1
+        un_entry[sp['start'][:4]][sp['entry_from']] += 1
+    # Varighed: andel stadig ledig efter k måneder (kun forløb, hvor k måneder kan observeres)
+    surv = []
+    for kk in range(0, 25):
+        at_risk = [sp for sp in measurable if months_between(sp['start'], last) >= kk]
+        still = sum(1 for sp in at_risk if spell_len(sp) > kk or (sp['end'] is None and months_between(sp['start'], last) >= kk))
+        surv.append(dict(k=kk, n=len(at_risk), still=still))
+    # Længde af afsluttede forløb, i bånd, efter udfald
+    DUR = [(1, 3, '1–3 mdr.'), (4, 6, '4–6 mdr.'), (7, 12, '7–12 mdr.'), (13, 24, '1–2 år'), (25, 10**6, 'over 2 år')]
+    def dur_band(n):
+        for lo, hi, lab in DUR:
+            if lo <= n <= hi: return lab
+        return 'ukendt'
+    un_dur = collections.defaultdict(collections.Counter)
+    for sp in measurable:
+        if sp['end']: un_dur[dur_band(spell_len(sp))][sp['exit_to']] += 1
+    # Bestanden nu efter varighed (inkl. de venstre-censurerede: "over 2 år" el. ukendt)
+    stock_now = collections.Counter()
+    for sp in spells:
+        if sp['end'] is None:
+            stock_now['over 4 år (fra før 2022)' if sp['left_censored'] else dur_band(spell_len(sp))] += 1
+    completed = [spell_len(sp) for sp in measurable if sp['end']]
+    completed.sort()
+    median = completed[len(completed) // 2] if completed else None
+    # Udmeldelsesrate for ledige pr. måned i ledighed: hvor i forløbet melder de sig ud?
+    ud_by_k = collections.Counter()
+    for sp in measurable:
+        if sp['exit_to'] == 'ud': ud_by_k[min(spell_len(sp), 25)] += 1
+    unemployment = dict(
+        outcomeByStartYear=[dict(year=y, **dict(c)) for y, c in sorted(un_outcome.items())],
+        entryByStartYear=[dict(year=y, **dict(c)) for y, c in sorted(un_entry.items())],
+        survival=surv,
+        durationByOutcome={b: dict(c) for b, c in un_dur.items()},
+        stockNow=dict(stock_now.most_common()),
+        medianMonths=median, completedSpells=len(completed), measurableSpells=len(measurable),
+        udByMonth=[dict(k=k, n=n) for k, n in sorted(ud_by_k.items())],
+    )
+
     # ── Medlemmerne på seneste liste: alder, køn, kreds, sektor ─────────────
     cur = L[last]
     age_by_group = collections.defaultdict(collections.Counter)
@@ -417,6 +492,7 @@ def main() -> None:
         reasons=dict(byYear={y: dict(c.most_common()) for y, c in sorted(reason_year.items())},
                      byGroup={g: dict(c.most_common()) for g, c in reason_group.items()}),
         churnRate=rate,
+        unemployment=unemployment,
         sizes=sizes,
     )
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

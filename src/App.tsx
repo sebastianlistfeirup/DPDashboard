@@ -11,6 +11,7 @@ import { Hero } from '@/sections/Hero'
 import { Konge } from '@/sections/Konge'
 import { Goal } from '@/sections/Goal'
 import { MainCats } from '@/sections/MainCats'
+import { Economy } from '@/sections/Economy'
 import { YearWheel } from '@/sections/YearWheel'
 import { Categories } from '@/sections/Categories'
 import { DataNeeds, Sections } from '@/sections/Movements'
@@ -25,6 +26,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'status', label: 'Status', group: 'Overblik' },
   { id: 'kongeindikator', label: 'Kongeindikator', group: 'Overblik' },
   { id: 'maal', label: 'Mål 2029', group: 'Udvikling' },
+  { id: 'oekonomi', label: 'Økonomi', group: 'Udvikling' },
   { id: 'hovedkategorier', label: 'Hovedkategorier', group: 'Udvikling' },
   { id: 'aarshjul', label: 'Årshjul', group: 'Udvikling' },
   { id: 'kategorier', label: 'Alle kategorier', group: 'Segmenter' },
@@ -88,6 +90,7 @@ export default function App() {
         </div>
         <Section id="kongeindikator"><Konge data={data} a={a} /></Section>
         <Section id="maal" tone="dark"><Goal data={data} a={a} goal={goal} /></Section>
+        <Section id="oekonomi" tone="dark" className="border-t border-white/10"><Economy data={data} a={a} goal={goal} /></Section>
         <Section id="hovedkategorier"><MainCats data={data} a={a} /></Section>
         <Section id="aarshjul" tone="sunken"><YearWheel data={data} a={a} /></Section>
         <Section id="kategorier"><Categories data={data} a={a} /></Section>
